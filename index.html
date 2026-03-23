@@ -1,1569 +1,2276 @@
-<!DOCTYPE html><html lang="pt-BR" class="dark"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html><html lang="pt-BR"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Luan Barber | Sistema Premium</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pamphilo Festas e Eventos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root{
---bg-body:#070709;--bg-main:#0c0c10;--bg-card:#141418;--bg-card-hover:#1a1a20;
---bg-input:#18181e;--border:#222228;--border-light:#2e2e36;
---red:#dc2626;--red-dark:#b91c1c;--red-glow:rgba(220,38,38,.25);
---gold:#c9a96e;--gold-dark:#a8873f;
---white:#ffffff;--t1:#f0f0f2;--t2:#b0b0ba;--t3:#76767e;--t4:#4a4a52;
---font-display:'Bebas Neue',sans-serif;--font-body:'Outfit',sans-serif;
---radius:12px;--radius-sm:8px;--radius-lg:18px;
---shadow:0 4px 24px rgba(0,0,0,.4);--shadow-red:0 4px 20px var(--red-glow);
---transition:.25s cubic-bezier(.4,0,.2,1);
---nav-h:64px;--bottom-h:72px;
+:root {
+  --gold: #C9A96E;
+  --gold-light: #E2C992;
+  --gold-dark: #A8873F;
+  --cream: #FFF8EE;
+  --charcoal: #1A1A2E;
+  --charcoal-mid: #24243E;
+  --charcoal-light: #2E2E48;
+  --text-primary: #1A1A2E;
+  --text-secondary: #5A5A7A;
+  --bg-primary: #FEFCF8;
+  --bg-secondary: #F7F3EC;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFF8EE;
+  --border-color: #E8E0D4;
+  --shadow-sm: 0 2px 8px rgba(26,26,46,0.06);
+  --shadow-md: 0 4px 20px rgba(26,26,46,0.08);
+  --shadow-lg: 0 8px 40px rgba(26,26,46,0.12);
+  --shadow-gold: 0 4px 20px rgba(201,169,110,0.25);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--font-body);background:var(--bg-body);color:var(--t1);
-line-height:1.6;overflow-x:hidden;min-height:100vh;min-height:100dvh;
--webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--bg-main)}
-::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:var(--t4)}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-input,select,textarea,button{font-family:inherit;font-size:16px;border:none;outline:none;background:none}
-button{cursor:pointer}
-h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:.04em;font-weight:400;line-height:1.1}
 
-/* NAV */
-.topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);
-background:rgba(7,7,9,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;
-justify-content:space-between;padding:0 20px}
-.topnav .brand{display:flex;align-items:center;gap:10px}
-.topnav .brand-icon{width:36px;height:36px;background:var(--red);border-radius:8px;
-display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
-.topnav .brand-text{font-family:var(--font-display);font-size:26px;letter-spacing:.06em;color:var(--white)}
-.topnav .brand-text span{color:var(--red)}
-.topnav-links{display:flex;gap:6px}
-.topnav-links button{padding:8px 14px;border-radius:var(--radius-sm);
-color:var(--t2);font-size:13px;font-weight:500;transition:var(--transition)}
-.topnav-links button:hover,.topnav-links button.active{color:var(--white);background:var(--bg-card)}
-@media(max-width:768px){.topnav-links{display:none}}
+html.dark {
+  --text-primary: #F0EBE3;
+  --text-secondary: #A0A0BC;
+  --bg-primary: #0F0F1A;
+  --bg-secondary: #161625;
+  --bg-card: #1A1A2E;
+  --bg-card-hover: #24243E;
+  --border-color: #2E2E48;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  --shadow-gold: 0 4px 20px rgba(201,169,110,0.15);
+}
 
-/* BOTTOM NAV */
-.bottomnav{position:fixed;bottom:0;left:0;right:0;height:var(--bottom-h);
-background:rgba(7,7,9,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-border-top:1px solid var(--border);z-index:100;display:none;
-padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
-@media(max-width:768px){.bottomnav{display:flex;align-items:center;justify-content:space-around}}
-.bottomnav button{display:flex;flex-direction:column;align-items:center;gap:3px;
-padding:6px 12px;border-radius:var(--radius-sm);color:var(--t3);
-font-size:10px;font-weight:500;transition:var(--transition);background:none}
-.bottomnav button i{font-size:20px;transition:var(--transition)}
-.bottomnav button.active{color:var(--red)}
-.bottomnav button.active i{transform:scale(1.15)}
-.bottomnav .book-btn{background:var(--red);color:#fff;border-radius:50%;
-width:52px;height:52px;font-size:22px;margin-top:-18px;box-shadow:var(--shadow-red);
-display:flex;align-items:center;justify-content:center;flex-direction:row;gap:0;padding:0}
-.bottomnav .book-btn span{display:none}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* MAIN */
-.main{padding-top:var(--nav-h);padding-bottom:16px;min-height:100vh;min-height:100dvh}
-@media(max-width:768px){.main{padding-bottom:calc(var(--bottom-h) + 16px)}}
-.page{animation:fadeUp .4s ease both;max-width:720px;margin:0 auto;padding:20px 16px}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
-@keyframes slideRight{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-padding:14px 28px;border-radius:var(--radius);font-weight:600;font-size:15px;
-transition:var(--transition);cursor:pointer;white-space:nowrap}
-.btn-red{background:var(--red);color:#fff;box-shadow:var(--shadow-red)}
-.btn-red:hover{background:#ef4444;transform:translateY(-1px)}
-.btn-red:active{transform:scale(.97)}
-.btn-outline{border:1px solid var(--border-light);color:var(--t1);background:transparent}
-.btn-outline:hover{border-color:var(--red);color:var(--red)}
-.btn-ghost{color:var(--t2);padding:10px 16px}
-.btn-ghost:hover{color:var(--white);background:var(--bg-card)}
-.btn-block{width:100%}
-.btn-sm{padding:10px 18px;font-size:13px;border-radius:var(--radius-sm)}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#000;font-weight:700}
-.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn:disabled{opacity:.5;pointer-events:none}
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', serif;
+}
 
-/* CARDS */
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
-padding:20px;transition:var(--transition)}
-.card:hover{border-color:var(--border-light)}
-.card-glow{position:relative;overflow:hidden}
-.card-glow::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-background:radial-gradient(circle,var(--red-glow) 0%,transparent 60%);opacity:0;
-transition:opacity .4s;pointer-events:none}
-.card-glow:hover::before{opacity:1}
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
-/* INPUTS */
-.input-group{margin-bottom:16px}
-.input-group label{display:block;font-size:13px;font-weight:600;color:var(--t2);
-margin-bottom:6px;letter-spacing:.03em}
-.input-group input,.input-group select{width:100%;padding:14px 16px;
-background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);
-color:var(--t1);font-size:16px;transition:var(--transition)}
-.input-group input:focus,.input-group select:focus{border-color:var(--red);
-box-shadow:0 0 0 3px var(--red-glow)}
-.input-group input::placeholder{color:var(--t4)}
+/* ===== BACKGROUND PATTERN ===== */
+.bg-pattern {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(circle at 20% 50%, var(--gold) 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, var(--gold) 1px, transparent 1px),
+    radial-gradient(circle at 50% 80%, var(--gold) 1px, transparent 1px);
+  background-size: 60px 60px, 80px 80px, 70px 70px;
+}
 
-/* BADGE */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
-border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.04em}
-.badge-red{background:rgba(220,38,38,.15);color:#f87171}
-.badge-green{background:rgba(34,197,94,.15);color:#4ade80}
-.badge-gold{background:rgba(201,169,110,.15);color:var(--gold)}
-.badge-gray{background:rgba(120,120,130,.15);color:var(--t2)}
+html.dark .bg-pattern { opacity: 0.02; }
 
-/* DIVIDER */
-.divider{height:1px;background:var(--border);margin:20px 0}
+/* ===== PAGE SECTIONS ===== */
+.page-section {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
 
-/* TOAST */
-.toast-container{position:fixed;top:80px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.toast{padding:14px 20px;border-radius:var(--radius);background:var(--bg-card);
-border:1px solid var(--border);box-shadow:var(--shadow);color:var(--t1);font-size:14px;
-animation:slideInRight .3s ease;display:flex;align-items:center;gap:10px;max-width:340px}
-.toast i{font-size:18px}
-.toast.success i{color:#4ade80}.toast.error i{color:#f87171}.toast.info i{color:#60a5fa}
-@keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+.page-section.active {
+  display: block;
+  animation: fadeSlideIn 0.5s ease-out;
+}
 
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;
-animation:fadeIn .2s ease}
-.modal-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
-padding:28px 24px;max-width:400px;width:100%;animation:scaleIn .25s ease;max-height:80vh;overflow-y:auto}
-.modal-box h3{font-size:28px;margin-bottom:12px}
-.modal-box p{color:var(--t2);font-size:14px;margin-bottom:20px;line-height:1.6}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* WHATSAPP FLOAT */
-.wa-float{position:fixed;bottom:90px;right:16px;width:56px;height:56px;
-background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;
-font-size:26px;color:#fff;z-index:90;box-shadow:0 4px 16px rgba(37,211,102,.4);
-transition:var(--transition);cursor:pointer}
-.wa-float:hover{transform:scale(1.1)}
-@media(min-width:769px){.wa-float{bottom:24px}}
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* ================ HOME ================ */
-.hero{position:relative;margin:-20px -16px 0;padding:80px 24px 60px;
-background:linear-gradient(135deg,#0c0c10 0%,#1a0a0a 50%,#0c0c10 100%);overflow:hidden;text-align:center}
-.hero::before{content:'';position:absolute;inset:0;
-background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(220,38,38,.03) 40px,rgba(220,38,38,.03) 41px),
-repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(220,38,38,.03) 40px,rgba(220,38,38,.03) 41px);pointer-events:none}
-.hero::after{content:'';position:absolute;top:-120px;right:-120px;width:360px;height:360px;
-background:radial-gradient(circle,rgba(220,38,38,.12),transparent 70%);pointer-events:none}
-.hero-logo{width:90px;height:90px;background:var(--red);border-radius:20px;
-display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
-font-size:40px;color:#fff;box-shadow:var(--shadow-red);position:relative}
-.hero h1{font-size:clamp(48px,10vw,72px);letter-spacing:.08em;margin-bottom:4px}
-.hero h1 span{color:var(--red)}
-.hero-sub{color:var(--t2);font-size:15px;margin-bottom:16px;font-weight:300}
-.hero-rating{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px}
-.hero-rating .stars{color:var(--gold);font-size:14px;display:flex;gap:2px}
-.hero-rating .score{font-weight:700;font-size:18px;color:var(--gold)}
-.hero-rating .count{color:var(--t3);font-size:13px}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
 
-.section-title{font-size:32px;margin-bottom:4px;letter-spacing:.06em}
-.section-sub{color:var(--t3);font-size:14px;margin-bottom:24px}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(201,169,110,0.2); }
+  50% { box-shadow: 0 0 40px rgba(201,169,110,0.4); }
+}
 
-.home-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-bottom:32px}
-.home-cat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-padding:18px 8px;text-align:center;cursor:pointer;transition:var(--transition)}
-.home-cat:hover{border-color:var(--red);transform:translateY(-2px)}
-.home-cat i{font-size:24px;color:var(--red);margin-bottom:8px;display:block}
-.home-cat span{font-size:12px;font-weight:600;color:var(--t2);display:block}
+/* ===== HEADER BAR ===== */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+  transition: background 0.3s, border 0.3s;
+}
 
-.home-about{margin:32px 0}
-.home-about p{color:var(--t2);font-size:14px;line-height:1.8}
+.top-bar-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+  cursor: pointer;
+}
 
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
-.info-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-.info-card i{color:var(--red);font-size:18px;margin-bottom:8px}
-.info-card h4{font-size:16px;color:var(--t1);margin-bottom:4px;font-family:var(--font-body);font-weight:600}
-.info-card p{font-size:12px;color:var(--t3);line-height:1.5}
+.top-bar .step-indicator {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
 
-.hours-table{width:100%;border-collapse:collapse;margin-top:12px}
-.hours-table td{padding:10px 12px;font-size:13px;border-bottom:1px solid var(--border)}
-.hours-table td:first-child{color:var(--t2);font-weight:500}
-.hours-table td:last-child{color:var(--t1);text-align:right;font-weight:600}
-.hours-table tr:last-child td{border-bottom:none}
-.hours-table .closed{color:var(--red)}
+/* ===== HERO / LANDING ===== */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
 
-.social-links{display:flex;gap:12px;margin-top:16px}
-.social-links a{width:44px;height:44px;border-radius:50%;background:var(--bg-card);
-border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-font-size:18px;color:var(--t2);transition:var(--transition)}
-.social-links a:hover{color:var(--white);border-color:var(--red);background:rgba(220,38,38,.1)}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(201,169,110,0.06) 0%, transparent 60%);
+  animation: rotate 30s linear infinite;
+  pointer-events: none;
+}
 
-/* ================ AUTH ================ */
-.auth-page{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--nav-h) - 40px);
-min-height:calc(100dvh - var(--nav-h) - 40px);padding:24px 16px}
-.auth-box{width:100%;max-width:400px}
-.auth-box .auth-header{text-align:center;margin-bottom:32px}
-.auth-box .auth-header h2{font-size:40px;letter-spacing:.06em}
-.auth-box .auth-header p{color:var(--t3);font-size:14px;margin-top:6px}
-.auth-social{display:flex;gap:10px;margin-bottom:20px}
-.auth-social button{flex:1;padding:12px;border-radius:var(--radius);border:1px solid var(--border);
-display:flex;align-items:center;justify-content:center;gap:8px;color:var(--t1);
-font-size:14px;font-weight:500;transition:var(--transition);background:var(--bg-card)}
-.auth-social button:hover{border-color:var(--border-light);background:var(--bg-card-hover)}
-.auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--t4);font-size:13px}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.auth-link{text-align:center;margin-top:16px;font-size:14px;color:var(--t3)}
-.auth-link a{color:var(--red);font-weight:600;cursor:pointer}
-.auth-link a:hover{text-decoration:underline}
-.checkbox-row{display:flex;align-items:flex-start;gap:10px;margin:16px 0}
-.checkbox-row input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);margin-top:2px;flex-shrink:0}
-.checkbox-row label{font-size:13px;color:var(--t3);cursor:pointer}
-.captcha-placeholder{background:var(--bg-input);border:1px solid var(--border);
-border-radius:var(--radius);padding:14px;margin-bottom:16px;text-align:center;
-color:var(--t4);font-size:13px}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
-/* ================ DASHBOARD ================ */
-.dash-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
-.dash-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--red-dark));
-display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;flex-shrink:0}
-.dash-info h2{font-size:22px;font-family:var(--font-body);font-weight:700;line-height:1.3}
-.dash-info p{color:var(--t3);font-size:13px}
-.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
-.dash-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-padding:14px 12px;text-align:center}
-.dash-stat .val{font-size:20px;font-weight:700;color:var(--white)}
-.dash-stat .lbl{font-size:11px;color:var(--t3);margin-top:2px}
-.dash-stat .val.gold{color:var(--gold)}
+.hero-logo {
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  animation: floatUp 0.8s ease-out, pulseGlow 3s ease-in-out infinite;
+  position: relative;
+}
 
-.dash-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg-card);
-border-radius:var(--radius);padding:4px;border:1px solid var(--border)}
-.dash-tabs button{flex:1;padding:10px 12px;border-radius:var(--radius-sm);
-font-size:13px;font-weight:600;color:var(--t3);transition:var(--transition)}
-.dash-tabs button.active{background:var(--red);color:#fff}
+.hero-logo i {
+  font-size: 40px;
+  color: var(--gold);
+}
 
-.appt-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.appt-card .appt-left{flex:1}
-.appt-card .appt-service{font-weight:600;font-size:15px;margin-bottom:2px}
-.appt-card .appt-detail{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:6px}
-.appt-card .appt-detail i{font-size:11px;color:var(--t4)}
-.appt-card .appt-right{text-align:right}
-.appt-card .appt-date{font-weight:700;font-size:14px;color:var(--red)}
-.appt-card .appt-time{font-size:12px;color:var(--t2)}
+.hero-title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  animation: floatUp 0.8s ease-out 0.15s both;
+  line-height: 1.2;
+}
 
-.empty-state{text-align:center;padding:40px 16px;color:var(--t3)}
-.empty-state i{font-size:40px;color:var(--t4);margin-bottom:12px}
-.empty-state p{font-size:14px}
+.hero-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  animation: floatUp 0.8s ease-out 0.3s both;
+}
 
-/* ================ BOOKING ================ */
-.booking-progress{display:flex;align-items:center;gap:0;margin-bottom:28px;padding:0 4px}
-.booking-step{display:flex;align-items:center;flex:1}
-.booking-step .step-circle{width:32px;height:32px;border-radius:50%;background:var(--bg-input);
-border:2px solid var(--border);display:flex;align-items:center;justify-content:center;
-font-size:13px;font-weight:700;color:var(--t4);transition:var(--transition);flex-shrink:0}
-.booking-step .step-circle.active{background:var(--red);border-color:var(--red);color:#fff}
-.booking-step .step-circle.done{background:var(--red);border-color:var(--red);color:#fff}
-.booking-step .step-line{flex:1;height:2px;background:var(--border);margin:0 6px;transition:var(--transition)}
-.booking-step .step-line.active{background:var(--red)}
-.booking-step:last-child .step-line{display:none}
+.hero-desc {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  animation: floatUp 0.8s ease-out 0.45s both;
+}
 
-.search-box{position:relative;margin-bottom:20px}
-.search-box input{width:100%;padding:14px 16px 14px 44px;background:var(--bg-input);
-border:1px solid var(--border);border-radius:var(--radius);color:var(--t1);font-size:16px}
-.search-box input:focus{border-color:var(--red)}
-.search-box i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--t4)}
+.hero-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 30px;
+  animation: floatUp 0.8s ease-out 0.35s both;
+}
 
-.svc-category{margin-bottom:16px}
-.svc-cat-header{display:flex;align-items:center;justify-content:space-between;
-padding:14px 16px;background:var(--bg-card);border:1px solid var(--border);
-border-radius:var(--radius);cursor:pointer;transition:var(--transition);user-select:none}
-.svc-cat-header:hover{border-color:var(--border-light)}
-.svc-cat-header .cat-left{display:flex;align-items:center;gap:10px}
-.svc-cat-header .cat-left i{color:var(--red);font-size:16px;width:24px;text-align:center}
-.svc-cat-header .cat-left span{font-weight:600;font-size:14px}
-.svc-cat-header .cat-count{font-size:12px;color:var(--t3)}
-.svc-cat-header .chevron{color:var(--t4);transition:var(--transition);font-size:14px}
-.svc-cat-header.open .chevron{transform:rotate(180deg)}
+/* ===== BUTTONS ===== */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  border: none;
+  padding: 16px 48px;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-gold);
+  position: relative;
+  overflow: hidden;
+}
 
-.svc-items{overflow:hidden;max-height:0;transition:max-height .35s ease}
-.svc-items.open{max-height:1000px}
-.svc-item{display:flex;align-items:center;gap:12px;padding:14px 16px;
-border-bottom:1px solid var(--border);cursor:pointer;transition:var(--transition)}
-.svc-item:hover{background:var(--bg-card-hover)}
-.svc-item:last-child{border-bottom:none}
-.svc-item .svc-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border-light);
-display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0;font-size:12px;color:transparent}
-.svc-item.selected .svc-check{background:var(--red);border-color:var(--red);color:#fff}
-.svc-item .svc-info{flex:1}
-.svc-item .svc-name{font-weight:600;font-size:14px}
-.svc-item .svc-meta{font-size:12px;color:var(--t3);margin-top:2px}
-.svc-item .svc-price{font-weight:700;font-size:15px;color:var(--white);white-space:nowrap}
-.svc-item .svc-price.free{color:var(--t3);font-weight:500;font-size:13px}
+.btn-gold::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
 
-.pro-card{display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg-card);
-border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;
-margin-bottom:10px;transition:var(--transition)}
-.pro-card.selected{border-color:var(--red);background:rgba(220,38,38,.05)}
-.pro-card .pro-avatar{width:48px;height:48px;border-radius:50%;
-background:linear-gradient(135deg,var(--border-light),var(--t4));
-display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--white)}
-.pro-card .pro-name{font-weight:600;font-size:15px}
-.pro-card .pro-role{font-size:12px;color:var(--t3)}
+.btn-gold:hover::before { left: 100%; }
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(201,169,110,0.4);
+  color: #fff;
+}
 
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.cal-header h3{font-size:18px;font-family:var(--font-body);font-weight:700;text-transform:capitalize}
-.cal-header button{width:36px;height:36px;border-radius:50%;background:var(--bg-card);
-border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-color:var(--t2);transition:var(--transition)}
-.cal-header button:hover{border-color:var(--red);color:var(--red)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-bottom:20px}
-.cal-day-name{font-size:11px;color:var(--t4);font-weight:600;padding:8px 0;text-transform:uppercase}
-.cal-day{padding:10px 0;border-radius:var(--radius-sm);font-size:14px;font-weight:500;
-color:var(--t3);cursor:default;transition:var(--transition)}
-.cal-day.available{color:var(--t1);cursor:pointer}
-.cal-day.available:hover{background:var(--bg-card)}
-.cal-day.selected{background:var(--red);color:#fff}
-.cal-day.today{position:relative}
-.cal-day.today::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-width:4px;height:4px;border-radius:50%;background:var(--red)}
-.cal-day.off{color:var(--t4);opacity:.4}
+.btn-gold:active { transform: translateY(0); }
 
-.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media(min-width:480px){.time-grid{grid-template-columns:repeat(4,1fr)}}
-.time-slot{padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg-card);
-border:1px solid var(--border);text-align:center;font-size:14px;font-weight:600;
-color:var(--t2);cursor:pointer;transition:var(--transition)}
-.time-slot:hover{border-color:var(--red);color:var(--white)}
-.time-slot.selected{background:var(--red);border-color:var(--red);color:#fff}
-.time-slot.unavailable{opacity:.3;pointer-events:none;text-decoration:line-through}
+.btn-outline-gold {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  padding: 12px 32px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-.summary-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
-padding:24px;margin-bottom:20px}
-.summary-card h3{font-size:28px;margin-bottom:16px}
-.summary-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
-.summary-row:last-child{border-bottom:none}
-.summary-row .label{color:var(--t3)}
-.summary-row .value{font-weight:600;color:var(--t1)}
-.summary-total{display:flex;justify-content:space-between;padding:16px 0 0;
-margin-top:8px;border-top:2px solid var(--red);font-size:18px;font-weight:700}
-.summary-total .price{color:var(--red)}
+.btn-outline-gold:hover {
+  background: var(--gold);
+  color: #fff;
+  transform: translateY(-1px);
+}
 
-.booking-footer{display:flex;gap:10px;margin-top:24px}
-.booking-footer .btn{flex:1}
+.btn-back {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-family: 'Lato', sans-serif;
+}
 
-.confirm-animation{text-align:center;padding:40px 0}
-.confirm-animation .check-circle{width:80px;height:80px;border-radius:50%;
-background:rgba(34,197,94,.15);margin:0 auto 20px;display:flex;align-items:center;
-justify-content:center;font-size:36px;color:#4ade80;animation:scaleIn .4s ease .2s both}
-.confirm-animation h2{font-size:36px;margin-bottom:8px}
-.confirm-animation p{color:var(--t3);font-size:14px;margin-bottom:24px}
+.btn-back:hover { color: var(--gold); background: var(--bg-secondary); }
 
-/* ================ SERVICES CATALOG ================ */
-.svc-catalog .svc-cat-header{margin-bottom:0;border-radius:var(--radius) var(--radius) 0 0}
-.svc-catalog .svc-cat-header:not(.open){border-radius:var(--radius)}
-.svc-catalog .svc-items{background:var(--bg-card);border:1px solid var(--border);border-top:none;
-border-radius:0 0 var(--radius) var(--radius)}
+/* ===== CONTENT CONTAINER ===== */
+.content-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 20px 40px;
+}
 
-/* ================ PLANS ================ */
-.plans-grid{display:grid;gap:16px}
-.plan-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
-padding:24px;position:relative;overflow:hidden;transition:var(--transition)}
-.plan-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
-.plan-card.featured{border-color:var(--red)}
-.plan-card.featured::before{content:'MAIS POPULAR';position:absolute;top:16px;right:-32px;
-background:var(--red);color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;
-padding:4px 40px;transform:rotate(45deg)}
-.plan-card .plan-tier{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-margin-bottom:8px}
-.plan-card .plan-tier.bronze{color:#cd7f32}
-.plan-card .plan-tier.silver{color:#c0c0c0}
-.plan-card .plan-tier.gold{color:var(--gold)}
-.plan-card .plan-tier.platinum{color:#e5e4e2}
-.plan-card .plan-tier.vip{color:var(--red)}
-.plan-card .plan-tier.kids{color:#60a5fa}
-.plan-card .plan-tier.basic{color:var(--t2)}
-.plan-card .plan-tier.duo{color:#a78bfa}
-.plan-card .plan-tier.family{color:#fb923c}
-.plan-card .plan-tier.family-plus{color:#f472b6}
-.plan-card .plan-tier.black{color:var(--white)}
-.plan-name{font-size:28px;font-family:var(--font-display);letter-spacing:.04em;margin-bottom:2px}
-.plan-subtitle{color:var(--t3);font-size:13px;margin-bottom:12px}
-.plan-price{font-size:32px;font-weight:700;color:var(--white);margin-bottom:4px}
-.plan-price span{font-size:14px;font-weight:400;color:var(--t3)}
-.plan-validity{font-size:12px;color:var(--t3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
-.plan-validity i{color:var(--red);font-size:11px}
-.plan-includes{list-style:none;margin-bottom:20px}
-.plan-includes li{padding:6px 0;font-size:13px;color:var(--t2);display:flex;align-items:center;gap:8px}
-.plan-includes li i{color:var(--red);font-size:11px;flex-shrink:0}
+.section-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
 
-/* ================ ADMIN ================ */
-.admin-tabs{display:flex;gap:4px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.admin-tabs button{padding:10px 16px;border-radius:var(--radius-sm);font-size:12px;
-font-weight:600;color:var(--t3);white-space:nowrap;transition:var(--transition);background:var(--bg-card);border:1px solid var(--border)}
-.admin-tabs button.active{background:var(--red);color:#fff;border-color:var(--red)}
+.section-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
 
-.admin-table{width:100%;border-collapse:collapse;background:var(--bg-card);border-radius:var(--radius);overflow:hidden}
-.admin-table th{background:var(--bg-input);padding:12px;font-size:12px;font-weight:600;
-color:var(--t3);text-align:left;letter-spacing:.04em;text-transform:uppercase}
-.admin-table td{padding:12px;font-size:13px;border-top:1px solid var(--border)}
-.admin-table .action-btn{padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;
-cursor:pointer;transition:var(--transition);margin-right:4px}
-.admin-table .edit-btn{background:rgba(96,165,250,.1);color:#60a5fa}
-.admin-table .edit-btn:hover{background:rgba(96,165,250,.2)}
-.admin-table .del-btn{background:rgba(248,113,113,.1);color:#f87171}
-.admin-table .del-btn:hover{background:rgba(248,113,113,.2)}
-.admin-table .toggle-btn{padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer}
-.admin-table .toggle-on{background:rgba(74,222,128,.1);color:#4ade80}
-.admin-table .toggle-off{background:rgba(248,113,113,.1);color:#f87171}
+/* ===== MENU CARDS ===== */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
 
-.admin-config{max-width:500px}
-.admin-config .day-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
-.admin-config .day-row label{width:80px;font-size:14px;font-weight:500}
-.admin-config .day-row input[type=checkbox]{accent-color:var(--red)}
-.admin-config .day-row input[type=time]{padding:8px;background:var(--bg-input);border:1px solid var(--border);
-border-radius:var(--radius-sm);color:var(--t1);font-size:14px}
-.table-responsive{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius)}
+.menu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-/* ================ ADMIN AGENDA ================ */
-.agenda-pro-filter{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
-.agenda-pro-filter::-webkit-scrollbar{height:0;display:none}
-.agenda-pro-pill{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;white-space:nowrap;
-border:1px solid var(--border);color:var(--t3);cursor:pointer;transition:var(--transition);background:var(--bg-card)}
-.agenda-pro-pill.active{background:var(--red);color:#fff;border-color:var(--red)}
-.agenda-pro-pill:hover:not(.active){border-color:var(--border-light);color:var(--t1)}
+.menu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
 
-.agenda-day-scroll{display:flex;gap:6px;overflow-x:auto;padding:4px 0 12px;
--webkit-overflow-scrolling:touch;margin-bottom:20px;scroll-snap-type:x proximity}
-.agenda-day-scroll::-webkit-scrollbar{height:0;display:none}
-.agenda-day{display:flex;flex-direction:column;align-items:center;min-width:54px;
-padding:10px 8px 8px;border-radius:var(--radius);cursor:pointer;
-transition:var(--transition);border:1px solid transparent;gap:3px;scroll-snap-align:center}
-.agenda-day:hover{background:var(--bg-card)}
-.agenda-day .day-abbr{font-size:10px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.08em}
-.agenda-day .day-num{font-size:22px;font-weight:700;color:var(--t1);line-height:1.2}
-.agenda-day .day-dots{display:flex;gap:3px;min-height:6px;margin-top:2px}
-.agenda-day .day-dots .dot{width:5px;height:5px;border-radius:50%}
-.agenda-day.today{background:rgba(201,169,110,.08);border-color:var(--gold)}
-.agenda-day.today .day-abbr{color:var(--gold)}
-.agenda-day.today .day-num{color:var(--gold)}
-.agenda-day.selected{background:var(--red);border-color:var(--red)}
-.agenda-day.selected .day-abbr{color:rgba(255,255,255,.7)}
-.agenda-day.selected .day-num{color:#fff}
-.agenda-day.off{opacity:.3;pointer-events:none}
+.menu-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
 
-.agenda-date-label{font-size:15px;font-weight:600;color:var(--t2);margin-bottom:16px;
-display:flex;align-items:center;gap:8px;text-transform:capitalize}
-.agenda-date-label i{color:var(--red);font-size:13px}
+.menu-card:hover::after { transform: scaleX(1); }
 
-.agenda-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
-.agenda-stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-padding:12px;text-align:center}
-.agenda-stat-card .stat-val{font-size:20px;font-weight:700;color:var(--white)}
-.agenda-stat-card .stat-val.revenue{font-size:16px}
-.agenda-stat-card .stat-lbl{font-size:11px;color:var(--t3);margin-top:2px}
+.menu-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(201,169,110,0.1), rgba(201,169,110,0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 22px;
+  color: var(--gold);
+}
 
-.agenda-timeline{position:relative;padding-left:0}
-.agenda-slot{display:flex;gap:0;min-height:60px;position:relative}
-.agenda-slot .slot-time{width:50px;font-size:12px;font-weight:600;color:var(--t4);
-text-align:right;padding-top:3px;flex-shrink:0;padding-right:10px}
-.agenda-slot .slot-rail{width:20px;position:relative;flex-shrink:0;display:flex;justify-content:center}
-.agenda-slot .slot-rail::before{content:'';position:absolute;top:0;bottom:0;width:1px;background:var(--border)}
-.agenda-slot .slot-rail .rail-dot{width:9px;height:9px;border-radius:50%;background:var(--bg-input);
-border:2px solid var(--border);position:relative;z-index:1;margin-top:4px}
-.agenda-slot.has-appt .slot-rail::before{background:var(--red)}
-.agenda-slot.has-appt .slot-rail .rail-dot{background:var(--red);border-color:var(--red);
-box-shadow:0 0 8px var(--red-glow)}
-.agenda-slot .slot-content{flex:1;padding:0 0 8px 10px;min-width:0}
+.menu-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
 
-.agenda-appt{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--red);
-border-radius:var(--radius-sm);padding:12px 14px;transition:var(--transition);margin-bottom:4px}
-.agenda-appt:hover{border-color:var(--border-light);transform:translateX(2px)}
-.agenda-appt .appt-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.agenda-appt .appt-avatar{width:32px;height:32px;border-radius:50%;
-background:linear-gradient(135deg,var(--red),var(--red-dark));
-display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
-.agenda-appt .appt-client{font-weight:700;font-size:14px;color:var(--t1);overflow:hidden;
-text-overflow:ellipsis;white-space:nowrap}
-.agenda-appt .appt-svc{font-size:13px;color:var(--t2);margin-bottom:6px;overflow:hidden;
-text-overflow:ellipsis;white-space:nowrap}
-.agenda-appt .appt-bottom{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--t3);flex-wrap:wrap}
-.agenda-appt .appt-bottom span{display:flex;align-items:center;gap:4px;white-space:nowrap}
-.agenda-appt .appt-bottom i{font-size:10px;color:var(--t4)}
+.menu-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
 
-.agenda-available{padding:6px 0;font-size:12px;color:rgba(74,222,128,.7);font-weight:500;
-display:flex;align-items:center;gap:6px}
-.agenda-available i{font-size:8px}
-.agenda-closed-msg{text-align:center;padding:32px 16px;color:var(--t3)}
-.agenda-closed-msg i{font-size:32px;color:var(--t4);margin-bottom:8px;display:block}
+.menu-card .arrow-icon {
+  position: absolute;
+  top: 24px; right: 20px;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s;
+  font-size: 1rem;
+}
 
-/* ================ SHARE ================ */
-.share-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin:20px 0}
-.share-box .msg-preview{background:var(--bg-input);border-radius:var(--radius);padding:16px;
-font-size:13px;color:var(--t2);line-height:1.8;margin-bottom:16px;white-space:pre-line;max-height:200px;overflow-y:auto}
-.share-actions{display:flex;gap:10px;flex-wrap:wrap}
+.menu-card:hover .arrow-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-/* ================ STAGGER ================ */
-.stagger > *{animation:fadeUp .4s ease both}
-.stagger > *:nth-child(1){animation-delay:.05s}
-.stagger > *:nth-child(2){animation-delay:.1s}
-.stagger > *:nth-child(3){animation-delay:.12s}
-.stagger > *:nth-child(4){animation-delay:.16s}
-.stagger > *:nth-child(5){animation-delay:.2s}
-.stagger > *:nth-child(6){animation-delay:.24s}
-.stagger > *:nth-child(7){animation-delay:.28s}
-.stagger > *:nth-child(8){animation-delay:.32s}
-.stagger > *:nth-child(9){animation-delay:.36s}
-.stagger > *:nth-child(10){animation-delay:.4s}
+/* ===== MENU DETAIL ===== */
+.menu-detail-header {
+  padding: 24px 0 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 28px;
+}
 
-/* ================ UTILS ================ */
-.mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-20{margin-top:20px}.mt-24{margin-top:24px}
-.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-20{margin-bottom:20px}
-.text-center{text-align:center}.text-red{color:var(--red)}.text-t2{color:var(--t2)}.text-t3{color:var(--t3)}
-.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.gap-8{gap:8px}.gap-12{gap:12px}
-.hidden{display:none!important}
+.menu-detail-header h2 {
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  color: var(--gold);
+}
+
+.category-section {
+  margin-bottom: 32px;
+  animation: floatUp 0.5s ease-out both;
+}
+
+.category-section:nth-child(2) { animation-delay: 0.1s; }
+.category-section:nth-child(3) { animation-delay: 0.15s; }
+.category-section:nth-child(4) { animation-delay: 0.2s; }
+.category-section:nth-child(5) { animation-delay: 0.25s; }
+
+.category-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(201,169,110,0.1), rgba(201,169,110,0.03));
+  border-radius: 20px;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+}
+
+.item-list li {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+  border-radius: 8px;
+}
+
+.item-list li:last-child { border-bottom: none; }
+
+.item-list li:hover {
+  background: var(--bg-card-hover);
+  padding-left: 20px;
+}
+
+.item-list li::before {
+  content: '◆';
+  font-size: 6px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.select-menu-btn {
+  margin-top: 30px;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+/* ===== FORM ===== */
+.form-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 40px);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: all 0.3s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+}
+
+.form-group textarea { resize: vertical; min-height: 100px; }
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 40px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 576px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+.form-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-section-title i { font-size: 0.9rem; }
+
+.form-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 28px 0;
+}
+
+/* ===== SUMMARY ===== */
+.summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 40px);
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 16px;
+}
+
+.summary-row:last-child { border-bottom: none; }
+
+.summary-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.summary-value {
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-align: right;
+  word-break: break-word;
+}
+
+/* ===== SUCCESS ===== */
+.success-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  animation: floatUp 0.6s ease-out, pulseGlow 2s ease-in-out infinite;
+}
+
+.success-icon i {
+  font-size: 42px;
+  color: var(--gold);
+}
+
+.success-title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.success-msg {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201,169,110,0.4);
+}
+
+.progress-dot.completed {
+  background: var(--gold-dark);
+}
+
+.progress-line {
+  width: 30px;
+  height: 2px;
+  background: var(--border-color);
+  transition: background 0.3s;
+}
+
+.progress-line.active { background: var(--gold); }
+
+/* ===== SELECTED MENU BADGE ===== */
+.selected-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04));
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 30px;
+  padding: 8px 18px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.selected-badge i { font-size: 0.8rem; }
+
+/* ===== CUSTOM MODAL ===== */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.custom-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  animation: floatUp 0.3s ease-out;
+}
+
+.custom-modal h4 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.custom-modal p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.custom-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .menu-grid { grid-template-columns: 1fr; }
+  .content-wrap { padding: 70px 16px 30px; }
+  .btn-gold { padding: 14px 36px; font-size: 0.9rem; }
+}
+
+/* ===== PHONE INPUT MASK ===== */
+.input-icon-wrap {
+  position: relative;
+}
+.input-icon-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.input-icon-wrap input { padding-left: 40px; }
+
+/* ===== LOADING SPINNER ===== */
+.spinner-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.spinner-ring {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== PDF SECTION ===== */
+.pdf-section {
+  max-width: 500px;
+  width: 100%;
+  margin-top: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 36px);
+  box-shadow: var(--shadow-sm);
+  animation: floatUp 0.6s ease-out 0.3s both;
+}
+
+.pdf-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.pdf-section-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.btn-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #C0392B, #96281B);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(192,57,43,0.25);
+}
+
+.btn-pdf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(192,57,43,0.35);
+}
+
+.btn-pdf:active { transform: translateY(0); }
+
+.btn-pdf i { font-size: 1.1rem; }
+
+.pdf-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 14px;
+  opacity: 0.7;
+}
+
+.success-actions-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* ===== GALLERY ICON BTN ===== */
+.gallery-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-gallery {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, rgba(201,169,110,0.14), rgba(201,169,110,0.05));
+  border: 1.5px solid rgba(201,169,110,0.35);
+  color: var(--gold);
+  padding: 7px 16px;
+  border-radius: 30px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-gallery i { font-size: 0.85rem; }
+
+.btn-gallery:hover {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-gold);
+}
+
+/* ===== GALLERY LIGHTBOX ===== */
+.gallery-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.25s ease;
+}
+
+.gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+
+.gallery-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.gallery-counter {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+}
+
+.gallery-close-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.gallery-close-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Main viewer area */
+.gallery-viewer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 10px;
+}
+
+.gallery-viewer img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: opacity 0.25s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+.gallery-nav-btn:hover {
+  background: rgba(201,169,110,0.5);
+  border-color: var(--gold);
+}
+
+.gallery-nav-btn.prev { left: 10px; }
+.gallery-nav-btn.next { right: 10px; }
+
+/* Thumbnail strip */
+.gallery-thumbs-wrap {
+  flex-shrink: 0;
+  padding: 12px 10px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gallery-thumbs-wrap::-webkit-scrollbar { display: none; }
+
+.gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-width: min-content;
+}
+
+.gallery-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-thumb.active {
+  border-color: var(--gold);
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(201,169,110,0.4);
+}
+
+.gallery-thumb:hover { opacity: 0.85; }
+
+@media (max-width: 480px) {
+  .gallery-nav-btn { width: 38px; height: 38px; font-size: 0.85rem; }
+  .gallery-thumb { width: 46px; height: 46px; }
+  .gallery-header-title { font-size: 0.92rem; }
+  .btn-gallery { padding: 6px 12px; font-size: 0.72rem; }
+}
 </style>
 </head>
 <body>
-<div id="app"></div>
-<div id="toast-container" class="toast-container"></div>
-<div id="modal-container"></div>
+
+<div class="bg-pattern"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar" style="display:none;">
+  <span class="top-bar-brand" onclick="goToPage('landing')">PAMPHILO</span>
+  <span class="step-indicator" id="stepIndicator"></span>
+</div>
+
+<!-- ==================== PAGE 1: LANDING ==================== -->
+<div class="page-section active" id="page-landing">
+  <div class="hero-section">
+    <div class="hero-logo">
+      <i class="fas fa-champagne-glasses"></i>
+    </div>
+    <h1 class="hero-title">Pamphilo</h1>
+    <p class="hero-subtitle">Festas &amp; Eventos</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Monte seu evento escolhendo o cardápio desejado.
+      Selecione as opções, informe os detalhes e envie sua solicitação.
+      Nossa equipe retornará com o orçamento personalizado.
+    </p>
+    <button class="btn-gold" onclick="goToPage('menus')" style="animation: floatUp 0.8s ease-out 0.6s both;">
+      <i class="fas fa-utensils me-2"></i>COMEÇAR SOLICITAÇÃO
+    </button>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: MENU SELECTION ==================== -->
+<div class="page-section" id="page-menus">
+  <div class="content-wrap">
+    <button class="btn-back" onclick="goToPage('landing')">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+
+    <div class="progress-bar-wrap mt-3">
+      <div class="progress-dot active"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+    </div>
+
+    <div class="gallery-title-row">
+      <h2 class="section-title">Escolha o Cardápio</h2>
+      <button class="btn-gallery" onclick="openGallery()">
+        <i class="fas fa-camera"></i> Galeria
+      </button>
+    </div>
+    <p class="section-subtitle">Selecione o cardápio ideal para o seu evento</p>
+
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: MENU DETAIL ==================== -->
+<div class="page-section" id="page-detail">
+  <div class="content-wrap">
+    <button class="btn-back" onclick="goToPage('menus')">
+      <i class="fas fa-arrow-left"></i> Voltar aos cardápios
+    </button>
+
+    <div class="progress-bar-wrap mt-3">
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+    </div>
+
+    <div class="menu-detail-header">
+      <h2 id="detailTitle"></h2>
+      <p class="section-subtitle" id="detailSubtitle"></p>
+    </div>
+    <div id="detailContent"></div>
+
+    <div class="select-menu-btn">
+      <button class="btn-gold" onclick="selectCurrentMenu()">
+        <i class="fas fa-check me-2"></i>SELECIONAR ESTE CARDÁPIO
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: EVENT FORM ==================== -->
+<div class="page-section" id="page-form">
+  <div class="content-wrap">
+    <button class="btn-back" onclick="goToPage('detail')">
+      <i class="fas fa-arrow-left"></i> Voltar ao cardápio
+    </button>
+
+    <div class="progress-bar-wrap mt-3">
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-line"></div>
+      <div class="progress-dot"></div>
+    </div>
+
+    <h2 class="section-title">Detalhes do Evento</h2>
+    <p class="section-subtitle">Preencha as informações para sua solicitação</p>
+
+    <div class="selected-badge" id="selectedMenuBadge">
+      <i class="fas fa-utensils"></i>
+      <span id="selectedMenuName"></span>
+    </div>
+
+    <div class="form-section">
+      <!-- Client Info -->
+      <div class="form-section-title">
+        <i class="fas fa-user"></i> Informações Pessoais
+      </div>
+
+      <div class="form-group">
+        <label for="clientName">Nome Completo</label>
+        <input type="text" id="clientName" placeholder="Seu nome completo">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="clientPhone">Telefone</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="clientPhone" placeholder="(00) 00000-0000" maxlength="15">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="clientEmail">Email</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="clientEmail" placeholder="seu@email.com">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- Event Info -->
+      <div class="form-section-title">
+        <i class="fas fa-calendar-star"></i> Informações do Evento
+      </div>
+
+      <div class="form-group">
+        <label for="eventType">Tipo de Evento</label>
+        <select id="eventType">
+          <option value="">Selecione o tipo de evento</option>
+          <option value="Casamento">Casamento</option>
+          <option value="Aniversário">Aniversário</option>
+          <option value="Confraternização">Confraternização</option>
+          <option value="Evento Empresarial">Evento Empresarial</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="eventDate">Data do Evento</label>
+          <input type="date" id="eventDate">
+        </div>
+        <div class="form-group">
+          <label for="eventTime">Horário do Evento</label>
+          <input type="time" id="eventTime">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="guestCount">Quantidade de Pessoas</label>
+        <input type="number" id="guestCount" placeholder="Número de convidados" min="1">
+      </div>
+
+      <div class="form-group">
+        <label for="observations">Observações Adicionais</label>
+        <textarea id="observations" placeholder="Informações extras, restrições alimentares, detalhes do evento..."></textarea>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn-gold" onclick="goToSummary()">
+        <i class="fas fa-eye me-2"></i>REVISAR SOLICITAÇÃO
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 5: SUMMARY ==================== -->
+<div class="page-section" id="page-summary">
+  <div class="content-wrap">
+    <button class="btn-back" onclick="goToPage('form')">
+      <i class="fas fa-arrow-left"></i> Voltar ao formulário
+    </button>
+
+    <div class="progress-bar-wrap mt-3">
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot completed"></div>
+      <div class="progress-line active"></div>
+      <div class="progress-dot active"></div>
+    </div>
+
+    <h2 class="section-title">Resumo da Solicitação</h2>
+    <p class="section-subtitle">Confira os dados antes de enviar</p>
+
+    <div class="summary-card" id="summaryContent"></div>
+
+    <div class="text-center mt-4 d-flex flex-column flex-sm-row justify-content-center gap-3">
+      <button class="btn-outline-gold" onclick="goToPage('form')">
+        <i class="fas fa-pen me-1"></i> EDITAR
+      </button>
+      <button class="btn-gold" onclick="submitRequest()">
+        <i class="fas fa-paper-plane me-2"></i>ENVIAR SOLICITAÇÃO
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 6: SUCCESS ==================== -->
+<div class="page-section" id="page-success">
+  <div class="success-section">
+    <div class="success-icon">
+      <i class="fas fa-check"></i>
+    </div>
+    <h2 class="success-title">Simulação Realizada</h2>
+    <p class="success-msg">
+      Sua simulação foi realizada com sucesso.<br>
+      Envie o PDF para equipe da <strong>Pamphilo Festas e Evento</strong> para receber o orçamento.
+    </p>
+
+    <div class="success-actions-wrap">
+      <!-- PDF Download Section -->
+      <div class="pdf-section">
+        <div class="pdf-section-title">Comprovante da Solicitação</div>
+        <p class="pdf-section-desc">
+          Baixe o PDF com todas as informações do seu evento para seus registros ou envie para a equipe do buffet.
+        </p>
+        <button class="btn-pdf" onclick="generatePDF()">
+          <i class="fas fa-file-pdf"></i> GERAR PDF DA SOLICITAÇÃO
+        </button>
+        <p class="pdf-note"><i class="fas fa-info-circle me-1"></i>O PDF será baixado automaticamente</p>
+      </div>
+
+      <button class="btn-outline-gold" onclick="resetAll()">
+        <i class="fas fa-plus me-1"></i> NOVA SOLICITAÇÃO
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ============================================================
-   DATA
-   ============================================================ */
-const SERVICES = [
-  { category:'Química', icon:'fa-flask', items:[
-    {id:1,name:'Platinado',price:140,duration:180,desc:'Platinado completo',active:true},
-    {id:2,name:'Alisamento / Alisamento Americano',price:40,duration:30,desc:'Alisamento profissional',active:true}
-  ]},
-  { category:'Combo', icon:'fa-layer-group', items:[
-    {id:3,name:'Combo Cabelo + Barba + Sobrancelha',price:70,duration:40,desc:'Pacote completo',active:true},
-    {id:4,name:'Combo Cabelo + Barba Premium',price:60,duration:40,desc:'Combo premium',active:true},
-    {id:5,name:'Degradê + Sobrancelha',price:45,duration:30,desc:'Degradê com sobrancelha',active:true}
-  ]},
-  { category:'Barba', icon:'fa-face-grin-beam', items:[
-    {id:6,name:'Barba',price:30,duration:30,desc:'Barba tradicional',active:true},
-    {id:7,name:'Barba (Só máquina)',price:15,duration:10,desc:'Barba rápida na máquina',active:true},
-    {id:8,name:'Barba Premium / Barbaterapia',price:35,duration:25,desc:'Com toalha quente e produtos',active:true}
-  ]},
-  { category:'Cabelo', icon:'fa-scissors', items:[
-    {id:9,name:'Corte Adulto',price:30,duration:30,desc:'A partir de R$ 30,00',priceLabel:'a partir de',active:true},
-    {id:10,name:'Corte Degradê',price:35,duration:25,desc:'Degradê profissional',active:true},
-    {id:11,name:'Corte Kids',price:35,duration:30,desc:'Corte infantil',active:true},
-    {id:12,name:'Corte Social',price:30,duration:25,desc:'Corte social clássico',active:true},
-    {id:13,name:'Pezinho',price:0,duration:10,desc:'Acabamento',priceLabel:'Consultar',active:true}
-  ]},
-  { category:'Depilação', icon:'fa-wand-magic-sparkles', items:[
-    {id:14,name:'Depilação Nasal + Orelha',price:50,duration:40,desc:'Depilação com cera',active:true}
-  ]},
-  { category:'Estética', icon:'fa-spa', items:[
-    {id:15,name:'Limpeza de Pele',price:50,duration:45,desc:'Limpeza profissional',active:true},
-    {id:16,name:'Sobrancelha',price:10,duration:10,desc:'Design de sobrancelha',active:true}
-  ]},
-  { category:'Tintura', icon:'fa-palette', items:[
-    {id:17,name:'Luzes',price:130,duration:180,desc:'Luzes completas',active:true}
-  ]}
-];
-
-const PLANS = [
-  {id:1,name:'Bronze',subtitle:'Essencial',price:89.90,tier:'bronze',validity:'Segunda à Quinta',active:true,
-   includes:['3 Corte Adulto','3 Sobrancelha']},
-  {id:2,name:'Silver',subtitle:'',price:119.00,tier:'silver',validity:'Segunda à Quinta',active:true,
-   includes:['4 Barba','2 Sobrancelha','2 Cabelo','Pezinho ilimitado']},
-  {id:3,name:'Gold',subtitle:'Premium',price:139.90,tier:'gold',validity:'Segunda à Sábado',active:true,featured:true,
-   includes:['4 Cortes','4 Barbas','Sobrancelha ilimitado','Pezinho ilimitado','1 Limpeza de pele','1 Barba Premium / Barbaterapia']},
-  {id:4,name:'Platinum',subtitle:'VIP',price:169.90,tier:'platinum',validity:'Segunda à Sábado',active:true,
-   includes:['Cortes ilimitados','Barbas ilimitadas','Sobrancelha ilimitada','2 Barbas Premium / Barbaterapia','10% desconto em químicas','Prioridade no atendimento']},
-  {id:5,name:'Kids',subtitle:'Infantil',price:59.90,tier:'kids',validity:'Segunda à Quinta',active:true,
-   includes:['2 Corte Kids','4 Pezinho']},
-  {id:6,name:'Basic',subtitle:'',price:109.99,tier:'basic',validity:'Segunda à Quinta',active:true,
-   includes:['4 Cortes de Cabelo']},
-  {id:7,name:'Duo',subtitle:'',price:129.90,tier:'duo',validity:'Segunda à Sexta',desc:'Para dois membros da família',active:true,
-   includes:['4 Cortes','2 Barbas','4 Sobrancelha','Pezinho ilimitado']},
-  {id:8,name:'Pai & Filho',subtitle:'',price:119.90,tier:'family',validity:'Segunda à Sexta',desc:'1 adulto e 1 criança',active:true,
-   includes:['2 Cortes Adulto','2 Corte Kids','2 Barbas','Pezinho ilimitado']},
-  {id:9,name:'Família 1',subtitle:'Básico',price:159.90,tier:'family',validity:'Segunda à Quinta',active:true,
-   includes:['4 Cortes Adultos','2 Barbas','2 Corte Kids','4 Sobrancelha','Pezinho ilimitado']},
-  {id:10,name:'Família 2',subtitle:'Completo',price:189.90,tier:'family-plus',desc:'Plano para 4 pessoas',validity:'Segunda à Sexta',active:true,
-   includes:['6 Cortes','4 Barbas','1 Barba Premium / Barbaterapia','Sobrancelha ilimitada','Pezinho ilimitado']},
-  {id:11,name:'Família VIP',subtitle:'',price:239.90,tier:'vip',desc:'Plano para 5 pessoas',validity:'Segunda à Sábado',active:true,
-   includes:['Cortes ilimitados','Barbas ilimitadas','Sobrancelha ilimitada','Pezinho ilimitado','2 Barbas Premium / Barbaterapia','10% desconto em químicas','Corte Kids ilimitado']},
-  {id:12,name:'Pai & Filho Black',subtitle:'',price:209.90,tier:'black',validity:'A definir',active:true,
-   includes:['Detalhes em breve']}
-];
-
-const PROFESSIONALS = [
-  {id:1,name:'Luan',role:'Proprietário & Barbeiro',avatar:'fa-crown'},
-  {id:2,name:'Rafael',role:'Barbeiro Senior',avatar:'fa-star'},
-  {id:3,name:'Gabriel',role:'Barbeiro',avatar:'fa-scissors'}
-];
-
-const SCHEDULE = {
-  0:{open:false,label:'Domingo'},
-  1:{open:true,start:'09:00',end:'20:00',label:'Segunda'},
-  2:{open:true,start:'09:00',end:'20:00',label:'Terça'},
-  3:{open:true,start:'09:00',end:'20:00',label:'Quarta'},
-  4:{open:true,start:'09:00',end:'20:00',label:'Quinta'},
-  5:{open:true,start:'09:00',end:'20:00',label:'Sexta'},
-  6:{open:true,start:'09:00',end:'18:00',label:'Sábado'}
-};
-
-const DEMO_USER = {id:'#0001',name:'João Silva',email:'demo@luanbarber.com',phone:'(16) 99787-2217',points:150,credits:0};
-
-const SHARE_MSG = `Luan Barber agradece seu contato. Como podemos ajudar?\n\nOlá, tudo bem?\n\nSe deseja agendar algum de nossos serviços, use nosso novo assistente pessoal abaixo. É rápido e fácil:\n[LINK DO SISTEMA]\n\nAguardo você aqui no Luan Barber 👊👊`;
-
-/* ============================================================
-   STATE
-   ============================================================ */
-const state = {
-  page:'home',
-  isLoggedIn:false,
-  isAdmin:false,
-  user:null,
-  users:[{...DEMO_USER,password:'demo123'}],
-  appointments:[
-    // Today 2026-03-23 (Mon)
-    {id:1,client:'Carlos Mendes',services:['Corte Degradê'],professional:'Luan',date:'2026-03-23',time:'09:00',status:'upcoming',total:35,duration:25},
-    {id:2,client:'Pedro Lima',services:['Barba'],professional:'Rafael',date:'2026-03-23',time:'09:30',status:'upcoming',total:30,duration:30},
-    {id:3,client:'Lucas Santos',services:['Combo Cabelo + Barba + Sobrancelha'],professional:'Luan',date:'2026-03-23',time:'10:30',status:'upcoming',total:70,duration:40},
-    {id:4,client:'André Costa',services:['Corte Adulto'],professional:'Gabriel',date:'2026-03-23',time:'11:00',status:'upcoming',total:30,duration:30},
-    {id:5,client:'Felipe Rocha',services:['Barba Premium / Barbaterapia'],professional:'Luan',date:'2026-03-23',time:'14:00',status:'upcoming',total:35,duration:25},
-    {id:6,client:'Marcos Oliveira',services:['Corte Social','Sobrancelha'],professional:'Rafael',date:'2026-03-23',time:'15:00',status:'upcoming',total:40,duration:35},
-    // Tue 2026-03-24
-    {id:7,client:'João Silva',services:['Corte Degradê'],professional:'Luan',date:'2026-03-24',time:'09:00',status:'upcoming',total:35,duration:25},
-    {id:8,client:'Ricardo Nunes',services:['Platinado'],professional:'Gabriel',date:'2026-03-24',time:'10:00',status:'upcoming',total:140,duration:180},
-    {id:9,client:'Diego Ferreira',services:['Barba','Sobrancelha'],professional:'Rafael',date:'2026-03-24',time:'11:00',status:'upcoming',total:40,duration:40},
-    {id:10,client:'Thiago Souza',services:['Combo Cabelo + Barba Premium'],professional:'Luan',date:'2026-03-24',time:'14:30',status:'upcoming',total:60,duration:40},
-    // Wed 2026-03-25
-    {id:11,client:'Bruno Alves',services:['Limpeza de Pele'],professional:'Rafael',date:'2026-03-25',time:'09:30',status:'upcoming',total:50,duration:45},
-    {id:12,client:'Gustavo Reis',services:['Barba'],professional:'Gabriel',date:'2026-03-25',time:'10:00',status:'upcoming',total:30,duration:30},
-    {id:13,client:'João Silva',services:['Corte Degradê'],professional:'Luan',date:'2026-03-25',time:'14:00',status:'upcoming',total:35,duration:25},
-    // Thu 2026-03-26
-    {id:14,client:'Henrique Moura',services:['Corte Adulto','Barba'],professional:'Luan',date:'2026-03-26',time:'10:00',status:'upcoming',total:60,duration:60},
-    {id:15,client:'Rodrigo Dias',services:['Luzes'],professional:'Gabriel',date:'2026-03-26',time:'13:00',status:'upcoming',total:130,duration:180},
-    {id:16,client:'Matheus Braga',services:['Sobrancelha'],professional:'Rafael',date:'2026-03-26',time:'09:00',status:'upcoming',total:10,duration:10},
-    // Fri 2026-03-27
-    {id:17,client:'Caio Ribeiro',services:['Combo Cabelo + Barba + Sobrancelha'],professional:'Luan',date:'2026-03-27',time:'10:00',status:'upcoming',total:70,duration:40},
-    {id:18,client:'Vinicius Ramos',services:['Degradê + Sobrancelha'],professional:'Gabriel',date:'2026-03-27',time:'11:00',status:'upcoming',total:45,duration:30},
-    // Sat 2026-03-28
-    {id:19,client:'João Silva',services:['Combo Cabelo + Barba + Sobrancelha'],professional:'Luan',date:'2026-03-28',time:'10:00',status:'upcoming',total:70,duration:40},
-    {id:20,client:'Eduardo Pinto',services:['Barba Premium / Barbaterapia'],professional:'Rafael',date:'2026-03-28',time:'11:00',status:'upcoming',total:35,duration:25},
-    // Completed (history)
-    {id:21,client:'João Silva',services:['Barba Premium / Barbaterapia'],professional:'Rafael',date:'2026-03-15',time:'11:00',status:'completed',total:35,duration:25},
-    {id:22,client:'João Silva',services:['Corte Adulto','Sobrancelha'],professional:'Luan',date:'2026-03-08',time:'16:00',status:'completed',total:40,duration:40},
-    {id:23,client:'João Silva',services:['Platinado'],professional:'Gabriel',date:'2026-02-20',time:'09:00',status:'completed',total:140,duration:180}
-  ],
-  nextApptId:24,
-  booking:{step:0,services:[],professional:null,date:null,time:null},
-  dashTab:'upcoming',
-  adminTab:'services',
-  calMonth:new Date().getMonth(),
-  calYear:new Date().getFullYear(),
-  openCategories:{},
-  searchQuery:'',
-  bookingConfirmed:false,
-  agendaDate:null,
-  agendaPro:'all'
-};
-
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-function fmt(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
-function fmtDur(m){if(m>=60){const h=Math.floor(m/60);const r=m%60;return r?`${h}h${r}min`:`${h}h`;}return `${m}min`;}
-function fmtDate(d){const p=d.split('-');return `${p[2]}/${p[1]}/${p[0]}`;}
-function dayName(d){return ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][new Date(d+'T12:00:00').getDay()];}
-function fullDayName(i){return ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'][i];}
-function monthName(m){return ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'][m];}
-function getAllServices(){return SERVICES.flatMap(c=>c.items);}
-function getServiceById(id){return getAllServices().find(s=>s.id===id);}
-
-function showToast(msg,type='success'){
-  const c=document.getElementById('toast-container');
-  const icons={success:'fa-check-circle',error:'fa-exclamation-circle',info:'fa-info-circle'};
-  const t=document.createElement('div');
-  t.className=`toast ${type}`;
-  t.innerHTML=`<i class="fas ${icons[type]||icons.info}"></i><span>${msg}</span>`;
-  c.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(40px)';t.style.transition='.3s';
-    setTimeout(()=>t.remove(),300);},3000);
+// ==================== DARK MODE ====================
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
 }
-
-function showModal(title,body,actions){
-  const mc=document.getElementById('modal-container');
-  mc.innerHTML=`<div class="modal-overlay" onclick="if(event.target===this)closeModal()">
-    <div class="modal-box"><h3>${title}</h3><p>${body}</p>
-    <div class="modal-actions">${actions}</div></div></div>`;
-}
-function closeModal(){document.getElementById('modal-container').innerHTML='';}
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-function navigate(page){
-  state.page=page;
-  if(page==='booking'){state.booking={step:0,services:[],professional:null,date:null,time:null};state.bookingConfirmed=false;state.searchQuery='';}
-  if(page==='services'){state.searchQuery='';state.openCategories={};}
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ============================================================
-   AUTH
-   ============================================================ */
-function doLogin(email,password){
-  const u=state.users.find(u=>u.email===email&&u.password===password);
-  if(u){state.isLoggedIn=true;state.user=u;state.isAdmin=email==='admin@luanbarber.com';navigate('dashboard');showToast('Bem-vindo de volta!');return true;}
-  showToast('E-mail ou senha incorretos','error');return false;
-}
-function doRegister(data){
-  if(state.users.find(u=>u.email===data.email)){showToast('E-mail já cadastrado','error');return false;}
-  const newUser={id:`#${String(state.users.length+1).padStart(4,'0')}`,name:data.name,email:data.email,
-    phone:data.phone,password:data.password,points:0,credits:0};
-  state.users.push(newUser);state.isLoggedIn=true;state.user=newUser;state.isAdmin=false;
-  navigate('dashboard');showToast('Cadastro realizado com sucesso!');return true;
-}
-function doLogout(){state.isLoggedIn=false;state.user=null;state.isAdmin=false;navigate('home');showToast('Sessão encerrada','info');}
-function demoLogin(){
-  state.isLoggedIn=true;state.user=DEMO_USER;state.isAdmin=false;navigate('dashboard');showToast('Modo demonstração ativado!');
-}
-function adminLogin(){
-  if(!state.users.find(u=>u.email==='admin@luanbarber.com')){
-    state.users.push({id:'#ADMIN',name:'Admin',email:'admin@luanbarber.com',phone:'',password:'admin123',points:0,credits:0});
-  }
-  state.isLoggedIn=true;state.user=state.users.find(u=>u.email==='admin@luanbarber.com');state.isAdmin=true;
-  navigate('admin');showToast('Painel administrativo ativado!');
-}
-
-/* ============================================================
-   BOOKING LOGIC
-   ============================================================ */
-function toggleBookingService(id){
-  const idx=state.booking.services.indexOf(id);
-  if(idx>-1)state.booking.services.splice(idx,1);else state.booking.services.push(id);
-  render();
-}
-function selectProfessional(id){state.booking.professional=id;render();}
-function selectDate(d){state.booking.date=d;state.booking.time=null;render();}
-function selectTime(t){state.booking.time=t;render();}
-function bookingNext(){
-  const s=state.booking.step;
-  if(s===0&&state.booking.services.length===0){showToast('Selecione ao menos um serviço','error');return;}
-  if(s===1&&!state.booking.professional){showToast('Selecione um profissional','error');return;}
-  if(s===2&&!state.booking.date){showToast('Selecione uma data','error');return;}
-  if(s===3&&!state.booking.time){showToast('Selecione um horário','error');return;}
-  if(s===4){confirmBooking();return;}
-  state.booking.step=s+1;render();window.scrollTo({top:0,behavior:'smooth'});
-}
-function bookingBack(){if(state.booking.step>0){state.booking.step--;render();window.scrollTo({top:0,behavior:'smooth'});}}
-
-function confirmBooking(){
-  const b=state.booking;
-  const svcs=b.services.map(id=>getServiceById(id));
-  const pro=PROFESSIONALS.find(p=>p.id===b.professional);
-  const total=svcs.reduce((s,v)=>s+v.price,0);
-  const dur=svcs.reduce((s,v)=>s+v.duration,0);
-  state.appointments.unshift({
-    id:state.nextApptId++,client:state.user?state.user.name:'Cliente',services:svcs.map(s=>s.name),professional:pro.name,
-    date:b.date,time:b.time,status:'upcoming',total,duration:dur
-  });
-  state.bookingConfirmed=true;render();
-}
-
-function getAvailableTimes(dateStr){
-  const d=new Date(dateStr+'T12:00:00');
-  const dow=d.getDay();
-  const sch=SCHEDULE[dow];
-  if(!sch||!sch.open)return[];
-  const totalDur=state.booking.services.reduce((s,id)=>{const sv=getServiceById(id);return s+(sv?sv.duration:0);},0)||30;
-  const [sh,sm]=sch.start.split(':').map(Number);
-  const [eh,em]=sch.end.split(':').map(Number);
-  const startMin=sh*60+sm;const endMin=eh*60+em;
-  const times=[];
-  const booked=state.appointments.filter(a=>a.date===dateStr&&a.status==='upcoming').map(a=>a.time);
-  for(let m=startMin;m+totalDur<=endMin;m+=30){
-    const hh=String(Math.floor(m/60)).padStart(2,'0');
-    const mm=String(m%60).padStart(2,'0');
-    const t=`${hh}:${mm}`;
-    times.push({time:t,available:!booked.includes(t)});
-  }
-  return times;
-}
-
-/* ============================================================
-   RENDER
-   ============================================================ */
-function render(){
-  const app=document.getElementById('app');
-  app.innerHTML=`${renderNav()}<div class="main"><div class="page">${renderPage()}</div></div>${renderBottomNav()}${renderWaFloat()}`;
-  attachEvents();
-}
-
-function renderNav(){
-  const links=state.isLoggedIn
-    ?`<button onclick="navigate('dashboard')" class="${state.page==='dashboard'?'active':''}">Meu Painel</button>
-       <button onclick="navigate('booking')" class="${state.page==='booking'?'active':''}">Agendar</button>
-       ${state.isAdmin?`<button onclick="navigate('admin')" class="${state.page==='admin'?'active':''}">Admin</button>`:''}
-       <button onclick="doLogout()" class="">Sair</button>`
-    :`<button onclick="navigate('services')" class="${state.page==='services'?'active':''}">Serviços</button>
-       <button onclick="navigate('plans')" class="${state.page==='plans'?'active':''}">Planos</button>
-       <button onclick="navigate('login')" class="${state.page==='login'?'active':''}">Entrar</button>`;
-  return `<nav class="topnav">
-    <div class="brand" onclick="navigate('home')" style="cursor:pointer">
-      <div class="brand-icon"><i class="fas fa-scissors"></i></div>
-      <div class="brand-text">LUAN <span>BARBER</span></div>
-    </div>
-    <div class="topnav-links">${links}</div>
-  </nav>`;
-}
-
-function renderBottomNav(){
-  const p=state.page;
-  if(state.isLoggedIn){
-    return `<div class="bottomnav">
-      <button onclick="navigate('home')" class="${p==='home'?'active':''}"><i class="fas fa-home"></i><span>Início</span></button>
-      <button onclick="navigate('plans')" class="${p==='plans'?'active':''}"><i class="fas fa-crown"></i><span>Planos</span></button>
-      <button onclick="navigate('booking')" class="book-btn"><i class="fas fa-plus"></i></button>
-      <button onclick="navigate('services')" class="${p==='services'?'active':''}"><i class="fas fa-cut"></i><span>Serviços</span></button>
-      <button onclick="navigate('dashboard')" class="${p==='dashboard'?'active':''}"><i class="fas fa-user"></i><span>Perfil</span></button>
-    </div>`;
-  }
-  return `<div class="bottomnav">
-    <button onclick="navigate('home')" class="${p==='home'?'active':''}"><i class="fas fa-home"></i><span>Início</span></button>
-    <button onclick="navigate('services')" class="${p==='services'?'active':''}"><i class="fas fa-cut"></i><span>Serviços</span></button>
-    <button onclick="navigate('plans')" class="${p==='plans'?'active':''}"><i class="fas fa-crown"></i><span>Planos</span></button>
-    <button onclick="navigate('login')" class="${p==='login'?'active':''}"><i class="fas fa-sign-in-alt"></i><span>Entrar</span></button>
-  </div>`;
-}
-
-function renderWaFloat(){
-  return `<a href="https://wa.me/5516997872217?text=Olá! Gostaria de saber mais sobre a Luan Barber." target="_blank" rel="noopener" class="wa-float" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
-}
-
-function renderPage(){
-  switch(state.page){
-    case'home':return renderHome();
-    case'login':return renderLogin();
-    case'register':return renderRegister();
-    case'dashboard':return renderDashboard();
-    case'booking':return state.bookingConfirmed?renderBookingConfirmed():renderBooking();
-    case'services':return renderServices();
-    case'plans':return renderPlans();
-    case'admin':return renderAdmin();
-    default:return renderHome();
-  }
-}
-
-/* ============================================================
-   HOME PAGE
-   ============================================================ */
-function renderHome(){
-  return `
-  <div class="hero">
-    <div class="hero-logo"><i class="fas fa-scissors"></i></div>
-    <h1>LUAN <span>BARBER</span></h1>
-    <p class="hero-sub">Barbearia Premium &bull; Estilo &amp; Atitude</p>
-    <div class="hero-rating">
-      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-      <span class="score">4.9</span>
-      <span class="count">(127 avaliações)</span>
-    </div>
-    <div class="hero-actions">
-      <button class="btn btn-red" onclick="${state.isLoggedIn?'navigate(\'booking\')':'navigate(\'login\')'}"><i class="fas fa-calendar-check"></i> Agendar Agora</button>
-      <a href="https://wa.me/5516997872217" target="_blank" rel="noopener" class="btn btn-outline"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    </div>
-  </div>
-
-  <div style="margin-top:32px">
-    <h2 class="section-title">CATEGORIAS</h2>
-    <p class="section-sub">Nossos serviços de excelência</p>
-    <div class="home-cats stagger">
-      <div class="home-cat" onclick="navigate('services')"><i class="fas fa-scissors"></i><span>Corte</span></div>
-      <div class="home-cat" onclick="navigate('services')"><i class="fas fa-face-grin-beam"></i><span>Barba</span></div>
-      <div class="home-cat" onclick="navigate('services')"><i class="fas fa-flask"></i><span>Platinado</span></div>
-      <div class="home-cat" onclick="navigate('services')"><i class="fas fa-spa"></i><span>Estética</span></div>
-      <div class="home-cat" onclick="navigate('plans')"><i class="fas fa-crown"></i><span>Assinaturas</span></div>
-    </div>
-  </div>
-
-  <div class="home-about">
-    <h2 class="section-title">SOBRE NÓS</h2>
-    <p class="section-sub">Tradição e modernidade</p>
-    <p>A <strong>Luan Barber</strong> é referência em cuidados masculinos, oferecendo serviços de alta qualidade em um ambiente sofisticado e acolhedor. Nossa equipe de profissionais especializados está pronta para proporcionar a melhor experiência em cortes, barbas, tratamentos e muito mais.</p>
-  </div>
-
-  <h2 class="section-title">INFORMAÇÕES</h2>
-  <p class="section-sub">Tudo que você precisa saber</p>
-  <div class="info-grid stagger">
-    <div class="info-card"><i class="fas fa-map-marker-alt"></i><h4>Localização</h4><p>Rua da Barbearia, 123<br>Centro, São Paulo - SP</p></div>
-    <div class="info-card"><i class="fas fa-phone"></i><h4>Contato</h4><p>(16) 99787-2217<br>contato@luanbarber.com</p></div>
-    <div class="info-card"><i class="fas fa-star"></i><h4>Avaliação</h4><p>4.9 / 5.0<br>127 avaliações</p></div>
-    <div class="info-card"><i class="fas fa-award"></i><h4>Desde</h4><p>2020<br>+5 anos de experiência</p></div>
-  </div>
-
-  <div style="margin-top:32px">
-    <h2 class="section-title">HORÁRIOS</h2>
-    <p class="section-sub">Funcionamento semanal</p>
-    <div class="card">
-      <table class="hours-table">
-        ${Object.entries(SCHEDULE).map(([k,v])=>`<tr><td>${v.label}</td><td${v.open?'':' class="closed"'}>${v.open?`${v.start} — ${v.end}`:'Fechado'}</td></tr>`).join('')}
-      </table>
-    </div>
-  </div>
-
-  <div style="margin-top:32px">
-    <h2 class="section-title">REDES SOCIAIS</h2>
-    <p class="section-sub">Siga a Luan Barber</p>
-    <div class="social-links">
-      <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://wa.me/5516997872217" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://tiktok.com" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
-    </div>
-  </div>
-
-  ${renderShareBox()}
-
-  <div style="text-align:center;margin-top:40px;padding:20px 0">
-    <button class="btn btn-ghost btn-sm" onclick="demoLogin()"><i class="fas fa-play"></i> Entrar em modo demonstração</button>
-    <br><br>
-    <button class="btn btn-ghost btn-sm" onclick="adminLogin()"><i class="fas fa-lock"></i> Acessar painel admin (demo)</button>
-  </div>`;
-}
-
-function renderShareBox(){
-  return `<div class="share-box" style="margin-top:32px">
-    <h2 class="section-title" style="font-size:24px">COMPARTILHAR</h2>
-    <p class="section-sub">Divulgue a Luan Barber</p>
-    <div class="msg-preview">${SHARE_MSG}</div>
-    <div class="share-actions">
-      <button class="btn btn-sm btn-outline" onclick="copyShareMsg()"><i class="fas fa-copy"></i> Copiar mensagem</button>
-      <a href="https://wa.me/?text=${encodeURIComponent(SHARE_MSG)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="color:#25d366;border-color:#25d366"><i class="fab fa-whatsapp"></i> Enviar via WhatsApp</a>
-    </div>
-  </div>`;
-}
-
-function copyShareMsg(){
-  if(navigator.clipboard){navigator.clipboard.writeText(SHARE_MSG).then(()=>showToast('Mensagem copiada!')).catch(()=>showToast('Erro ao copiar','error'));}
-  else{showToast('Clipboard não disponível','error');}
-}
-
-/* ============================================================
-   LOGIN
-   ============================================================ */
-function renderLogin(){
-  return `<div class="auth-page"><div class="auth-box">
-    <div class="auth-header"><h2>BEM-VINDO</h2><p>Acesse sua conta na Luan Barber</p></div>
-    <div class="auth-social">
-      <button onclick="showToast('Login social em breve','info')"><i class="fab fa-google" style="color:#ea4335"></i> Google</button>
-      <button onclick="showToast('Login social em breve','info')"><i class="fab fa-facebook-f" style="color:#1877f2"></i> Facebook</button>
-    </div>
-    <div class="auth-divider">ou entre com e-mail</div>
-    <form id="loginForm" onsubmit="handleLogin(event)">
-      <div class="input-group"><label>E-MAIL</label><input type="email" id="loginEmail" placeholder="seu@email.com" required></div>
-      <div class="input-group"><label>SENHA</label><input type="password" id="loginPass" placeholder="Sua senha" required></div>
-      <p style="text-align:right;margin-bottom:16px"><a style="color:var(--red);font-size:13px;cursor:pointer" onclick="showToast('Funcionalidade em breve','info')">Esqueci minha senha</a></p>
-      <button type="submit" class="btn btn-red btn-block"><i class="fas fa-sign-in-alt"></i> Entrar</button>
-    </form>
-    <div class="auth-link">Não tem conta? <a onclick="navigate('register')">Cadastre-se</a></div>
-    <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-ghost btn-sm" onclick="demoLogin()"><i class="fas fa-play"></i> Modo demonstração</button>
-    </div>
-    <p style="text-align:center;color:var(--t4);font-size:11px;margin-top:12px">Demo: demo@luanbarber.com / demo123</p>
-  </div></div>`;
-}
-
-function handleLogin(e){
-  e.preventDefault();
-  const email=document.getElementById('loginEmail').value;
-  const pass=document.getElementById('loginPass').value;
-  doLogin(email,pass);
-}
-
-/* ============================================================
-   REGISTER
-   ============================================================ */
-function renderRegister(){
-  return `<div class="auth-page"><div class="auth-box">
-    <div class="auth-header"><h2>CRIAR CONTA</h2><p>Junte-se à Luan Barber</p></div>
-    <form id="regForm" onsubmit="handleRegister(event)">
-      <div class="input-group"><label>NOME COMPLETO</label><input type="text" id="regName" placeholder="Seu nome" required></div>
-      <div class="input-group"><label>E-MAIL</label><input type="email" id="regEmail" placeholder="seu@email.com" required></div>
-      <div class="input-group"><label>TELEFONE</label><input type="tel" id="regPhone" placeholder="(16) 99787-2217" required></div>
-      <div class="input-group"><label>SENHA</label><input type="password" id="regPass" placeholder="Crie uma senha" required minlength="6"></div>
-      <div class="input-group"><label>CONFIRMAR SENHA</label><input type="password" id="regPass2" placeholder="Repita a senha" required></div>
-      <div class="captcha-placeholder"><i class="fas fa-robot"></i> Área reservada para captcha</div>
-      <div class="checkbox-row"><input type="checkbox" id="regTerms" required><label for="regTerms">Li e aceito os <a style="color:var(--red);cursor:pointer" onclick="showToast('Termos em breve','info')">Termos de Uso</a> e a <a style="color:var(--red);cursor:pointer" onclick="showToast('Política em breve','info')">Política de Privacidade</a></label></div>
-      <button type="submit" class="btn btn-red btn-block"><i class="fas fa-user-plus"></i> Cadastrar</button>
-    </form>
-    <div class="auth-link">Já tem conta? <a onclick="navigate('login')">Faça login</a></div>
-  </div></div>`;
-}
-
-function handleRegister(e){
-  e.preventDefault();
-  const name=document.getElementById('regName').value.trim();
-  const email=document.getElementById('regEmail').value.trim();
-  const phone=document.getElementById('regPhone').value.trim();
-  const pass=document.getElementById('regPass').value;
-  const pass2=document.getElementById('regPass2').value;
-  if(pass!==pass2){showToast('As senhas não coincidem','error');return;}
-  doRegister({name,email,phone,password:pass});
-}
-
-/* ============================================================
-   DASHBOARD
-   ============================================================ */
-function renderDashboard(){
-  if(!state.isLoggedIn)return renderLogin();
-  const u=state.user;
-  const upcoming=state.appointments.filter(a=>a.status==='upcoming').sort((a,b)=>a.date.localeCompare(b.date));
-  const history=state.appointments.filter(a=>a.status==='completed').sort((a,b)=>b.date.localeCompare(a.date));
-  const nextAppt=upcoming[0];
-
-  return `
-  <div class="dash-header">
-    <div class="dash-avatar"><i class="fas fa-user"></i></div>
-    <div class="dash-info">
-      <h2>${u.name}</h2>
-      <p>${u.email} &bull; ID ${u.id}</p>
-    </div>
-  </div>
-
-  <div class="dash-stats stagger">
-    <div class="dash-stat"><div class="val gold"><i class="fas fa-coins" style="font-size:14px"></i> ${u.points}</div><div class="lbl">Pontos</div></div>
-    <div class="dash-stat"><div class="val">${fmt(u.credits)}</div><div class="lbl">Créditos</div></div>
-    <div class="dash-stat"><div class="val">${upcoming.length}</div><div class="lbl">Agendados</div></div>
-  </div>
-
-  ${nextAppt?`<div class="card mb-16" style="border-color:var(--red);background:linear-gradient(135deg,rgba(220,38,38,.08),var(--bg-card))">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-      <span class="badge badge-red"><i class="fas fa-clock"></i> Próximo</span>
-    </div>
-    <div style="font-weight:700;font-size:16px;margin-bottom:4px">${nextAppt.services.join(', ')}</div>
-    <div style="font-size:13px;color:var(--t3)"><i class="fas fa-calendar"></i> ${dayName(nextAppt.date)}, ${fmtDate(nextAppt.date)} às ${nextAppt.time} &bull; ${nextAppt.professional}</div>
-  </div>`:''}
-
-  <button class="btn btn-red btn-block mb-20" onclick="navigate('booking')"><i class="fas fa-plus"></i> Novo Agendamento</button>
-
-  <div class="dash-tabs">
-    <button class="${state.dashTab==='upcoming'?'active':''}" onclick="state.dashTab='upcoming';render()">Agendamentos</button>
-    <button class="${state.dashTab==='history'?'active':''}" onclick="state.dashTab='history';render()">Histórico</button>
-    <button class="${state.dashTab==='plans'?'active':''}" onclick="state.dashTab='plans';render()">Assinaturas</button>
-  </div>
-
-  ${state.dashTab==='upcoming'?renderUpcoming(upcoming):''}
-  ${state.dashTab==='history'?renderHistory(history):''}
-  ${state.dashTab==='plans'?`<div class="text-center mt-16"><p class="text-t3" style="font-size:14px;margin-bottom:16px">Conheça nossos planos exclusivos</p><button class="btn btn-gold btn-sm" onclick="navigate('plans')"><i class="fas fa-crown"></i> Ver Planos</button></div>`:''}
-
-  ${state.isAdmin?`<div class="divider"></div><button class="btn btn-outline btn-block btn-sm" onclick="navigate('admin')"><i class="fas fa-cog"></i> Painel Administrativo</button>`:''}
-  `;
-}
-
-function renderUpcoming(list){
-  if(!list.length)return `<div class="empty-state"><i class="far fa-calendar"></i><p>Sem agendamentos futuros</p><button class="btn btn-red btn-sm mt-12" onclick="navigate('booking')">Agendar agora</button></div>`;
-  return `<div class="stagger">${list.map(a=>`<div class="appt-card">
-    <div class="appt-left">
-      <div class="appt-service">${a.services.join(', ')}</div>
-      <div class="appt-detail"><i class="fas fa-user"></i> ${a.professional} &bull; <i class="fas fa-clock"></i> ${fmtDur(a.duration)}</div>
-    </div>
-    <div class="appt-right">
-      <div class="appt-date">${fmtDate(a.date)}</div>
-      <div class="appt-time">${dayName(a.date)} ${a.time}</div>
-    </div>
-  </div>`).join('')}</div>`;
-}
-
-function renderHistory(list){
-  if(!list.length)return `<div class="empty-state"><i class="far fa-clock"></i><p>Nenhum agendamento anterior</p></div>`;
-  return `<div class="stagger">${list.map(a=>`<div class="appt-card" style="opacity:.7">
-    <div class="appt-left">
-      <div class="appt-service">${a.services.join(', ')}</div>
-      <div class="appt-detail"><i class="fas fa-user"></i> ${a.professional} &bull; ${fmt(a.total)}</div>
-    </div>
-    <div class="appt-right">
-      <div class="appt-date" style="color:var(--t3)">${fmtDate(a.date)}</div>
-      <div class="appt-time">${a.time}</div>
-      <span class="badge badge-green" style="margin-top:4px">Concluído</span>
-    </div>
-  </div>`).join('')}</div>`;
-}
-
-/* ============================================================
-   BOOKING
-   ============================================================ */
-function renderBooking(){
-  if(!state.isLoggedIn){navigate('login');return renderLogin();}
-  const steps=['Serviços','Profissional','Data','Horário','Resumo'];
-  const s=state.booking.step;
-  return `
-  <h2 class="section-title">NOVO AGENDAMENTO</h2>
-  <p class="section-sub">Etapa ${s+1} de ${steps.length}: ${steps[s]}</p>
-  <div class="booking-progress">${steps.map((_,i)=>`<div class="booking-step">
-    <div class="step-circle ${i<s?'done':i===s?'active':''}">${i<s?'<i class="fas fa-check" style="font-size:11px"></i>':i+1}</div>
-    ${i<steps.length-1?`<div class="step-line ${i<s?'active':''}"></div>`:''}
-  </div>`).join('')}</div>
-  ${s===0?renderBookingServices():''}
-  ${s===1?renderBookingProfessional():''}
-  ${s===2?renderBookingDate():''}
-  ${s===3?renderBookingTime():''}
-  ${s===4?renderBookingSummary():''}
-  <div class="booking-footer">
-    ${s>0?`<button class="btn btn-outline" onclick="bookingBack()"><i class="fas fa-arrow-left"></i> Voltar</button>`:''}
-    <button class="btn btn-red" onclick="bookingNext()">${s===4?'<i class="fas fa-check"></i> Confirmar':'Próximo <i class="fas fa-arrow-right"></i>'}</button>
-  </div>`;
-}
-
-function renderBookingServices(){
-  const q=state.searchQuery.toLowerCase();
-  return `<div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Pesquisar serviço..." value="${state.searchQuery}" oninput="state.searchQuery=this.value;render()"></div>
-  <div class="stagger">${SERVICES.map(cat=>{
-    const filtered=cat.items.filter(s=>s.active&&(!q||s.name.toLowerCase().includes(q)||cat.category.toLowerCase().includes(q)));
-    if(!filtered.length)return '';
-    const isOpen=state.openCategories[cat.category]||!!q;
-    return `<div class="svc-category">
-      <div class="svc-cat-header ${isOpen?'open':''}" onclick="toggleCategory('${cat.category}')">
-        <div class="cat-left"><i class="fas ${cat.icon}"></i><span>${cat.category}</span></div>
-        <div style="display:flex;align-items:center;gap:10px"><span class="cat-count">${filtered.length}</span><i class="fas fa-chevron-down chevron"></i></div>
-      </div>
-      <div class="svc-items ${isOpen?'open':''}">
-        ${filtered.map(s=>{
-          const sel=state.booking.services.includes(s.id);
-          return `<div class="svc-item ${sel?'selected':''}" onclick="toggleBookingService(${s.id})">
-            <div class="svc-check"><i class="fas fa-check"></i></div>
-            <div class="svc-info"><div class="svc-name">${s.name}</div><div class="svc-meta"><i class="fas fa-clock"></i> ${fmtDur(s.duration)}</div></div>
-            <div class="svc-price ${s.price===0?'free':''}">${s.priceLabel?s.priceLabel:fmt(s.price)}</div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
-  }).join('')}</div>
-  ${state.booking.services.length?`<div class="card mt-16" style="border-color:var(--red)">
-    <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600">
-      <span>${state.booking.services.length} serviço(s) selecionado(s)</span>
-      <span class="text-red">${fmt(state.booking.services.reduce((t,id)=>{const sv=getServiceById(id);return t+(sv?sv.price:0);},0))}</span>
-    </div>
-    <div style="font-size:12px;color:var(--t3);margin-top:4px">Duração total: ${fmtDur(state.booking.services.reduce((t,id)=>{const sv=getServiceById(id);return t+(sv?sv.duration:0);},0))}</div>
-  </div>`:''}`;
-}
-
-function toggleCategory(cat){
-  state.openCategories[cat]=!state.openCategories[cat];render();
-}
-
-function renderBookingProfessional(){
-  return `<div class="stagger">${PROFESSIONALS.map(p=>`<div class="pro-card ${state.booking.professional===p.id?'selected':''}" onclick="selectProfessional(${p.id})">
-    <div class="pro-avatar"><i class="fas ${p.avatar}"></i></div>
-    <div><div class="pro-name">${p.name}</div><div class="pro-role">${p.role}</div></div>
-    ${state.booking.professional===p.id?'<i class="fas fa-check-circle" style="margin-left:auto;color:var(--red);font-size:20px"></i>':''}
-  </div>`).join('')}</div>`;
-}
-
-function renderBookingDate(){
-  const y=state.calYear,m=state.calMonth;
-  const firstDay=new Date(y,m,1).getDay();
-  const daysInMonth=new Date(y,m+1,0).getDate();
-  const today=new Date();today.setHours(0,0,0,0);
-  const days=['D','S','T','Q','Q','S','S'];
-  let cells=days.map(d=>`<div class="cal-day-name">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++)cells+=`<div class="cal-day"></div>`;
-  for(let d=1;d<=daysInMonth;d++){
-    const dateObj=new Date(y,m,d);dateObj.setHours(0,0,0,0);
-    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dow=dateObj.getDay();
-    const isPast=dateObj<today;
-    const isToday=dateObj.getTime()===today.getTime();
-    const isClosed=!SCHEDULE[dow]||!SCHEDULE[dow].open;
-    const isSelected=state.booking.date===dateStr;
-    let cls='cal-day';
-    if(isPast||isClosed)cls+=' off';
-    else cls+=' available';
-    if(isToday)cls+=' today';
-    if(isSelected)cls+=' selected';
-    cells+=`<div class="${cls}" ${!isPast&&!isClosed?`onclick="selectDate('${dateStr}')"`:''}>${d}</div>`;
-  }
-  return `<div class="cal-header">
-    <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
-    <h3>${monthName(m)} ${y}</h3>
-    <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
-  </div>
-  <div class="cal-grid">${cells}</div>
-  ${state.booking.date?`<p style="text-align:center;color:var(--t2);font-size:14px"><i class="fas fa-calendar-check" style="color:var(--red)"></i> ${dayName(state.booking.date)}, ${fmtDate(state.booking.date)}</p>`:'<p style="text-align:center;color:var(--t4);font-size:14px">Selecione uma data disponível</p>'}`;
-}
-
-function changeMonth(dir){
-  state.calMonth+=dir;
-  if(state.calMonth>11){state.calMonth=0;state.calYear++;}
-  if(state.calMonth<0){state.calMonth=11;state.calYear--;}
-  render();
-}
-
-function renderBookingTime(){
-  if(!state.booking.date)return '<p class="text-center text-t3">Selecione uma data primeiro</p>';
-  const times=getAvailableTimes(state.booking.date);
-  if(!times.length)return '<p class="text-center text-t3">Nenhum horário disponível para esta data</p>';
-  return `<p style="font-size:14px;color:var(--t2);margin-bottom:16px"><i class="fas fa-calendar"></i> ${dayName(state.booking.date)}, ${fmtDate(state.booking.date)}</p>
-  <div class="time-grid">${times.map(t=>`<div class="time-slot ${state.booking.time===t.time?'selected':''} ${!t.available?'unavailable':''}" onclick="${t.available?`selectTime('${t.time}')`:''}">${t.time}</div>`).join('')}</div>`;
-}
-
-function renderBookingSummary(){
-  const b=state.booking;
-  const svcs=b.services.map(id=>getServiceById(id)).filter(Boolean);
-  const pro=PROFESSIONALS.find(p=>p.id===b.professional);
-  const total=svcs.reduce((s,v)=>s+v.price,0);
-  const dur=svcs.reduce((s,v)=>s+v.duration,0);
-  return `<div class="summary-card">
-    <h3>RESUMO</h3>
-    ${svcs.map(s=>`<div class="summary-row"><span class="label">${s.name}</span><span class="value">${s.priceLabel||fmt(s.price)}</span></div>`).join('')}
-    <div class="summary-row"><span class="label">Profissional</span><span class="value">${pro?pro.name:'-'}</span></div>
-    <div class="summary-row"><span class="label">Data</span><span class="value">${b.date?`${dayName(b.date)}, ${fmtDate(b.date)}`:'-'}</span></div>
-    <div class="summary-row"><span class="label">Horário</span><span class="value">${b.time||'-'}</span></div>
-    <div class="summary-row"><span class="label">Duração total</span><span class="value">${fmtDur(dur)}</span></div>
-    <div class="summary-total"><span>Total</span><span class="price">${fmt(total)}</span></div>
-  </div>`;
-}
-
-function renderBookingConfirmed(){
-  return `<div class="confirm-animation">
-    <div class="check-circle"><i class="fas fa-check"></i></div>
-    <h2>AGENDADO!</h2>
-    <p>Seu agendamento foi confirmado com sucesso.<br>Nos vemos na Luan Barber!</p>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-red" onclick="navigate('dashboard')"><i class="fas fa-user"></i> Meu Painel</button>
-      <button class="btn btn-outline" onclick="navigate('booking')"><i class="fas fa-plus"></i> Novo Agendamento</button>
-    </div>
-  </div>`;
-}
-
-/* ============================================================
-   SERVICES CATALOG
-   ============================================================ */
-function renderServices(){
-  const q=state.searchQuery.toLowerCase();
-  return `<h2 class="section-title">SERVIÇOS</h2>
-  <p class="section-sub">Catálogo completo da Luan Barber</p>
-  <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Pesquisar serviço..." value="${state.searchQuery}" oninput="state.searchQuery=this.value;render()"></div>
-  <div class="svc-catalog stagger">${SERVICES.map(cat=>{
-    const filtered=cat.items.filter(s=>s.active&&(!q||s.name.toLowerCase().includes(q)||cat.category.toLowerCase().includes(q)));
-    if(!filtered.length)return '';
-    const isOpen=state.openCategories[cat.category]||!!q;
-    return `<div class="svc-category">
-      <div class="svc-cat-header ${isOpen?'open':''}" onclick="toggleCategory('${cat.category}')">
-        <div class="cat-left"><i class="fas ${cat.icon}"></i><span>${cat.category}</span></div>
-        <div style="display:flex;align-items:center;gap:10px"><span class="cat-count">${filtered.length}</span><i class="fas fa-chevron-down chevron"></i></div>
-      </div>
-      <div class="svc-items ${isOpen?'open':''}">
-        ${filtered.map(s=>`<div class="svc-item" style="cursor:default">
-          <div style="width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0"></div>
-          <div class="svc-info"><div class="svc-name">${s.name}</div><div class="svc-meta">${s.desc} &bull; <i class="fas fa-clock"></i> ${fmtDur(s.duration)}</div></div>
-          <div class="svc-price ${s.price===0?'free':''}">${s.priceLabel?s.priceLabel:fmt(s.price)}</div>
-        </div>`).join('')}
-      </div>
-    </div>`;
-  }).join('')}</div>
-  <div class="text-center mt-24">
-    <button class="btn btn-red" onclick="${state.isLoggedIn?"navigate('booking')":"navigate('login')"}"><i class="fas fa-calendar-check"></i> Agendar Agora</button>
-  </div>`;
-}
-
-/* ============================================================
-   PLANS
-   ============================================================ */
-function renderPlans(){
-  const activePlans=PLANS.filter(p=>p.active);
-  const individual=activePlans.filter(p=>!p.tier.includes('family')&&p.tier!=='duo'&&p.tier!=='vip'&&p.tier!=='black');
-  const family=activePlans.filter(p=>p.tier.includes('family')||p.tier==='duo'||p.tier==='vip'||p.tier==='black');
-  return `<h2 class="section-title">PLANOS & ASSINATURAS</h2>
-  <p class="section-sub">Escolha o plano ideal para você</p>
-
-  <h3 style="font-size:22px;margin-bottom:16px;color:var(--t2);font-family:var(--font-display);letter-spacing:.06em">INDIVIDUAIS</h3>
-  <div class="plans-grid stagger">${individual.map(renderPlanCard).join('')}</div>
-
-  <div class="divider" style="margin:32px 0"></div>
-
-  <h3 style="font-size:22px;margin-bottom:16px;color:var(--t2);font-family:var(--font-display);letter-spacing:.06em">FAMÍLIA & DUO</h3>
-  <div class="plans-grid stagger">${family.map(renderPlanCard).join('')}</div>`;
-}
-
-function renderPlanCard(p){
-  return `<div class="plan-card ${p.featured?'featured':''}">
-    <div class="plan-tier ${p.tier}">${p.tier.toUpperCase().replace('-',' ')}</div>
-    <div class="plan-name">${p.name}${p.subtitle?` — ${p.subtitle}`:''}</div>
-    ${p.desc?`<div class="plan-subtitle">${p.desc}</div>`:''}
-    <div class="plan-price">${fmt(p.price)} <span>/mês</span></div>
-    <div class="plan-validity"><i class="fas fa-calendar-alt"></i> Válido ${p.validity}</div>
-    <ul class="plan-includes">${p.includes.map(i=>`<li><i class="fas fa-check"></i> ${i}</li>`).join('')}</ul>
-    <button class="btn ${p.tier==='platinum'||p.tier==='vip'?'btn-gold':'btn-red'} btn-block btn-sm" onclick="handleSubscribe('${p.name}')"><i class="fas fa-crown"></i> Assinar</button>
-  </div>`;
-}
-
-function handleSubscribe(planName){
-  if(!state.isLoggedIn){navigate('login');showToast('Faça login para assinar','info');return;}
-  showModal('Assinar Plano',`Deseja assinar o plano <strong>${planName}</strong>?<br><br><span style="font-size:12px;color:var(--t3)">Em um sistema completo, você seria redirecionado para o pagamento.</span>`,
-    `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
-     <button class="btn btn-red btn-sm" onclick="closeModal();showToast('Assinatura simulada com sucesso!')">Confirmar</button>`);
-}
-
-/* ============================================================
-   ADMIN
-   ============================================================ */
-function renderAdmin(){
-  if(!state.isAdmin){navigate('home');return renderHome();}
-  const tab=state.adminTab;
-  return `<h2 class="section-title">PAINEL ADMIN</h2>
-  <p class="section-sub">Gerencie sua barbearia</p>
-  <div class="admin-tabs">
-    <button class="${tab==='services'?'active':''}" onclick="state.adminTab='services';render()"><i class="fas fa-scissors"></i> Serviços</button>
-    <button class="${tab==='plans'?'active':''}" onclick="state.adminTab='plans';render()"><i class="fas fa-crown"></i> Planos</button>
-    <button class="${tab==='clients'?'active':''}" onclick="state.adminTab='clients';render()"><i class="fas fa-users"></i> Clientes</button>
-    <button class="${tab==='appointments'?'active':''}" onclick="state.adminTab='appointments';render()"><i class="fas fa-calendar"></i> Agenda</button>
-    <button class="${tab==='config'?'active':''}" onclick="state.adminTab='config';render()"><i class="fas fa-cog"></i> Config</button>
-  </div>
-  ${tab==='services'?renderAdminServices():''}
-  ${tab==='plans'?renderAdminPlans():''}
-  ${tab==='clients'?renderAdminClients():''}
-  ${tab==='appointments'?renderAdminAppointments():''}
-  ${tab==='config'?renderAdminConfig():''}`;
-}
-
-function renderAdminServices(){
-  const allSvcs=SERVICES.flatMap(c=>c.items.map(s=>({...s,category:c.category})));
-  return `<button class="btn btn-red btn-sm mb-16" onclick="showToast('Cadastro de serviço em breve','info')"><i class="fas fa-plus"></i> Novo Serviço</button>
-  <div class="table-responsive"><table class="admin-table">
-    <thead><tr><th>Serviço</th><th>Categoria</th><th>Preço</th><th>Duração</th><th>Status</th><th>Ações</th></tr></thead>
-    <tbody>${allSvcs.map(s=>`<tr>
-      <td style="font-weight:600">${s.name}</td><td><span class="badge badge-gray">${s.category}</span></td>
-      <td>${s.priceLabel||fmt(s.price)}</td><td>${fmtDur(s.duration)}</td>
-      <td><button class="toggle-btn ${s.active?'toggle-on':'toggle-off'}" onclick="toggleService(${s.id})">${s.active?'Ativo':'Inativo'}</button></td>
-      <td><button class="action-btn edit-btn" onclick="showToast('Edição em breve','info')">Editar</button><button class="action-btn del-btn" onclick="showDeleteServiceModal(${s.id},'${s.name.replace(/'/g,"\\'")}')">Excluir</button></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
-}
-
-function toggleService(id){
-  SERVICES.forEach(c=>{c.items.forEach(s=>{if(s.id===id)s.active=!s.active;});});
-  render();showToast('Status alterado');
-}
-
-function showDeleteServiceModal(id,name){
-  showModal('Excluir Serviço',`Tem certeza que deseja excluir <strong>${name}</strong>?`,
-    `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
-     <button class="btn btn-red btn-sm" onclick="deleteService(${id})">Excluir</button>`);
-}
-function deleteService(id){
-  SERVICES.forEach(c=>{c.items=c.items.filter(s=>s.id!==id);});
-  closeModal();render();showToast('Serviço removido');
-}
-
-function renderAdminPlans(){
-  return `<button class="btn btn-red btn-sm mb-16" onclick="showToast('Cadastro de plano em breve','info')"><i class="fas fa-plus"></i> Novo Plano</button>
-  <div class="table-responsive"><table class="admin-table">
-    <thead><tr><th>Plano</th><th>Preço</th><th>Validade</th><th>Status</th><th>Ações</th></tr></thead>
-    <tbody>${PLANS.map(p=>`<tr>
-      <td style="font-weight:600">${p.name}${p.subtitle?` — ${p.subtitle}`:''}</td>
-      <td>${fmt(p.price)}/mês</td><td>${p.validity}</td>
-      <td><button class="toggle-btn ${p.active?'toggle-on':'toggle-off'}" onclick="togglePlan(${p.id})">${p.active?'Ativo':'Inativo'}</button></td>
-      <td><button class="action-btn edit-btn" onclick="showToast('Edição em breve','info')">Editar</button><button class="action-btn del-btn" onclick="showDeletePlanModal(${p.id},'${p.name.replace(/'/g,"\\'")}')">Excluir</button></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
-}
-
-function togglePlan(id){
-  const p=PLANS.find(p=>p.id===id);if(p)p.active=!p.active;render();showToast('Status alterado');
-}
-function showDeletePlanModal(id,name){
-  showModal('Excluir Plano',`Tem certeza que deseja excluir o plano <strong>${name}</strong>?`,
-    `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
-     <button class="btn btn-red btn-sm" onclick="deletePlan(${id})">Excluir</button>`);
-}
-function deletePlan(id){PLANS.splice(PLANS.findIndex(p=>p.id===id),1);closeModal();render();showToast('Plano removido');}
-
-function renderAdminClients(){
-  return `<div class="table-responsive"><table class="admin-table">
-    <thead><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Telefone</th></tr></thead>
-    <tbody>${state.users.map(u=>`<tr>
-      <td>${u.id}</td><td style="font-weight:600">${u.name}</td><td>${u.email}</td><td>${u.phone||'-'}</td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
-}
-
-function getTodayStr(){
-  const t=new Date();
-  return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
-}
-
-function getAgendaAvailableCount(dateStr,proFilter){
-  const dow=new Date(dateStr+'T12:00:00').getDay();
-  const sch=SCHEDULE[dow];
-  if(!sch||!sch.open)return 0;
-  const [sh,sm]=sch.start.split(':').map(Number);
-  const [eh,em]=sch.end.split(':').map(Number);
-  const totalSlots=Math.floor(((eh*60+em)-(sh*60+sm))/30);
-  let booked=state.appointments.filter(a=>a.date===dateStr&&a.status==='upcoming');
-  if(proFilter&&proFilter!=='all')booked=booked.filter(a=>a.professional===proFilter);
-  return Math.max(0,totalSlots-booked.length);
-}
-
-function selectAgendaDate(dateStr){state.agendaDate=dateStr;render();}
-
-function renderAgendaApptCard(appt,startTime){
-  const endM=startTime.split(':').map(Number);
-  const totalMin=endM[0]*60+endM[1]+appt.duration;
-  const endTimeStr=`${String(Math.floor(totalMin/60)).padStart(2,'0')}:${String(totalMin%60).padStart(2,'0')}`;
-  const initials=(appt.client||'Cliente').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-  return `<div class="agenda-appt">
-    <div class="appt-top">
-      <div class="appt-avatar">${initials}</div>
-      <div class="appt-client">${appt.client||'Cliente'}</div>
-    </div>
-    <div class="appt-svc">${appt.services.join(', ')}</div>
-    <div class="appt-bottom">
-      <span><i class="fas fa-clock"></i> ${startTime} — ${endTimeStr}</span>
-      <span><i class="fas fa-hourglass-half"></i> ${fmtDur(appt.duration)}</span>
-      <span><i class="fas fa-user"></i> ${appt.professional}</span>
-    </div>
-  </div>`;
-}
-
-function renderAdminAppointments(){
-  if(!state.agendaDate)state.agendaDate=getTodayStr();
-  const selectedDate=state.agendaDate;
-  const selectedPro=state.agendaPro||'all';
-  const todayStr=getTodayStr();
-
-  // Generate 14 days centered around today (-3 to +10)
-  const days=[];
-  const base=new Date();base.setDate(base.getDate()-3);
-  for(let i=0;i<14;i++){
-    const d=new Date(base);d.setDate(d.getDate()+i);
-    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const dow=d.getDay();
-    const isClosed=!SCHEDULE[dow]||!SCHEDULE[dow].open;
-    const apptCount=state.appointments.filter(a=>a.date===ds&&a.status==='upcoming').length;
-    days.push({ds,day:d.getDate(),dow,abbr:['DOM','SEG','TER','QUA','QUI','SEX','SÁB'][dow],
-      isToday:ds===todayStr,isClosed,apptCount});
-  }
-
-  // Filter appointments for selected date
-  let dayAppts=state.appointments.filter(a=>a.date===selectedDate&&a.status==='upcoming');
-  if(selectedPro!=='all')dayAppts=dayAppts.filter(a=>a.professional===selectedPro);
-  dayAppts.sort((a,b)=>a.time.localeCompare(b.time));
-
-  const selectedDow=new Date(selectedDate+'T12:00:00').getDay();
-  const sch=SCHEDULE[selectedDow];
-  const totalAppts=dayAppts.length;
-  const totalRevenue=dayAppts.reduce((s,a)=>s+a.total,0);
-  const availCount=getAgendaAvailableCount(selectedDate,selectedPro);
-
-  // Build timeline
-  let timelineHtml='';
-  if(sch&&sch.open){
-    const [sh,sm]=sch.start.split(':').map(Number);
-    const [eh,em]=sch.end.split(':').map(Number);
-    const startMin=sh*60+sm;const endMin=eh*60+em;
-    const bookedMap={};
-    dayAppts.forEach(a=>{bookedMap[a.time]=a;});
-
-    for(let m=startMin;m<endMin;m+=30){
-      const hh=String(Math.floor(m/60)).padStart(2,'0');
-      const mm=String(m%60).padStart(2,'0');
-      const ts=`${hh}:${mm}`;
-      const appt=bookedMap[ts];
-      const hasAppt=!!appt;
-      timelineHtml+=`<div class="agenda-slot ${hasAppt?'has-appt':''}">
-        <div class="slot-time">${ts}</div>
-        <div class="slot-rail"><div class="rail-dot"></div></div>
-        <div class="slot-content">${hasAppt?renderAgendaApptCard(appt,ts)
-          :`<div class="agenda-available"><i class="fas fa-circle"></i> Disponível</div>`}</div>
-      </div>`;
-    }
-  }else{
-    timelineHtml=`<div class="agenda-closed-msg"><i class="fas fa-moon"></i><p>Fechado neste dia</p></div>`;
-  }
-
-  return `
-  <div class="agenda-pro-filter">
-    <button class="agenda-pro-pill ${selectedPro==='all'?'active':''}" onclick="state.agendaPro='all';render()">
-      <i class="fas fa-users" style="margin-right:4px;font-size:11px"></i> Todos</button>
-    ${PROFESSIONALS.map(p=>`<button class="agenda-pro-pill ${selectedPro===p.name?'active':''}" onclick="state.agendaPro='${p.name}';render()">
-      <i class="fas ${p.avatar}" style="margin-right:4px;font-size:11px"></i> ${p.name}</button>`).join('')}
-  </div>
-
-  <div class="agenda-day-scroll" id="agendaDayScroll">
-    ${days.map(d=>{
-      let cls='agenda-day';
-      if(d.isClosed)cls+=' off';
-      else if(d.ds===selectedDate)cls+=' selected';
-      else if(d.isToday)cls+=' today';
-      const dotCount=Math.min(d.apptCount,4);
-      const dotColor=d.ds===selectedDate?'rgba(255,255,255,.6)':d.isToday?'var(--gold)':'var(--red)';
-      const dots=dotCount>0?Array(dotCount).fill(0).map(()=>`<div class="dot" style="background:${dotColor}"></div>`).join(''):'';
-      return `<div class="${cls}" onclick="${!d.isClosed?`selectAgendaDate('${d.ds}')`:''}">
-        <div class="day-abbr">${d.abbr}</div>
-        <div class="day-num">${d.day}</div>
-        <div class="day-dots">${dots}</div>
-      </div>`;
-    }).join('')}
-  </div>
-
-  <div class="agenda-stats">
-    <div class="agenda-stat-card"><div class="stat-val" style="color:var(--red)">${totalAppts}</div><div class="stat-lbl">Agendamentos</div></div>
-    <div class="agenda-stat-card"><div class="stat-val revenue">${fmt(totalRevenue)}</div><div class="stat-lbl">Faturamento</div></div>
-    <div class="agenda-stat-card"><div class="stat-val" style="color:#4ade80">${availCount}</div><div class="stat-lbl">Disponíveis</div></div>
-  </div>
-
-  <div class="agenda-date-label"><i class="fas fa-calendar-day"></i> ${fullDayName(selectedDow)}, ${fmtDate(selectedDate)}</div>
-
-  <div class="agenda-timeline">${timelineHtml}</div>`;
-}
-
-function renderAdminConfig(){
-  return `<div class="admin-config">
-    <h3 style="font-size:20px;font-family:var(--font-body);font-weight:700;margin-bottom:16px">Horário de Funcionamento</h3>
-    ${Object.entries(SCHEDULE).map(([k,v])=>`<div class="day-row">
-      <label>${v.label}</label>
-      <input type="checkbox" ${v.open?'checked':''} onchange="SCHEDULE[${k}].open=this.checked;render()">
-      <input type="time" value="${v.start||'09:00'}" ${!v.open?'disabled':''} onchange="SCHEDULE[${k}].start=this.value" style="flex:1">
-      <span style="color:var(--t4);font-size:13px">até</span>
-      <input type="time" value="${v.end||'18:00'}" ${!v.open?'disabled':''} onchange="SCHEDULE[${k}].end=this.value" style="flex:1">
-    </div>`).join('')}
-    <button class="btn btn-red btn-sm mt-20" onclick="render();showToast('Configurações salvas!')"><i class="fas fa-save"></i> Salvar</button>
-  </div>`;
-}
-
-/* ============================================================
-   EVENTS
-   ============================================================ */
-function attachEvents(){
-  const scroll=document.getElementById('agendaDayScroll');
-  if(scroll){
-    const sel=scroll.querySelector('.agenda-day.selected')||scroll.querySelector('.agenda-day.today');
-    if(sel){sel.scrollIntoView({behavior:'auto',block:'nearest',inline:'center'});}
-  }
-}
-
-/* ============================================================
-   INIT
-   ============================================================ */
-function init(){
-  if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(event) {
+  if (event.matches) {
     document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
   }
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',event=>{
-    if(event.matches){document.documentElement.classList.add('dark');}
-    else{document.documentElement.classList.remove('dark');}
-  });
-  render();
+});
+
+// ==================== MENU DATA ====================
+var menuData = {
+  pizza: {
+    name: "Cardápio de Pizza",
+    icon: "fa-pizza-slice",
+    desc: "Pizzas artesanais com massa especial e ingredientes selecionados",
+    categories: [
+      {
+        title: "Pizzas Tradicionais",
+        icon: "fa-pizza-slice",
+        items: [
+          "Pizza Margherita — molho de tomate, mussarela de búfala, manjericão fresco",
+          "Pizza Calabresa — calabresa fatiada, cebola, azeitonas, mussarela",
+          "Pizza Portuguesa — presunto, ovos, cebola, azeitonas, ervilha, mussarela",
+          "Pizza Quatro Queijos — mussarela, provolone, gorgonzola, parmesão",
+          "Pizza Frango com Catupiry — frango desfiado, catupiry, milho, mussarela",
+          "Pizza Napolitana — molho de tomate, mussarela, tomate fatiado, parmesão, manjericão"
+        ]
+      },
+      {
+        title: "Pizzas Especiais",
+        icon: "fa-star",
+        items: [
+          "Pizza de Camarão — camarões salteados, cream cheese, tomate cereja, rúcula",
+          "Pizza Parma — presunto de parma, rúcula, tomate seco, lascas de parmesão",
+          "Pizza Trufada — mussarela, cogumelos, azeite trufado, cream cheese",
+          "Pizza Vegetariana — abobrinha, berinjela, pimentão, tomate, azeitonas, mussarela"
+        ]
+      },
+      {
+        title: "Pizzas Doces",
+        icon: "fa-candy-cane",
+        items: [
+          "Pizza de Chocolate — chocolate ao leite, granulado, morango",
+          "Pizza de Banana — banana caramelizada, canela, doce de leite",
+          "Pizza Romeu e Julieta — goiabada, queijo minas derretido"
+        ]
+      },
+      {
+        title: "Acompanhamentos",
+        icon: "fa-glass-cheers",
+        items: [
+          "Borda recheada com catupiry",
+          "Borda recheada com cheddar",
+          "Molhos especiais — alho, pimenta, ervas finas",
+          "Refrigerantes e sucos naturais"
+        ]
+      }
+    ]
+  },
+  boteco: {
+    name: "Cardápio de Boteco",
+    icon: "fa-beer-mug-empty",
+    desc: "Petiscos e porções típicas para um evento descontraído",
+    categories: [
+      {
+        title: "Porções e Petiscos",
+        icon: "fa-drumstick-bite",
+        items: [
+          "Bolinho de bacalhau com azeitonas",
+          "Pastel de carne — massa crocante, recheio generoso",
+          "Coxinha de frango cremosa",
+          "Bolinho de aipim com carne seca",
+          "Calabresa acebolada na chapa",
+          "Torresmo crocante com limão",
+          "Espetinhos de carne e frango",
+          "Batata frita com cheddar e bacon"
+        ]
+      },
+      {
+        title: "Tábuas e Aperitivos",
+        icon: "fa-cheese",
+        items: [
+          "Tábua de frios — queijos variados, embutidos, azeitonas, torradas",
+          "Bruschetta de tomate e manjericão",
+          "Dadinhos de tapioca com geleia de pimenta",
+          "Provolone à milanesa"
+        ]
+      },
+      {
+        title: "Pratos Quentes",
+        icon: "fa-fire",
+        items: [
+          "Escondidinho de carne seca",
+          "Feijoada express em copinhos",
+          "Arroz carreteiro",
+          "Mandioca frita crocante"
+        ]
+      },
+      {
+        title: "Bebidas",
+        icon: "fa-glass-cheers",
+        items: [
+          "Chopp artesanal (Pilsen e IPA)",
+          "Caipirinha de limão, maracujá ou morango",
+          "Drinks autorais do bartender",
+          "Refrigerantes e água mineral"
+        ]
+      }
+    ]
+  },
+  feijoada: {
+    name: "Cardápio Feijoada",
+    icon: "fa-bowl-food",
+    desc: "A autêntica feijoada completa com todos os acompanhamentos",
+    categories: [
+      {
+        title: "Feijoada Completa",
+        icon: "fa-bowl-food",
+        items: [
+          "Feijoada tradicional — feijão preto, carnes nobres defumadas",
+          "Couve refogada na manteiga",
+          "Farofa crocante com bacon",
+          "Arroz branco soltinho",
+          "Torresmo artesanal",
+          "Laranja fatiada"
+        ]
+      },
+      {
+        title: "Acompanhamentos Extras",
+        icon: "fa-plus",
+        items: [
+          "Vinagrete fresco — tomate, cebola, pimentão, coentro",
+          "Mandioca cozida na manteiga",
+          "Lombo assado fatiado",
+          "Linguiça calabresa na brasa",
+          "Couve crispy"
+        ]
+      },
+      {
+        title: "Sobremesas",
+        icon: "fa-ice-cream",
+        items: [
+          "Mousse de maracujá",
+          "Quindim tradicional",
+          "Cocada cremosa",
+          "Pudim de leite condensado"
+        ]
+      },
+      {
+        title: "Bebidas",
+        icon: "fa-glass-cheers",
+        items: [
+          "Caipirinha de limão",
+          "Batida de coco",
+          "Sucos naturais variados",
+          "Cerveja e chopp gelado"
+        ]
+      }
+    ]
+  },
+  cardapio1: {
+    name: "Cardápio 1",
+    icon: "fa-utensils",
+    desc: "Cardápio clássico com entradas, buffet principal e sobremesas",
+    categories: [
+      {
+        title: "Entradas",
+        icon: "fa-leaf",
+        items: [
+          "Canapés variados — salmão, cream cheese, tomate seco",
+          "Mini quiches de queijo e presunto",
+          "Carpaccio de carne com rúcula e parmesão",
+          "Cestinha de camarão"
+        ]
+      },
+      {
+        title: "Saladas",
+        icon: "fa-seedling",
+        items: [
+          "Salada Caesar — alface romana, croutons, parmesão, molho Caesar",
+          "Salada tropical — folhas verdes, manga, nozes, molho de maracujá",
+          "Salada caprese — tomate, mussarela de búfala, manjericão"
+        ]
+      },
+      {
+        title: "Buffet Principal",
+        icon: "fa-concierge-bell",
+        items: [
+          "Filé mignon ao molho madeira",
+          "Frango grelhado com ervas finas",
+          "Arroz branco e arroz à grega",
+          "Batata gratinada com queijo",
+          "Legumes salteados na manteiga"
+        ]
+      },
+      {
+        title: "Massas",
+        icon: "fa-bowl-food",
+        items: [
+          "Penne ao molho bolonhesa",
+          "Lasanha à bolonhesa tradicional"
+        ]
+      },
+      {
+        title: "Doces e Sobremesas",
+        icon: "fa-cake-candles",
+        items: [
+          "Brigadeiro gourmet (tradicional, pistache, maracujá)",
+          "Bem-casado artesanal",
+          "Mousse de chocolate belga",
+          "Pudim de leite condensado"
+        ]
+      }
+    ]
+  },
+  cardapio2: {
+    name: "Cardápio 2",
+    icon: "fa-plate-wheat",
+    desc: "Cardápio sofisticado com opções premium e menu internacional",
+    categories: [
+      {
+        title: "Entradas",
+        icon: "fa-leaf",
+        items: [
+          "Salmão defumado com alcaparras e cream cheese",
+          "Bruschettas trio — tomate, cogumelo, gorgonzola",
+          "Tartare de atum com gergelim e molho ponzu",
+          "Ceviche de peixe branco"
+        ]
+      },
+      {
+        title: "Saladas",
+        icon: "fa-seedling",
+        items: [
+          "Salada de folhas nobres com nozes e gorgonzola",
+          "Salada mediterrânea — pepino, tomate, azeitonas, queijo feta",
+          "Salada de quinoa com legumes grelhados"
+        ]
+      },
+      {
+        title: "Buffet Principal",
+        icon: "fa-concierge-bell",
+        items: [
+          "Medalhão de filé mignon com molho de vinho tinto",
+          "Salmão grelhado ao molho de maracujá",
+          "Risoto de camarão com açafrão",
+          "Arroz de jasmim",
+          "Batata rústica com alecrim",
+          "Ratatouille de legumes provençais"
+        ]
+      },
+      {
+        title: "Massas",
+        icon: "fa-bowl-food",
+        items: [
+          "Fettuccine ao molho alfredo com camarão",
+          "Ravioli de ricota ao molho sugo fresco"
+        ]
+      },
+      {
+        title: "Doces e Sobremesas",
+        icon: "fa-cake-candles",
+        items: [
+          "Petit gâteau com sorvete de baunilha",
+          "Cheesecake de frutas vermelhas",
+          "Brigadeiro gourmet premium (Nutella, limão siciliano, café)",
+          "Pavlova de frutas tropicais",
+          "Doce de leite na taça com crocante"
+        ]
+      }
+    ]
+  },
+  cardapio3: {
+    name: "Cardápio 3",
+    icon: "fa-fire-burner",
+    desc: "Cardápio regional com sabores autênticos da culinária brasileira",
+    categories: [
+      {
+        title: "Entradas",
+        icon: "fa-leaf",
+        items: [
+          "Acarajé mini com vatapá",
+          "Bolinho de arroz com queijo coalho",
+          "Croquete de carne de sol com manteiga de garrafa",
+          "Tapioca recheada (opções variadas)"
+        ]
+      },
+      {
+        title: "Saladas",
+        icon: "fa-seedling",
+        items: [
+          "Salada de grão de bico com tomate e hortelã",
+          "Salada sertaneja — maxixe, quiabo crocante, cebola roxa",
+          "Vinagrete especial da casa"
+        ]
+      },
+      {
+        title: "Buffet Principal",
+        icon: "fa-concierge-bell",
+        items: [
+          "Carne de sol com mandioca gratinada",
+          "Baião de dois completo — feijão verde, arroz, queijo coalho",
+          "Galinha caipira ao molho pardo",
+          "Pirão de peixe",
+          "Arroz com pequi",
+          "Feijão tropeiro mineiro"
+        ]
+      },
+      {
+        title: "Doces e Sobremesas",
+        icon: "fa-cake-candles",
+        items: [
+          "Cartola — banana frita, queijo coalho, canela e açúcar",
+          "Canjica cremosa com coco",
+          "Bolo de rolo artesanal",
+          "Rapadura com queijo",
+          "Doce de goiaba caseiro"
+        ]
+      }
+    ]
+  },
+  cardapio4: {
+    name: "Cardápio 4",
+    icon: "fa-champagne-glasses",
+    desc: "Cardápio premium para eventos corporativos e celebrações especiais",
+    categories: [
+      {
+        title: "Coquetel de Boas-vindas",
+        icon: "fa-martini-glass",
+        items: [
+          "Espumante de recepção",
+          "Água aromatizada com frutas e ervas",
+          "Mini finger foods — blini de salmão, espetinho caprese, tartelete de cogumelo"
+        ]
+      },
+      {
+        title: "Entradas",
+        icon: "fa-leaf",
+        items: [
+          "Terrine de foie gras com geleia de damasco",
+          "Ostras frescas com limão e molho mignonette",
+          "Carpaccio de salmão com alcaparras e azeite trufado",
+          "Tábua de queijos especiais com frutas secas"
+        ]
+      },
+      {
+        title: "Buffet Principal",
+        icon: "fa-concierge-bell",
+        items: [
+          "Tournedos de filé ao molho béarnaise",
+          "Cordeiro assado lentamente com alecrim e alho",
+          "Bacalhau gratinado à portuguesa",
+          "Risoto de aspargos e trufas negras",
+          "Legumes grelhados com azeite extra virgem",
+          "Purê trufado de batatas"
+        ]
+      },
+      {
+        title: "Massas",
+        icon: "fa-bowl-food",
+        items: [
+          "Tagliatelle fresco com ragu de pato",
+          "Gnocchi de batata doce ao molho gorgonzola"
+        ]
+      },
+      {
+        title: "Doces e Sobremesas",
+        icon: "fa-cake-candles",
+        items: [
+          "Crème brûlée de baunilha Bourbon",
+          "Tarte tatin de maçã com sorvete artesanal",
+          "Trufas artesanais sortidas (champagne, pistache, cacau)",
+          "Mesa de doces finos — bem-casados, bombons, mini tortas",
+          "Torre de profiteroles com calda de chocolate"
+        ]
+      }
+    ]
+  }
+};
+
+// ==================== STATE ====================
+var currentPage = 'landing';
+var selectedMenuKey = null;
+var lastRequestData = null;
+
+// ==================== NAVIGATION ====================
+function goToPage(page) {
+  var allPages = document.querySelectorAll('.page-section');
+  allPages.forEach(function(p) { p.classList.remove('active'); });
+
+  var target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('active');
+    currentPage = page;
+    window.scrollTo(0, 0);
+  }
+
+  var topBar = document.getElementById('topBar');
+  var stepIndicator = document.getElementById('stepIndicator');
+  if (page === 'landing') {
+    topBar.style.display = 'none';
+  } else {
+    topBar.style.display = 'flex';
+    var steps = {
+      menus: 'Passo 1 de 4',
+      detail: 'Passo 2 de 4',
+      form: 'Passo 3 de 4',
+      summary: 'Passo 4 de 4',
+      success: 'Concluído'
+    };
+    stepIndicator.textContent = steps[page] || '';
+  }
 }
-document.addEventListener('DOMContentLoaded',init);
+
+// ==================== RENDER MENUS ====================
+function renderMenuGrid() {
+  var grid = document.getElementById('menuGrid');
+  var html = '';
+  var keys = Object.keys(menuData);
+  keys.forEach(function(key, idx) {
+    var m = menuData[key];
+    html += '<div class="menu-card" onclick="openMenuDetail(\'' + key + '\')" style="animation: floatUp 0.5s ease-out ' + (idx * 0.07) + 's both;">';
+    html += '<i class="fas fa-arrow-right arrow-icon"></i>';
+    html += '<div class="menu-card-icon"><i class="fas ' + m.icon + '"></i></div>';
+    html += '<h4>' + m.name + '</h4>';
+    html += '<p>' + m.desc + '</p>';
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+// ==================== MENU DETAIL ====================
+function openMenuDetail(key) {
+  selectedMenuKey = key;
+  var menu = menuData[key];
+  document.getElementById('detailTitle').textContent = menu.name;
+  document.getElementById('detailSubtitle').textContent = menu.desc;
+
+  var content = '';
+  menu.categories.forEach(function(cat) {
+    content += '<div class="category-section">';
+    content += '<div class="category-label"><i class="fas ' + cat.icon + '"></i> ' + cat.title + '</div>';
+    content += '<ul class="item-list">';
+    cat.items.forEach(function(item) {
+      content += '<li>' + item + '</li>';
+    });
+    content += '</ul>';
+    content += '</div>';
+  });
+
+  document.getElementById('detailContent').innerHTML = content;
+  goToPage('detail');
+}
+
+// ==================== SELECT MENU ====================
+function selectCurrentMenu() {
+  if (!selectedMenuKey) return;
+  var menu = menuData[selectedMenuKey];
+  document.getElementById('selectedMenuName').textContent = menu.name;
+  goToPage('form');
+}
+
+// ==================== PHONE MASK ====================
+document.addEventListener('DOMContentLoaded', function() {
+  var phoneInput = document.getElementById('clientPhone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+      var x = e.target.value.replace(/\D/g, '').substring(0, 11);
+      var formatted = '';
+      if (x.length > 0) { formatted = '(' + x.substring(0, 2); }
+      if (x.length >= 3) { formatted += ') ' + x.substring(2, 7); }
+      if (x.length >= 8) { formatted += '-' + x.substring(7, 11); }
+      e.target.value = formatted;
+    });
+  }
+});
+
+// ==================== CUSTOM MODAL ====================
+function showModal(title, message, onOk) {
+  var overlay = document.createElement('div');
+  overlay.className = 'custom-modal-overlay';
+  overlay.innerHTML =
+    '<div class="custom-modal">' +
+      '<h4>' + title + '</h4>' +
+      '<p>' + message + '</p>' +
+      '<div class="custom-modal-actions">' +
+        '<button class="btn-gold" style="padding:10px 28px;font-size:0.85rem;" id="modalOkBtn">OK</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  var okBtn = document.getElementById('modalOkBtn');
+  okBtn.addEventListener('click', function() {
+    overlay.remove();
+    if (onOk) onOk();
+  });
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      overlay.remove();
+      if (onOk) onOk();
+    }
+  });
+}
+
+// ==================== VALIDATION & SUMMARY ====================
+function goToSummary() {
+  var name = document.getElementById('clientName').value.trim();
+  var phone = document.getElementById('clientPhone').value.trim();
+  var email = document.getElementById('clientEmail').value.trim();
+  var eventType = document.getElementById('eventType').value;
+  var eventDate = document.getElementById('eventDate').value;
+  var eventTime = document.getElementById('eventTime').value;
+  var guestCount = document.getElementById('guestCount').value;
+
+  var missing = [];
+  if (!name) missing.push('Nome');
+  if (!phone) missing.push('Telefone');
+  if (!email) missing.push('Email');
+  if (!eventType) missing.push('Tipo de Evento');
+  if (!eventDate) missing.push('Data do Evento');
+  if (!eventTime) missing.push('Horário');
+  if (!guestCount) missing.push('Quantidade de Pessoas');
+
+  if (missing.length > 0) {
+    showModal('Campos Obrigatórios', 'Por favor, preencha os seguintes campos:<br><br><strong>' + missing.join(', ') + '</strong>');
+    return;
+  }
+
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showModal('Email Inválido', 'Por favor, insira um endereço de email válido.');
+    return;
+  }
+
+  var observations = document.getElementById('observations').value.trim();
+  var menu = menuData[selectedMenuKey];
+
+  var dateParts = eventDate.split('-');
+  var formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
+
+  var summaryHtml = '';
+  var rows = [
+    { label: 'Cliente', value: name },
+    { label: 'Telefone', value: phone },
+    { label: 'Email', value: email },
+    { label: 'Tipo de Evento', value: eventType },
+    { label: 'Cardápio', value: menu.name },
+    { label: 'Data', value: formattedDate },
+    { label: 'Horário', value: eventTime },
+    { label: 'Pessoas', value: guestCount + ' convidados' }
+  ];
+
+  if (observations) {
+    rows.push({ label: 'Observações', value: observations });
+  }
+
+  rows.forEach(function(r) {
+    summaryHtml += '<div class="summary-row">';
+    summaryHtml += '<span class="summary-label">' + r.label + '</span>';
+    summaryHtml += '<span class="summary-value">' + r.value + '</span>';
+    summaryHtml += '</div>';
+  });
+
+  document.getElementById('summaryContent').innerHTML = summaryHtml;
+  goToPage('summary');
+}
+
+// ==================== SUBMIT ====================
+function submitRequest() {
+  var name = document.getElementById('clientName').value.trim();
+  var phone = document.getElementById('clientPhone').value.trim();
+  var email = document.getElementById('clientEmail').value.trim();
+  var eventType = document.getElementById('eventType').value;
+  var eventDate = document.getElementById('eventDate').value;
+  var eventTime = document.getElementById('eventTime').value;
+  var guestCount = document.getElementById('guestCount').value;
+  var observations = document.getElementById('observations').value.trim();
+  var menu = menuData[selectedMenuKey];
+
+  var dateParts = eventDate.split('-');
+  var formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
+
+  var requestData = {
+    nome_cliente: name,
+    telefone: phone,
+    email: email,
+    tipo_evento: eventType,
+    cardapio_escolhido: menu.name,
+    cardapio_key: selectedMenuKey,
+    data_evento: formattedDate,
+    horario_evento: eventTime,
+    quantidade_pessoas: guestCount,
+    observacoes: observations || 'Nenhuma'
+  };
+
+  lastRequestData = requestData;
+  console.log('Solicitação enviada: ' + JSON.stringify(requestData));
+
+  goToPage('success');
+}
+
+// ==================== GENERATE PDF ====================
+function generatePDF() {
+  if (!lastRequestData) return;
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF('p', 'mm', 'a4');
+  var pageW = 210;
+  var marginL = 20;
+  var marginR = 20;
+  var contentW = pageW - marginL - marginR;
+  var y = 0;
+
+  // Colors
+  var gold = [201, 169, 110];
+  var goldDark = [168, 135, 63];
+  var charcoal = [26, 26, 46];
+  var gray = [120, 120, 140];
+  var lightBg = [252, 250, 245];
+  var white = [255, 255, 255];
+
+  // ---- Header Banner ----
+  doc.setFillColor(charcoal[0], charcoal[1], charcoal[2]);
+  doc.rect(0, 0, pageW, 52, 'F');
+
+  // Gold accent line
+  doc.setFillColor(gold[0], gold[1], gold[2]);
+  doc.rect(0, 52, pageW, 2, 'F');
+
+  // Company Name
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(22);
+  doc.setTextColor(gold[0], gold[1], gold[2]);
+  doc.text('PAMPHILO FESTAS E EVENTOS', pageW / 2, 24, { align: 'center' });
+
+  // Subtitle
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(200, 200, 210);
+  doc.text('Solicitação de Evento', pageW / 2, 34, { align: 'center' });
+
+  // Date generated
+  var now = new Date();
+  var genDate = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  doc.setFontSize(8);
+  doc.setTextColor(160, 160, 180);
+  doc.text('Documento gerado em: ' + genDate, pageW / 2, 44, { align: 'center' });
+
+  y = 64;
+
+  // ---- Helper Functions ----
+  function drawSectionTitle(title, iconChar) {
+    doc.setFillColor(gold[0], gold[1], gold[2]);
+    doc.roundedRect(marginL, y - 1, 3, 8, 1, 1, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(charcoal[0], charcoal[1], charcoal[2]);
+    doc.text(title, marginL + 8, y + 5);
+    y += 14;
+  }
+
+  function drawInfoRow(label, value, isLast) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(gray[0], gray[1], gray[2]);
+    doc.text(label.toUpperCase(), marginL + 4, y + 4);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(charcoal[0], charcoal[1], charcoal[2]);
+    var lines = doc.splitTextToSize(value, contentW - 60);
+    doc.text(lines, marginL + 58, y + 4);
+
+    var rowH = Math.max(10, lines.length * 5 + 5);
+    if (!isLast) {
+      doc.setDrawColor(230, 225, 215);
+      doc.setLineWidth(0.3);
+      doc.line(marginL + 4, y + rowH, marginL + contentW - 4, y + rowH);
+    }
+    y += rowH;
+  }
+
+  function checkPageBreak(neededSpace) {
+    if (y + neededSpace > 272) {
+      doc.addPage();
+      y = 20;
+    }
+  }
+
+  // ---- Client Information ----
+  drawSectionTitle('DADOS DO CLIENTE');
+
+  doc.setFillColor(lightBg[0], lightBg[1], lightBg[2]);
+  doc.roundedRect(marginL, y - 2, contentW, 40, 3, 3, 'F');
+  doc.setDrawColor(230, 225, 215);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(marginL, y - 2, contentW, 40, 3, 3, 'S');
+
+  drawInfoRow('Nome', lastRequestData.nome_cliente, false);
+  drawInfoRow('Telefone', lastRequestData.telefone, false);
+  drawInfoRow('Email', lastRequestData.email, true);
+
+  y += 10;
+  checkPageBreak(60);
+
+  // ---- Event Information ----
+  drawSectionTitle('INFORMAÇÕES DO EVENTO');
+
+  doc.setFillColor(lightBg[0], lightBg[1], lightBg[2]);
+  doc.roundedRect(marginL, y - 2, contentW, 60, 3, 3, 'F');
+  doc.setDrawColor(230, 225, 215);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(marginL, y - 2, contentW, 60, 3, 3, 'S');
+
+  drawInfoRow('Tipo de Evento', lastRequestData.tipo_evento, false);
+  drawInfoRow('Cardápio', lastRequestData.cardapio_escolhido, false);
+  drawInfoRow('Data', lastRequestData.data_evento, false);
+  drawInfoRow('Horário', lastRequestData.horario_evento, false);
+  drawInfoRow('Pessoas', lastRequestData.quantidade_pessoas + ' convidados', false);
+  drawInfoRow('Observações', lastRequestData.observacoes, true);
+
+  y += 10;
+  checkPageBreak(40);
+
+  // ---- Menu Items ----
+  var menuKey = lastRequestData.cardapio_key;
+  var menuInfo = menuData[menuKey];
+  if (menuInfo) {
+    drawSectionTitle('ITENS DO CARDÁPIO — ' + menuInfo.name.toUpperCase());
+
+    menuInfo.categories.forEach(function(cat) {
+      checkPageBreak(20 + cat.items.length * 6);
+
+      // Category label
+      doc.setFillColor(gold[0], gold[1], gold[2]);
+      doc.roundedRect(marginL, y, contentW, 7, 2, 2, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(255, 255, 255);
+      doc.text(cat.title.toUpperCase(), marginL + 5, y + 5);
+      y += 11;
+
+      cat.items.forEach(function(item) {
+        checkPageBreak(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(charcoal[0], charcoal[1], charcoal[2]);
+
+        // Diamond bullet
+        doc.setFillColor(gold[0], gold[1], gold[2]);
+        doc.circle(marginL + 5, y + 1.5, 1, 'F');
+
+        var itemLines = doc.splitTextToSize(item, contentW - 16);
+        doc.text(itemLines, marginL + 10, y + 2.5);
+        y += itemLines.length * 4.5 + 2;
+      });
+
+      y += 6;
+    });
+  }
+
+  // ---- Footer ----
+  checkPageBreak(30);
+  y += 5;
+  doc.setDrawColor(gold[0], gold[1], gold[2]);
+  doc.setLineWidth(0.5);
+  doc.line(marginL, y, marginL + contentW, y);
+  y += 8;
+
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(9);
+  doc.setTextColor(gray[0], gray[1], gray[2]);
+  doc.text('Este documento é uma solicitação de evento.', pageW / 2, y, { align: 'center' });
+  y += 5;
+  doc.text('A equipe da Pamphilo Festas e Eventos entrará em contato com o orçamento.', pageW / 2, y, { align: 'center' });
+  y += 8;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(gold[0], gold[1], gold[2]);
+  doc.text('PAMPHILO FESTAS E EVENTOS', pageW / 2, y, { align: 'center' });
+
+  // Save PDF
+  var clientName = lastRequestData.nome_cliente.replace(/\s+/g, '_').substring(0, 30);
+  var eventDate = lastRequestData.data_evento.replace(/\//g, '-');
+  var fileName = 'simulacao_' + clientName + '_' + eventDate + '.pdf';
+
+  // Create blob and trigger download via anchor tag
+  var pdfBlob = doc.output('blob');
+  var url = URL.createObjectURL(pdfBlob);
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+}
+
+// ==================== RESET ====================
+function resetAll() {
+  selectedMenuKey = null;
+  document.getElementById('clientName').value = '';
+  document.getElementById('clientPhone').value = '';
+  document.getElementById('clientEmail').value = '';
+  document.getElementById('eventType').value = '';
+  document.getElementById('eventDate').value = '';
+  document.getElementById('eventTime').value = '';
+  document.getElementById('guestCount').value = '';
+  document.getElementById('observations').value = '';
+  goToPage('landing');
+}
+
+// ==================== GALLERY ====================
+var galleryImages = [
+  'https://pfst.cf2.poecdn.net/base/image/569ee240372da4c6530b4543ba0c3adb605cc19963584bbfb4bfc1ec527448de?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/b81d2a4fa4315ad3bed10288c3571ca0ac5a32da8ab6b66eab4a907e5c905cc3?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/e3c085b5da6741c5c2fd863bcb713b63562c866adc6111299ecc8592a8f56357?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/d1bb5480c2c56b21a11f2846aaf08b6cdb8da01a998beb27c6658f55e017b5d1?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/0b99761cb17eb8b354e3fe649fce27b87faaaf7b3056adca5c1fada8b0c3ba2e?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/3a468f0a2e3903bda03d487006ac2f9c6b6239713206506e9f801c3df79e8260?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/06b237abe96bbaa9d5747ce80e2956cdc703f1e5ed51895796d57bd69546605a?w=752&h=1336',
+  'https://pfst.cf2.poecdn.net/base/image/d18fd647356997c3a5b265f4af99de7e59af266c3b3c17e82ae6b61db32c67c1?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/ffdec1092b2e70a423eabd9efff89578523a7d3aa134756a0f88a59be1ba6e77?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/d8866c191c575e197473568e4c17df54dfdc4b59a2d7f19f2f6a14389787f114?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/0391519f18e3de2b36f6401ee3df33c058447c066fa31f25e780210979d0201d?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/4ce779819d0f191a17574b91f5e46f7a960f623ae1c76657b16c98556e5358b6?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/01b593b15036a483e2b6b0b50d8ceab9eff3b3725ca48f731cd9dc420436f30f?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/ad75fa16dc914a6b45e61d574abd630691518be668d5bb1bf93fb84239283fca?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/a4fd0ecb0670d4080f81105b464ea7a303f68fc01fa23cc7f9e54f361f89ed0c?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/b67a1de2f3723c4ce601e2e17bf697a15f183a112deae58d6cbfe61c2ef33b0b?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/29d4c51d87790326a6aa94236e798f86185edb11c1b2cfc74825fe8ad1339696?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/de2a309ab983833f3b08b9449523e737a47b8647ad5adb21be157c12c35814a3?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/0fd2c698af1d98b0620726ce3e899d18e63a33d83bf79776a726a59e6c6d42f6?w=1336&h=752',
+  'https://pfst.cf2.poecdn.net/base/image/251f191687d79b9564c16c9a3c0fe8c2c4a06925928fe671b390d53754c5c8eb?w=1280&h=854',
+  'https://pfst.cf2.poecdn.net/base/image/276b97e30872e05f3228b027bf848ba28d314b350572d3601724073ba1a67e2e?w=1280&h=854',
+  'https://pfst.cf2.poecdn.net/base/image/231f5cc4fd229b7833b16e27ca462b4e233e7c81445049cc77c309093a9fdca1?w=1280&h=854',
+  'https://pfst.cf2.poecdn.net/base/image/cccbc1cb082d4de60c70b82816a7146c8fb6c4be6b4420448592756175d0a569?w=853&h=1280',
+  'https://pfst.cf2.poecdn.net/base/image/9d97784aa10f595db530d10a92345e9a40aebd389b1a83447316efde96c73732?w=1280&h=960',
+  'https://pfst.cf2.poecdn.net/base/image/9928a0bb95871a80ef153987cbd5380527575ecd04efc7e652a553409867ea60?w=1280&h=720',
+  'https://pfst.cf2.poecdn.net/base/image/46ab2cc8c763c5347b48ecbb08466756d0866c0b3e8251b4749847ff7555cc4f?w=1280&h=720',
+  'https://pfst.cf2.poecdn.net/base/image/f1c8a7948c3421b9d2086d71d539f7d15312d02fd6e3375cf394732f46fd5969?w=720&h=1280',
+  'https://pfst.cf2.poecdn.net/base/image/70fd9c0f87d87a74b2d5b553ce5d36491a4b9e132ce8f05007d58d03108994db?w=1280&h=853',
+  'https://pfst.cf2.poecdn.net/base/image/64537d5a8c14f9355a37ba2a3f8fb668f1bddc48be3ca320dbc89efd8f7ee908?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/c99a901a80c645f622b34ae42414af090de203fd2bb556431d5190a5d7fc03c6?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/3c0b2d61777287d95e8f782f5bf2008f390ad2a9f7d734df09428c1410371507?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/effdba08d8f0d0e23985baaf740210a1151ff0359bd2f5ef8945baafe6520b1d?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/03a83c6e52bafd93975a2f7b7891fb8ded3716ba3a70554795ae7c05c8db4ddc?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/8f4a84ff34c493a9974d20d56b185f87b62623bd11dd4fc0e913ffae4003f878?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/d5c23d860b13d92413566cb2fed3a23ae53023775af355b0586ea328858e542b?w=1032&h=774',
+  'https://pfst.cf2.poecdn.net/base/image/d328dfc97d0934e3aaf24b0bbdb820b41e4905c2794655dae3b3d01d87682fe5?w=1599&h=1200',
+  'https://pfst.cf2.poecdn.net/base/image/aa42365c20828084563771cc3d90b3b4ce7413d32b2ebc6efbb60b2163863e34?w=1599&h=1200',
+  'https://pfst.cf2.poecdn.net/base/image/8c149f28c72340ca263fa5070fcb3b3378b3b1a7c8d56f207790b780ac9f1367?w=1599&h=1200',
+  'https://pfst.cf2.poecdn.net/base/image/9d84f971f4d38625f655ae9ebe1ce449a250a0395fe865e61c09ec5f7a90ae8e?w=1599&h=1200'
+];
+
+var galleryIndex = 0;
+var galleryOverlay = null;
+
+function openGallery() {
+  galleryIndex = 0;
+  var overlay = document.createElement('div');
+  overlay.className = 'gallery-overlay';
+  overlay.id = 'galleryOverlay';
+
+  var headerHtml = '<div class="gallery-header">' +
+    '<span class="gallery-header-title"><i class="fas fa-images" style="margin-right:8px;"></i>Nossos Eventos</span>' +
+    '<span class="gallery-counter" id="galleryCounter">1 / ' + galleryImages.length + '</span>' +
+    '<button class="gallery-close-btn" onclick="closeGallery()"><i class="fas fa-times"></i></button>' +
+  '</div>';
+
+  var viewerHtml = '<div class="gallery-viewer" id="galleryViewer">' +
+    '<button class="gallery-nav-btn prev" onclick="galleryPrev(event)"><i class="fas fa-chevron-left"></i></button>' +
+    '<img id="galleryMainImg" src="' + galleryImages[0] + '" alt="Foto do evento">' +
+    '<button class="gallery-nav-btn next" onclick="galleryNext(event)"><i class="fas fa-chevron-right"></i></button>' +
+  '</div>';
+
+  var thumbsHtml = '<div class="gallery-thumbs-wrap"><div class="gallery-thumbs" id="galleryThumbs">';
+  galleryImages.forEach(function(src, i) {
+    thumbsHtml += '<div class="gallery-thumb' + (i === 0 ? ' active' : '') + '" onclick="galleryGoTo(' + i + ')">' +
+      '<img src="' + src + '" alt="Miniatura ' + (i + 1) + '" loading="lazy">' +
+    '</div>';
+  });
+  thumbsHtml += '</div></div>';
+
+  overlay.innerHTML = headerHtml + viewerHtml + thumbsHtml;
+  document.body.appendChild(overlay);
+  galleryOverlay = overlay;
+
+  // Swipe support
+  var viewer = overlay.querySelector('#galleryViewer');
+  var startX = 0;
+  var diffX = 0;
+  viewer.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    diffX = 0;
+  }, { passive: true });
+  viewer.addEventListener('touchmove', function(e) {
+    diffX = e.touches[0].clientX - startX;
+  }, { passive: true });
+  viewer.addEventListener('touchend', function() {
+    if (Math.abs(diffX) > 50) {
+      if (diffX < 0) { galleryNext(null); }
+      else { galleryPrev(null); }
+    }
+  });
+
+  // Keyboard support
+  document.addEventListener('keydown', galleryKeyHandler);
+}
+
+function closeGallery() {
+  var overlay = document.getElementById('galleryOverlay');
+  if (overlay) overlay.remove();
+  galleryOverlay = null;
+  document.removeEventListener('keydown', galleryKeyHandler);
+}
+
+function galleryKeyHandler(e) {
+  if (!galleryOverlay) return;
+  if (e.key === 'Escape') closeGallery();
+  if (e.key === 'ArrowRight') galleryNext(null);
+  if (e.key === 'ArrowLeft') galleryPrev(null);
+}
+
+function galleryGoTo(idx) {
+  galleryIndex = idx;
+  var img = document.getElementById('galleryMainImg');
+  img.style.opacity = '0';
+  setTimeout(function() {
+    img.src = galleryImages[idx];
+    img.style.opacity = '1';
+  }, 150);
+
+  document.getElementById('galleryCounter').textContent = (idx + 1) + ' / ' + galleryImages.length;
+
+  var thumbs = document.querySelectorAll('.gallery-thumb');
+  thumbs.forEach(function(t, i) {
+    t.classList.toggle('active', i === idx);
+  });
+
+  // Scroll thumb into view
+  var activeThumb = thumbs[idx];
+  if (activeThumb) {
+    activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+}
+
+function galleryNext(e) {
+  if (e) e.stopPropagation();
+  var next = (galleryIndex + 1) % galleryImages.length;
+  galleryGoTo(next);
+}
+
+function galleryPrev(e) {
+  if (e) e.stopPropagation();
+  var prev = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
+  galleryGoTo(prev);
+}
+
+// ==================== INIT ====================
+renderMenuGrid();
 </script>
+
 
 
 
