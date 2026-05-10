@@ -1,0 +1,2967 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pamphilo Festas e Eventos - Sistema de Gestão</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    /* ============================================
+       CSS VARIABLES & THEME
+    ============================================ */
+    :root {
+      --gold: #C8A84E;
+      --gold-light: #E8D5A0;
+      --gold-dark: #9A7B30;
+      --navy: #0D1B2A;
+      --navy-light: #1B2D45;
+      --navy-medium: #162236;
+      --cream: #FDF8EF;
+      --cream-dark: #F0E6D3;
+      --burgundy: #7A2038;
+      --bg-main: #F4F0E8;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A2E;
+      --text-secondary: #5A5A6E;
+      --text-muted: #8E8E9E;
+      --border-color: #E8E0D0;
+      --shadow-sm: 0 2px 8px rgba(13,27,42,0.06);
+      --shadow-md: 0 4px 20px rgba(13,27,42,0.08);
+      --shadow-lg: 0 8px 40px rgba(13,27,42,0.12);
+      --sidebar-width: 260px;
+      --sidebar-collapsed: 70px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dark {
+      --bg-main: #0A0E17;
+      --bg-card: #131A28;
+      --text-primary: #E8E0D0;
+      --text-secondary: #A0A0B0;
+      --text-muted: #6A6A7A;
+      --border-color: #1E2A3E;
+      --cream: #131A28;
+      --cream-dark: #1B2438;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.25);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.35);
+    }
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* ============================================
+       SIDEBAR
+    ============================================ */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-light) 100%);
+      z-index: 1000;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(200,168,78,0.15);
+      text-align: center;
+    }
+
+    .sidebar-brand .brand-icon {
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 22px;
+      color: var(--navy);
+      box-shadow: 0 4px 15px rgba(200,168,78,0.3);
+    }
+
+    .sidebar-brand h5 {
+      color: var(--gold);
+      font-size: 16px;
+      margin: 0;
+      letter-spacing: 1px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+    }
+
+    .sidebar-brand small {
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 16px 12px;
+      list-style: none;
+    }
+
+    .sidebar-nav .nav-label {
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 16px 12px 8px;
+      font-weight: 600;
+    }
+
+    .sidebar-nav .nav-item {
+      margin-bottom: 4px;
+    }
+
+    .sidebar-nav .nav-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none; background: none; width: 100%; text-align: left;
+    }
+
+    .sidebar-nav .nav-link:hover {
+      background: rgba(200,168,78,0.1);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .sidebar-nav .nav-link.active {
+      background: linear-gradient(135deg, rgba(200,168,78,0.2), rgba(200,168,78,0.08));
+      color: var(--gold);
+      box-shadow: 0 2px 10px rgba(200,168,78,0.1);
+    }
+
+    .sidebar-nav .nav-link i {
+      width: 20px; text-align: center; font-size: 16px;
+    }
+
+    /* ============================================
+       MAIN CONTENT
+    ============================================ */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      transition: var(--transition);
+    }
+
+    .topbar {
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-card);
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .topbar h4 {
+      margin: 0; font-size: 22px;
+    }
+
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+
+    .mobile-toggle {
+      display: none;
+      background: none; border: none;
+      font-size: 22px; color: var(--text-primary);
+      cursor: pointer; padding: 8px;
+    }
+
+    .page-content { padding: 28px 32px; }
+
+    /* ============================================
+       CARDS & COMPONENTS
+    ============================================ */
+    .card-custom {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .card-custom:hover { box-shadow: var(--shadow-md); }
+
+    .card-custom .card-header-custom {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .card-custom .card-body-custom { padding: 24px; }
+
+    /* Stat Cards */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    }
+
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    .stat-card .stat-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-label {
+      color: var(--text-secondary);
+      font-size: 13px; font-weight: 500;
+    }
+
+    .icon-gold { background: rgba(200,168,78,0.12); color: var(--gold); }
+    .icon-burgundy { background: rgba(122,32,56,0.12); color: var(--burgundy); }
+    .icon-navy { background: rgba(13,27,42,0.1); color: var(--navy-light); }
+    .dark .icon-navy { background: rgba(200,168,78,0.08); color: var(--gold-light); }
+
+    /* ============================================
+       BUTTONS
+    ============================================ */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--navy);
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 10px 24px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: var(--navy);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(200,168,78,0.3);
+    }
+
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 9px 24px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-navy {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 10px 24px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .btn-navy:hover {
+      background: var(--navy-light);
+      color: #fff;
+    }
+
+    .dark .btn-navy {
+      background: var(--gold-dark);
+      color: var(--navy);
+    }
+
+    .dark .btn-navy:hover {
+      background: var(--gold);
+    }
+
+    /* ============================================
+       TABLES
+    ============================================ */
+    .table-custom {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .table-custom thead th {
+      background: var(--cream-dark);
+      padding: 14px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .table-custom tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    .table-custom tbody tr:hover {
+      background: rgba(200,168,78,0.04);
+    }
+
+    /* ============================================
+       FORMS
+    ============================================ */
+    .form-control-custom,
+    .form-select-custom {
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-family: 'DM Sans', sans-serif;
+      transition: var(--transition);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      width: 100%;
+    }
+
+    .form-control-custom:focus,
+    .form-select-custom:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,168,78,0.15);
+      outline: none;
+    }
+
+    .form-label-custom {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================
+       BADGE & TAGS
+    ============================================ */
+    .badge-gold {
+      background: rgba(200,168,78,0.15);
+      color: var(--gold-dark);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .dark .badge-gold { color: var(--gold); }
+
+    .badge-status {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-confirmado { background: rgba(46,160,67,0.12); color: #2ea043; }
+    .badge-pendente { background: rgba(200,168,78,0.15); color: var(--gold-dark); }
+    .badge-cancelado { background: rgba(200,50,50,0.12); color: #c83232; }
+
+    /* ============================================
+       MENU CARD
+    ============================================ */
+    .menu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      height: 100%;
+    }
+
+    .menu-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .menu-card .menu-header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      color: #fff;
+      text-align: center;
+    }
+
+    .menu-card .menu-header i { font-size: 32px; color: var(--gold); margin-bottom: 10px; }
+    .menu-card .menu-header h5 { margin: 0; color: #fff; font-size: 18px; }
+
+    .menu-card .menu-body { padding: 20px; }
+
+    .menu-card .menu-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--gold-dark);
+      text-align: center;
+      padding: 12px;
+      background: rgba(200,168,78,0.08);
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .dark .menu-card .menu-price { color: var(--gold); }
+
+    .menu-items-list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .menu-items-list::-webkit-scrollbar { width: 4px; }
+    .menu-items-list::-webkit-scrollbar-track { background: transparent; }
+    .menu-items-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+    .menu-item-tag {
+      display: inline-block;
+      background: var(--cream-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin: 2px;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       TOAST NOTIFICATION
+    ============================================ */
+    .toast-container {
+      position: fixed;
+      top: 20px; right: 20px;
+      z-index: 9999;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .toast-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 12px;
+      min-width: 300px;
+      animation: toastIn 0.3s ease;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    .toast-item.success { border-left-color: #2ea043; }
+    .toast-item.error { border-left-color: #c83232; }
+    .toast-item.warning { border-left-color: var(--gold); }
+
+    @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(40px); } }
+
+    /* ============================================
+       MODAL CUSTOM
+    ============================================ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 5000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-box {
+      background: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-box-lg { max-width: 700px; }
+
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .modal-header-custom {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .modal-header-custom h4 { margin: 0; font-size: 20px; }
+
+    .modal-close {
+      background: none; border: none;
+      font-size: 20px; color: var(--text-muted);
+      cursor: pointer; padding: 4px 8px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover { background: var(--cream-dark); color: var(--text-primary); }
+
+    .modal-body-custom { padding: 24px; }
+    .modal-footer-custom {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex; gap: 12px; justify-content: flex-end;
+    }
+
+    /* ============================================
+       WELCOME BANNER
+    ============================================ */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, var(--navy-medium) 100%);
+      border-radius: 20px;
+      padding: 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -20%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(200,168,78,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .welcome-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%; left: 10%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(200,168,78,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .welcome-banner h2 {
+      color: var(--gold);
+      font-size: 36px;
+      margin-bottom: 8px;
+      position: relative; z-index: 1;
+    }
+
+    .welcome-banner p {
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+      position: relative; z-index: 1;
+    }
+
+    /* ============================================
+       SECTION PAGES
+    ============================================ */
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn 0.3s ease; }
+
+    /* ============================================
+       ORCAMENTO PREVIEW
+    ============================================ */
+    .orcamento-preview {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .orcamento-preview .company-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .orcamento-preview .company-header h3 { color: var(--gold-dark); font-size: 26px; }
+    .dark .orcamento-preview .company-header h3 { color: var(--gold); }
+
+    .orcamento-preview .detail-row {
+      display: flex; justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .orcamento-preview .detail-label { color: var(--text-secondary); font-weight: 500; }
+    .orcamento-preview .detail-value { font-weight: 600; }
+
+    .orcamento-preview .total-row {
+      display: flex; justify-content: space-between;
+      padding: 20px 0 0;
+      margin-top: 12px;
+      border-top: 2px solid var(--gold);
+    }
+
+    .orcamento-preview .total-label { font-size: 18px; font-weight: 700; }
+    .orcamento-preview .total-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--gold-dark);
+    }
+    .dark .orcamento-preview .total-value { color: var(--gold); }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0; }
+      .mobile-toggle { display: block; }
+      .page-content { padding: 20px 16px; }
+      .topbar { padding: 12px 16px; }
+      .welcome-banner { padding: 28px 20px; }
+      .welcome-banner h2 { font-size: 26px; }
+    }
+
+    @media (max-width: 576px) {
+      .stat-card .stat-value { font-size: 26px; }
+      .orcamento-preview { padding: 20px; }
+    }
+
+    /* ============================================
+       SIDEBAR OVERLAY ON MOBILE
+    ============================================ */
+    .sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .sidebar-overlay.active { display: block; }
+
+    /* ============================================
+       EMPTY STATE
+    ============================================ */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state i { font-size: 48px; margin-bottom: 16px; color: var(--border-color); }
+    .empty-state h5 { color: var(--text-secondary); margin-bottom: 8px; }
+
+    /* ============================================
+       SEARCH INPUT
+    ============================================ */
+    .search-box {
+      position: relative;
+    }
+    .search-box input {
+      padding-left: 40px;
+    }
+    .search-box i {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-card { animation: cardIn 0.4s ease both; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       TOAST CONTAINER
+  ============================================ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ============================================
+       SIDEBAR OVERLAY (mobile)
+  ============================================ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ============================================
+       SIDEBAR
+  ============================================ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fas fa-champagne-glasses"></i></div>
+      <h5>PAMPHILO</h5>
+      <small>Festas &amp; Eventos</small>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="nav-label">Principal</li>
+      <li class="nav-item"><button class="nav-link active" data-page="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</button></li>
+      <li class="nav-item"><button class="nav-link" data-page="cardapios"><i class="fas fa-utensils"></i> Cardápios</button></li>
+      <li class="nav-item"><button class="nav-link" data-page="simulador"><i class="fas fa-calculator"></i> Simulador</button></li>
+
+      <li class="nav-label">Gestão</li>
+      <li class="nav-item"><button class="nav-link" data-page="clientes"><i class="fas fa-user-group"></i> Clientes</button></li>
+      <li class="nav-item"><button class="nav-link" data-page="agenda"><i class="fas fa-calendar-days"></i> Agenda</button></li>
+      <li class="nav-item"><button class="nav-link" data-page="orcamentos"><i class="fas fa-file-invoice-dollar"></i> Orçamentos</button></li>
+      <li class="nav-item"><button class="nav-link" data-page="contratos"><i class="fas fa-file-signature"></i> Contratos</button></li>
+
+      <li class="nav-label">Sistema</li>
+      <li class="nav-item"><button class="nav-link" data-page="admin"><i class="fas fa-gear"></i> Administração</button></li>
+    </ul>
+  </aside>
+
+  <!-- ============================================
+       MAIN CONTENT
+  ============================================ -->
+  <main class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+        <h4 id="pageTitle">Dashboard</h4>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge-gold" id="dateDisplay"></span>
+      </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <!-- ========== DASHBOARD ========== -->
+      <section class="page-section active" id="page-dashboard">
+        <div class="welcome-banner">
+          <h2><i class="fas fa-champagne-glasses"></i> Pamphilo Festas e Eventos</h2>
+          <p>Sistema de Gestão de Buffet — Bem-vindo ao seu painel de controle</p>
+        </div>
+        <div class="row g-4 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card animate-card stagger-1">
+              <div class="stat-icon icon-gold"><i class="fas fa-utensils"></i></div>
+              <div class="stat-value" id="statCardapios">0</div>
+              <div class="stat-label">Cardápios</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card animate-card stagger-2">
+              <div class="stat-icon icon-burgundy"><i class="fas fa-users"></i></div>
+              <div class="stat-value" id="statClientes">0</div>
+              <div class="stat-label">Clientes</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card animate-card stagger-3">
+              <div class="stat-icon icon-navy"><i class="fas fa-calendar-check"></i></div>
+              <div class="stat-value" id="statEventos">0</div>
+              <div class="stat-label">Eventos</div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="stat-card animate-card stagger-4">
+              <div class="stat-icon icon-gold"><i class="fas fa-file-signature"></i></div>
+              <div class="stat-value" id="statContratos">0</div>
+              <div class="stat-label">Contratos</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-calendar-days" style="color:var(--gold)"></i> Próximos Eventos</div>
+              <div class="card-body-custom" id="dashUpcomingEvents">
+                <div class="empty-state"><i class="fas fa-calendar-xmark"></i><h5>Nenhum evento agendado</h5><p>Cadastre clientes e eventos para vê-los aqui.</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-clock-rotate-left" style="color:var(--gold)"></i> Últimos Orçamentos</div>
+              <div class="card-body-custom" id="dashRecentOrcamentos">
+                <div class="empty-state"><i class="fas fa-file-circle-xmark"></i><h5>Nenhum orçamento gerado</h5><p>Crie orçamentos na seção dedicada.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CARDAPIOS ========== -->
+      <section class="page-section" id="page-cardapios">
+        <div class="row g-4" id="cardapiosGrid"></div>
+      </section>
+
+      <!-- ========== SIMULADOR ========== -->
+      <section class="page-section" id="page-simulador">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-calculator" style="color:var(--gold)"></i> Simulador de Orçamento</div>
+              <div class="card-body-custom">
+                <div class="mb-3">
+                  <label class="form-label-custom">Cardápio</label>
+                  <select class="form-select-custom" id="simCardapio"></select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Quantidade de Pessoas</label>
+                  <input type="number" class="form-control-custom" id="simPessoas" min="1" value="100" placeholder="Ex: 100">
+                </div>
+                <div class="mb-4">
+                  <label class="form-label-custom">Valor por Pessoa</label>
+                  <input type="text" class="form-control-custom" id="simValor" readonly="">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Deslocamento (R$)</label>
+                  <input type="number" class="form-control-custom" id="simDeslocamento" min="0" step="0.01" value="0" placeholder="Ex: 50.00">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Garçom (R$)</label>
+                  <input type="number" class="form-control-custom" id="simGarcom" min="0" step="0.01" value="0" placeholder="Ex: 100.00">
+                </div>
+                <button class="btn-gold w-100" id="simCalcular"><i class="fas fa-calculator me-2"></i>Calcular Orçamento</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-receipt" style="color:var(--gold)"></i> Resultado</div>
+              <div class="card-body-custom" id="simResultado">
+                <div class="empty-state">
+                  <i class="fas fa-chart-line"></i>
+                  <h5>Selecione um cardápio e clique em calcular</h5>
+                  <p>O resultado aparecerá aqui.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CLIENTES ========== -->
+      <section class="page-section" id="page-clientes">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <div class="search-box" style="max-width:320px;flex:1;">
+            <i class="fas fa-search"></i>
+            <input type="text" class="form-control-custom" id="clienteSearch" placeholder="Buscar clientes...">
+          </div>
+          <button class="btn-gold" id="btnNovoCliente"><i class="fas fa-plus me-2"></i>Novo Cliente</button>
+        </div>
+        <div class="card-custom">
+          <div class="card-body-custom" style="overflow-x:auto;">
+            <table class="table-custom" id="clientesTable">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Telefone</th>
+                  <th>Email</th>
+                  <th>Tipo Evento</th>
+                  <th>Data</th>
+                  <th>Pessoas</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="clientesBody"></tbody>
+            </table>
+            <div class="empty-state" id="clientesEmpty">
+              <i class="fas fa-user-plus"></i>
+              <h5>Nenhum cliente cadastrado</h5>
+              <p>Clique em "Novo Cliente" para começar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== AGENDA ========== -->
+      <section class="page-section" id="page-agenda">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+          <h5 style="margin:0;">Todos os Eventos Agendados</h5>
+          <div class="d-flex gap-2">
+            <select class="form-select-custom" id="agendaFilter" style="width:auto;">
+              <option value="todos">Todos</option>
+              <option value="confirmado">Confirmados</option>
+              <option value="pendente">Pendentes</option>
+              <option value="cancelado">Cancelados</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-custom">
+          <div class="card-body-custom" style="overflow-x:auto;">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Cliente</th>
+                  <th>Tipo</th>
+                  <th>Pessoas</th>
+                  <th>Cardápio</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="agendaBody"></tbody>
+            </table>
+            <div class="empty-state" id="agendaEmpty">
+              <i class="fas fa-calendar-xmark"></i>
+              <h5>Nenhum evento na agenda</h5>
+              <p>Eventos aparecem aqui quando clientes são cadastrados.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ORCAMENTOS ========== -->
+      <section class="page-section" id="page-orcamentos">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-file-invoice-dollar" style="color:var(--gold)"></i> Gerar Orçamento</div>
+              <div class="card-body-custom">
+                <div class="mb-3">
+                  <label class="form-label-custom">Cliente</label>
+                  <select class="form-select-custom" id="orcCliente"><option value="">Selecione um cliente</option></select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Cardápio</label>
+                  <select class="form-select-custom" id="orcCardapio"></select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Nº de Pessoas</label>
+                  <input type="number" class="form-control-custom" id="orcPessoas" min="1" value="100">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Valor por Pessoa (R$)</label>
+                  <input type="text" class="form-control-custom" id="orcValorPessoa" readonly="">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Deslocamento (R$)</label>
+                  <input type="number" class="form-control-custom" id="orcDeslocamento" min="0" step="0.01" value="0" placeholder="Ex: 50.00">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Garçom (R$)</label>
+                  <input type="number" class="form-control-custom" id="orcGarcom" min="0" step="0.01" value="0" placeholder="Ex: 100.00">
+                </div>
+                <div class="mb-4">
+                  <label class="form-label-custom">Observações</label>
+                  <textarea class="form-control-custom" id="orcObs" rows="3" placeholder="Observações adicionais..."></textarea>
+                </div>
+                <button class="btn-gold w-100" id="btnGerarOrc"><i class="fas fa-file-circle-plus me-2"></i>Gerar Orçamento</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div id="orcPreviewArea">
+              <div class="card-custom">
+                <div class="card-body-custom">
+                  <div class="empty-state">
+                    <i class="fas fa-file-invoice"></i>
+                    <h5>Preencha os dados e gere um orçamento</h5>
+                    <p>A prévia do orçamento aparecerá aqui.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- LISTA DE ORCAMENTOS SALVOS -->
+            <div class="card-custom mt-4">
+              <div class="card-header-custom"><i class="fas fa-list" style="color:var(--gold)"></i> Orçamentos Gerados</div>
+              <div class="card-body-custom" id="orcListArea">
+                <div class="empty-state" id="orcListEmpty">
+                  <i class="fas fa-file-circle-xmark"></i>
+                  <h5>Nenhum orçamento gerado ainda</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CONTRATOS ========== -->
+      <section class="page-section" id="page-contratos">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="card-custom">
+              <div class="card-header-custom"><i class="fas fa-file-signature" style="color:var(--gold)"></i> Gerar Contrato</div>
+              <div class="card-body-custom">
+                <div class="mb-3">
+                  <label class="form-label-custom">Cliente *</label>
+                  <select class="form-select-custom" id="ctrCliente"><option value="">Selecione um cliente</option></select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">CPF / CNPJ do Contratante *</label>
+                  <input type="text" class="form-control-custom" id="ctrCpfCnpj" placeholder="000.000.000-00 ou 00.000.000/0000-00">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Endereço do Contratante</label>
+                  <input type="text" class="form-control-custom" id="ctrEndereco" placeholder="Rua, número, bairro, cidade - UF">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Cardápio *</label>
+                  <select class="form-select-custom" id="ctrCardapio"></select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Nº de Pessoas *</label>
+                  <input type="number" class="form-control-custom" id="ctrPessoas" min="1" value="100">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Valor por Pessoa (R$)</label>
+                  <input type="text" class="form-control-custom" id="ctrValorPessoa" readonly="">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Local do Evento *</label>
+                  <input type="text" class="form-control-custom" id="ctrLocal" placeholder="Nome e endereço do local">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Horário do Evento</label>
+                  <input type="text" class="form-control-custom" id="ctrHorario" placeholder="Ex: 19:00 às 23:00">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-custom">Forma de Pagamento</label>
+                  <select class="form-select-custom" id="ctrPagamento">
+                    <option value="A vista">À Vista</option>
+                    <option value="50% entrada + 50% no evento">50% entrada + 50% no evento</option>
+                    <option value="30% entrada + 70% no evento">30% entrada + 70% no evento</option>
+                    <option value="3x iguais">3x parcelas iguais</option>
+                    <option value="A combinar">A combinar</option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label-custom">Observações Adicionais</label>
+                  <textarea class="form-control-custom" id="ctrObs" rows="3" placeholder="Cláusulas ou condições especiais..."></textarea>
+                </div>
+                <button class="btn-gold w-100" id="btnGerarContrato"><i class="fas fa-file-signature me-2"></i>Gerar Contrato</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div id="ctrPreviewArea">
+              <div class="card-custom">
+                <div class="card-body-custom">
+                  <div class="empty-state">
+                    <i class="fas fa-file-signature"></i>
+                    <h5>Preencha os dados para gerar um contrato</h5>
+                    <p>A prévia e o PDF do contrato aparecerão aqui.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-custom mt-4">
+              <div class="card-header-custom"><i class="fas fa-list" style="color:var(--gold)"></i> Contratos Gerados</div>
+              <div class="card-body-custom" id="ctrListArea">
+                <div class="empty-state" id="ctrListEmpty">
+                  <i class="fas fa-file-circle-xmark"></i>
+                  <h5>Nenhum contrato gerado ainda</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ADMIN ========== -->
+      <section class="page-section" id="page-admin">
+        <div id="adminLocked">
+          <div class="card-custom" style="max-width:420px;margin:60px auto;">
+            <div class="card-body-custom text-center">
+              <i class="fas fa-lock" style="font-size:48px;color:var(--gold);margin-bottom:16px;"></i>
+              <h4>Painel Administrativo</h4>
+              <p style="color:var(--text-secondary);margin-bottom:24px;">Insira a senha de administrador para acessar.</p>
+              <div class="mb-3">
+                <input type="password" class="form-control-custom" id="adminPass" placeholder="Senha">
+              </div>
+              <button class="btn-gold w-100" id="btnAdminLogin"><i class="fas fa-right-to-bracket me-2"></i>Acessar</button>
+              <p style="color:var(--text-muted);font-size:12px;margin-top:12px;">Senha padrão: pamphilo2024</p>
+            </div>
+          </div>
+        </div>
+        <div id="adminPanel" style="display:none;">
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <h5 style="margin:0;"><i class="fas fa-gear me-2" style="color:var(--gold)"></i>Gerenciar Cardápios</h5>
+            <div class="d-flex gap-2">
+              <button class="btn-outline-gold" id="btnAdminLogout"><i class="fas fa-right-from-bracket me-2"></i>Sair</button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <select class="form-select-custom" id="adminCardapioSelect" style="max-width:350px;"></select>
+          </div>
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <div class="card-custom">
+                <div class="card-header-custom"><i class="fas fa-tag" style="color:var(--gold)"></i> Preço por Pessoa</div>
+                <div class="card-body-custom">
+                  <div class="mb-3">
+                    <label class="form-label-custom">Valor (R$)</label>
+                    <input type="number" class="form-control-custom" id="adminPreco" min="0" step="0.01">
+                  </div>
+                  <button class="btn-gold w-100" id="btnSalvarPreco"><i class="fas fa-floppy-disk me-2"></i>Salvar Preço</button>
+                </div>
+              </div>
+              <div class="card-custom mt-4">
+                <div class="card-header-custom"><i class="fas fa-plus" style="color:var(--gold)"></i> Adicionar Item</div>
+                <div class="card-body-custom">
+                  <div class="mb-3">
+                    <label class="form-label-custom">Nome do Item</label>
+                    <input type="text" class="form-control-custom" id="adminNovoItem" placeholder="Ex: Marguerita Especial">
+                  </div>
+                  <button class="btn-gold w-100" id="btnAddItem"><i class="fas fa-plus me-2"></i>Adicionar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="card-custom">
+                <div class="card-header-custom"><i class="fas fa-list-check" style="color:var(--gold)"></i> Itens do Cardápio</div>
+                <div class="card-body-custom" id="adminItemsList"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ============================================
+       DARK MODE DETECTION
+    ============================================ */
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(event) {
+      if (event.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+
+    /* ============================================
+       DATA STORE (in-memory database)
+    ============================================ */
+    var DB = {
+      adminPassword: 'pamphilo2024',
+      adminUnlocked: false,
+      nextClienteId: 1,
+      nextOrcamentoId: 1,
+      nextContratoId: 1,
+
+      cardapios: [
+        {
+          id: 1,
+          nome: 'Cardápio de Pizza',
+          icon: 'fa-pizza-slice',
+          preco: 65,
+          itens: [
+            'ATUM COM CEBOLA','ATUM COM PROVOLONE','ALHO E ÓLEO','ABOBRINHA','ALICHE','ALFACE',
+            'BAIANA','BAIANA COM CATUPIRY E ALHO','BRÓCOLIS','BERINJELA','CALABRESA','CATUPIRY',
+            'CARNE SECA','COSTELA','ESCONDIDINHO DE CALABRESA','ESCONDIDINHO DE FRANGO','ESCAROLA',
+            'ESPINAFRE','FRANGO COM CATUPIRY E MILHO','FRANGO COM BACON','FRANGO XADREZ',
+            'FILÉ COM GORGONZOLA','FILÉ COM CHEDDAR','FILÉ COM CATUPIRY','LOMBINHO COM CATUPIRY',
+            'LOMBINHO COM CHEDDAR','MUSSARELA','MARGUERITA','MAGNIFICA','MARAVILHOSA',
+            'MORTADELA COM LIMÃO','PALMITO ESPECIALE','PORTUGUESA','PEITO DE PERU COM ALHO PORÓ',
+            'PERA COM GORGONZOLA','PEPERONE','RÚCULA COM TOMATE SECO','SALAME','SHITAKE COM SHIMEJI',
+            '— DOCES —',
+            'BANANA COM DOCE DE LEITE','BANANA COM CANELA','BEIJINHO','BRIGADEIRO',
+            'CHOCOLATE COM MORANGO','CHOCOLATE COM PAÇOCA','SENSAÇÃO'
+          ]
+        },
+        {
+          id: 2,
+          nome: 'Cardápio de Boteco',
+          icon: 'fa-beer-mug-empty',
+          preco: 60,
+          itens: [
+            'LANCHINHO DE CARNE LOUCA','CALABRESA ACEBOLADA','FRANGO CROCANTE',
+            'MINI PASTEL','COXINHA','POLENTA','BATATA FRITA'
+          ]
+        },
+        {
+          id: 3,
+          nome: 'Cardápio Feijoada',
+          icon: 'fa-bowl-food',
+          preco: 70,
+          itens: [
+            'FEIJOADA COMPLETA','ARROZ BRANCO','COUVE REFOGADA','FAROFA CROCANTE',
+            'TORRESMO','LINGUIÇA DEFUMADA','LOMBO','LARANJA FATIADA','VINAGRETE','MOLHO DE PIMENTA'
+          ]
+        },
+        {
+          id: 4,
+          nome: 'Cardápio 1',
+          icon: 'fa-plate-wheat',
+          preco: 55,
+          itens: [
+            'SALADA CAESAR','ARROZ À GREGA','FILÉ DE FRANGO GRELHADO','BATATA RÚSTICA',
+            'FAROFA ESPECIAL','VINAGRETE','PUDIM DE LEITE'
+          ]
+        },
+        {
+          id: 5,
+          nome: 'Cardápio 2',
+          icon: 'fa-drumstick-bite',
+          preco: 75,
+          itens: [
+            'CARPACCIO','RISOTO DE CAMARÃO','MEDALHÃO AO MOLHO MADEIRA','LEGUMES GRELHADOS',
+            'ARROZ BRANCO','PETIT GATEAU'
+          ]
+        },
+        {
+          id: 6,
+          nome: 'Cardápio 3',
+          icon: 'fa-shrimp',
+          preco: 80,
+          itens: [
+            'BRUSCHETTA DE TOMATE','CAMARÃO NA MORANGA','SALMÃO GRELHADO','ARROZ DE BRÓCOLIS',
+            'BATATA SAUTÉ','MOUSSE DE MARACUJÁ'
+          ]
+        },
+        {
+          id: 7,
+          nome: 'Cardápio 4',
+          icon: 'fa-fire-burner',
+          preco: 50,
+          itens: [
+            'ESPETINHO DE CARNE','ESPETINHO DE FRANGO','LINGUIÇA TOSCANA','ARROZ CARRETEIRO',
+            'VINAGRETE','MANDIOCA FRITA','PÃO DE ALHO'
+          ]
+        }
+      ],
+
+      clientes: [],
+      orcamentos: [],
+      contratos: []
+    };
+
+    // Load from localStorage
+    var storedDB = localStorage.getItem('pamphiloDB');
+    if (storedDB) {
+      var parsed = JSON.parse(storedDB);
+      DB.clientes = parsed.clientes || [];
+      DB.orcamentos = parsed.orcamentos || [];
+      DB.contratos = parsed.contratos || [];
+      DB.nextClienteId = parsed.nextClienteId || 1;
+      DB.nextOrcamentoId = parsed.nextOrcamentoId || 1;
+      DB.nextContratoId = parsed.nextContratoId || 1;
+      DB.adminUnlocked = parsed.adminUnlocked || false;
+    }
+
+    function saveDB() {
+      localStorage.setItem('pamphiloDB', JSON.stringify({
+        clientes: DB.clientes,
+        orcamentos: DB.orcamentos,
+        contratos: DB.contratos,
+        nextClienteId: DB.nextClienteId,
+        nextOrcamentoId: DB.nextOrcamentoId,
+        nextContratoId: DB.nextContratoId,
+        adminUnlocked: DB.adminUnlocked
+      }));
+    }
+
+    /* ============================================
+       UTILITY FUNCTIONS
+    ============================================ */
+
+    /** Show toast notification */
+    function showToast(message, type) {
+      type = type || 'success';
+      var container = document.getElementById('toastContainer');
+      var toast = document.createElement('div');
+      toast.className = 'toast-item ' + type;
+      var iconClass = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-circle-xmark' : 'fa-triangle-exclamation';
+      toast.innerHTML = '<i class="fas ' + iconClass + '"></i> ' + message;
+      container.appendChild(toast);
+      setTimeout(function() {
+        toast.style.animation = 'toastOut 0.3s ease forwards';
+        setTimeout(function() { toast.remove(); }, 300);
+      }, 3000);
+    }
+
+    /** Show confirm dialog (replaces confirm()) */
+    function showConfirmDialog(title, message, onConfirm) {
+      var overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.innerHTML =
+        '<div class="modal-box">' +
+          '<div class="modal-header-custom"><h4>' + title + '</h4><button class="modal-close" data-action="close">&times;</button></div>' +
+          '<div class="modal-body-custom"><p style="color:var(--text-secondary)">' + message + '</p></div>' +
+          '<div class="modal-footer-custom">' +
+            '<button class="btn-navy" data-action="cancel">Cancelar</button>' +
+            '<button class="btn-gold" data-action="confirm">Confirmar</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', function(e) {
+        var action = e.target.getAttribute('data-action');
+        if (action === 'close' || action === 'cancel') {
+          overlay.remove();
+        } else if (action === 'confirm') {
+          overlay.remove();
+          onConfirm();
+        }
+      });
+    }
+
+    /** Format currency */
+    function formatCurrency(value) {
+      return 'R$ ' + Number(value).toFixed(2).replace('.', ',');
+    }
+
+    /** Format date */
+    function formatDate(dateStr) {
+      if (!dateStr) return '—';
+      var parts = dateStr.split('-');
+      return parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+
+    /** Get cardapio by ID */
+    function getCardapio(id) {
+      return DB.cardapios.find(function(c) { return c.id === id; });
+    }
+
+    /** Get cliente by ID */
+    function getCliente(id) {
+      return DB.clientes.find(function(c) { return c.id === id; });
+    }
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    var currentPage = 'dashboard';
+    var pageTitles = {
+      dashboard: 'Dashboard',
+      cardapios: 'Cardápios',
+      simulador: 'Simulador de Orçamento',
+      clientes: 'Clientes',
+      agenda: 'Agenda de Eventos',
+      orcamentos: 'Orçamentos',
+      contratos: 'Contratos',
+      admin: 'Administração'
+    };
+
+    function navigateTo(page) {
+      currentPage = page;
+      // Update nav links
+      document.querySelectorAll('.sidebar-nav .nav-link').forEach(function(link) {
+        link.classList.toggle('active', link.getAttribute('data-page') === page);
+      });
+      // Update page sections
+      document.querySelectorAll('.page-section').forEach(function(sec) {
+        sec.classList.toggle('active', sec.id === 'page-' + page);
+      });
+      // Update title
+      document.getElementById('pageTitle').textContent = pageTitles[page] || page;
+      // Close sidebar on mobile
+      closeSidebar();
+      // Refresh page data
+      refreshPage(page);
+    }
+
+    function refreshPage(page) {
+      if (page === 'dashboard') renderDashboard();
+      else if (page === 'cardapios') renderCardapios();
+      else if (page === 'simulador') renderSimuladorSelects();
+      else if (page === 'clientes') renderClientes();
+      else if (page === 'agenda') renderAgenda();
+      else if (page === 'orcamentos') renderOrcamentosPage();
+      else if (page === 'contratos') renderContratosPage();
+      else if (page === 'admin') renderAdminPage();
+    }
+
+    // Sidebar nav click
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        navigateTo(this.getAttribute('data-page'));
+      });
+    });
+
+    // Mobile sidebar toggle
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebarOverlay');
+
+    document.getElementById('mobileToggle').addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', closeSidebar);
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+
+    /* ============================================
+       DATE DISPLAY
+    ============================================ */
+    (function() {
+      var now = new Date();
+      var dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+      var meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      document.getElementById('dateDisplay').textContent =
+        dias[now.getDay()] + ', ' + now.getDate() + ' ' + meses[now.getMonth()] + ' ' + now.getFullYear();
+    })();
+
+    /* ============================================
+       DASHBOARD
+    ============================================ */
+    function renderDashboard() {
+      document.getElementById('statCardapios').textContent = DB.cardapios.length;
+      document.getElementById('statClientes').textContent = DB.clientes.length;
+      // Count events
+      var eventCount = DB.clientes.filter(function(c) { return c.dataEvento; }).length;
+      document.getElementById('statEventos').textContent = eventCount;
+      document.getElementById('statContratos').textContent = DB.contratos.length;
+
+      // Upcoming events
+      var evContainer = document.getElementById('dashUpcomingEvents');
+      var upcoming = DB.clientes.filter(function(c) { return c.dataEvento; })
+        .sort(function(a, b) { return a.dataEvento.localeCompare(b.dataEvento); })
+        .slice(0, 5);
+
+      if (upcoming.length === 0) {
+        evContainer.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-xmark"></i><h5>Nenhum evento agendado</h5><p>Cadastre clientes e eventos para vê-los aqui.</p></div>';
+      } else {
+        var html = '<table class="table-custom"><thead><tr><th>Data</th><th>Cliente</th><th>Tipo</th><th>Pessoas</th></tr></thead><tbody>';
+        upcoming.forEach(function(c) {
+          html += '<tr><td>' + formatDate(c.dataEvento) + '</td><td>' + escapeHtml(c.nome) + '</td><td>' + escapeHtml(c.tipoEvento) + '</td><td>' + c.qtdPessoas + '</td></tr>';
+        });
+        html += '</tbody></table>';
+        evContainer.innerHTML = html;
+      }
+
+      // Recent orcamentos
+      var orcContainer = document.getElementById('dashRecentOrcamentos');
+      var recent = DB.orcamentos.slice(-5).reverse();
+      if (recent.length === 0) {
+        orcContainer.innerHTML = '<div class="empty-state"><i class="fas fa-file-circle-xmark"></i><h5>Nenhum orçamento gerado</h5><p>Crie orçamentos na seção dedicada.</p></div>';
+      } else {
+        var html2 = '';
+        recent.forEach(function(o) {
+          html2 += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-color);">' +
+            '<div><strong>' + escapeHtml(o.clienteNome) + '</strong><br><small style="color:var(--text-muted)">' + escapeHtml(o.cardapioNome) + ' — ' + formatDate(o.data) + '</small></div>' +
+            '<span style="font-weight:700;color:var(--gold-dark)">' + formatCurrency(o.valorTotal) + '</span>' +
+          '</div>';
+        });
+        orcContainer.innerHTML = html2;
+      }
+    }
+
+    /* ============================================
+       CARDAPIOS VIEW
+    ============================================ */
+    function renderCardapios() {
+      var grid = document.getElementById('cardapiosGrid');
+      var html = '';
+      DB.cardapios.forEach(function(c) {
+        var itemsHtml = '';
+        var displayItems = c.itens.slice(0, 12);
+        displayItems.forEach(function(item) {
+          if (item.startsWith('—')) {
+            itemsHtml += '<span class="menu-item-tag" style="background:var(--gold);color:var(--navy);font-weight:600;">' + escapeHtml(item) + '</span>';
+          } else {
+            itemsHtml += '<span class="menu-item-tag">' + escapeHtml(item) + '</span>';
+          }
+        });
+        if (c.itens.length > 12) {
+          itemsHtml += '<span class="menu-item-tag" style="font-weight:600;">+' + (c.itens.length - 12) + ' itens</span>';
+        }
+
+        html += '<div class="col-sm-6 col-xl-4">' +
+          '<div class="menu-card animate-card" onclick="showCardapioDetail(' + c.id + ')">' +
+            '<div class="menu-header"><i class="fas ' + c.icon + '"></i><h5>' + escapeHtml(c.nome) + '</h5></div>' +
+            '<div class="menu-body">' +
+              '<div class="menu-items-list">' + itemsHtml + '</div>' +
+              '<div class="menu-price">' + formatCurrency(c.preco) + ' <small style="font-size:14px;font-weight:400;">/ pessoa</small></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      });
+      grid.innerHTML = html;
+    }
+
+    /** Show full cardapio detail in modal */
+    function showCardapioDetail(id) {
+      var c = getCardapio(id);
+      if (!c) return;
+
+      var itemsHtml = '';
+      c.itens.forEach(function(item, i) {
+        if (item.startsWith('—')) {
+          itemsHtml += '<tr><td colspan="2" style="font-weight:700;color:var(--gold-dark);background:rgba(200,168,78,0.08);text-align:center;">' + escapeHtml(item) + '</td></tr>';
+        } else {
+          itemsHtml += '<tr><td style="width:40px;color:var(--text-muted);">' + (i + 1) + '</td><td>' + escapeHtml(item) + '</td></tr>';
+        }
+      });
+
+      var overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.innerHTML =
+        '<div class="modal-box modal-box-lg">' +
+          '<div class="modal-header-custom">' +
+            '<h4><i class="fas ' + c.icon + ' me-2" style="color:var(--gold)"></i>' + escapeHtml(c.nome) + '</h4>' +
+            '<button class="modal-close" data-action="close">&times;</button>' +
+          '</div>' +
+          '<div class="modal-body-custom">' +
+            '<div style="text-align:center;margin-bottom:20px;">' +
+              '<span style="font-family:Cormorant Garamond,serif;font-size:32px;font-weight:700;color:var(--gold-dark);">' + formatCurrency(c.preco) + '</span>' +
+              '<span style="color:var(--text-muted);font-size:14px;"> / pessoa</span>' +
+            '</div>' +
+            '<table class="table-custom"><tbody>' + itemsHtml + '</tbody></table>' +
+          '</div>' +
+          '<div class="modal-footer-custom">' +
+            '<button class="btn-navy" data-action="close">Fechar</button>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', function(e) {
+        if (e.target.getAttribute('data-action') === 'close' || e.target === overlay) {
+          overlay.remove();
+        }
+      });
+    }
+
+    /* ============================================
+       SIMULADOR
+    ============================================ */
+    function renderSimuladorSelects() {
+      var sel = document.getElementById('simCardapio');
+      sel.innerHTML = '<option value="">Selecione um cardápio</option>';
+      DB.cardapios.forEach(function(c) {
+        sel.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + ' — ' + formatCurrency(c.preco) + '/pessoa</option>';
+      });
+    }
+
+    document.getElementById('simCardapio').addEventListener('change', function() {
+      var c = getCardapio(Number(this.value));
+      document.getElementById('simValor').value = c ? formatCurrency(c.preco) : '';
+    });
+
+    document.getElementById('simCalcular').addEventListener('click', function() {
+      var cardapioId = Number(document.getElementById('simCardapio').value);
+      var pessoas = parseInt(document.getElementById('simPessoas').value, 10);
+      var c = getCardapio(cardapioId);
+
+      if (!c) { showToast('Selecione um cardápio', 'warning'); return; }
+      if (!pessoas || pessoas < 1) { showToast('Informe a quantidade de pessoas', 'warning'); return; }
+
+      var deslocamento = parseFloat(document.getElementById('simDeslocamento').value) || 0;
+      var garcom = parseFloat(document.getElementById('simGarcom').value) || 0;
+      var total = (c.preco * pessoas) + deslocamento + garcom;
+
+      document.getElementById('simResultado').innerHTML =
+        '<div class="orcamento-preview">' +
+          '<div class="company-header"><h3>PAMPHILO FESTAS E EVENTOS</h3><p style="color:var(--text-muted);">Simulação de Orçamento</p></div>' +
+          '<div class="detail-row"><span class="detail-label">Cardápio</span><span class="detail-value">' + escapeHtml(c.nome) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Valor por pessoa</span><span class="detail-value">' + formatCurrency(c.preco) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Quantidade de pessoas</span><span class="detail-value">' + pessoas + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Deslocamento</span><span class="detail-value">' + formatCurrency(deslocamento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Garçom</span><span class="detail-value">' + formatCurrency(garcom) + '</span></div>' +
+          '<div class="total-row"><span class="total-label">Valor Total</span><span class="total-value">' + formatCurrency(total) + '</span></div>' +
+        '</div>';
+    });
+
+    /* ============================================
+       CLIENTES
+    ============================================ */
+    function renderClientes(filter) {
+      var body = document.getElementById('clientesBody');
+      var empty = document.getElementById('clientesEmpty');
+      var list = DB.clientes;
+      if (filter) {
+        var lc = filter.toLowerCase();
+        list = list.filter(function(c) {
+          return c.nome.toLowerCase().includes(lc) || c.email.toLowerCase().includes(lc) || c.telefone.includes(lc);
+        });
+      }
+
+      if (list.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+        document.getElementById('clientesTable').querySelector('thead').style.display = 'none';
+      } else {
+        empty.style.display = 'none';
+        document.getElementById('clientesTable').querySelector('thead').style.display = '';
+        var html = '';
+        list.forEach(function(c) {
+          html += '<tr>' +
+            '<td><strong>' + escapeHtml(c.nome) + '</strong></td>' +
+            '<td>' + escapeHtml(c.telefone) + '</td>' +
+            '<td>' + escapeHtml(c.email) + '</td>' +
+            '<td><span class="badge-gold">' + escapeHtml(c.tipoEvento) + '</span></td>' +
+            '<td>' + formatDate(c.dataEvento) + '</td>' +
+            '<td>' + c.qtdPessoas + '</td>' +
+            '<td>' +
+              '<button class="btn btn-sm" style="color:var(--gold);" onclick="editCliente(' + c.id + ')" title="Editar"><i class="fas fa-pen"></i></button>' +
+              '<button class="btn btn-sm" style="color:#c83232;" onclick="deleteCliente(' + c.id + ')" title="Excluir"><i class="fas fa-trash"></i></button>' +
+            '</td>' +
+          '</tr>';
+        });
+        body.innerHTML = html;
+      }
+    }
+
+    document.getElementById('clienteSearch').addEventListener('input', function() {
+      renderClientes(this.value);
+    });
+
+    document.getElementById('btnNovoCliente').addEventListener('click', function() {
+      showClienteForm();
+    });
+
+    function showClienteForm(cliente) {
+      var isEdit = !!cliente;
+      var overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.innerHTML =
+        '<div class="modal-box modal-box-lg">' +
+          '<div class="modal-header-custom"><h4>' + (isEdit ? 'Editar Cliente' : 'Novo Cliente') + '</h4><button class="modal-close" data-action="close">&times;</button></div>' +
+          '<div class="modal-body-custom">' +
+            '<div class="row g-3">' +
+              '<div class="col-md-6"><label class="form-label-custom">Nome *</label><input type="text" class="form-control-custom" id="frmNome" value="' + (isEdit ? escapeAttr(cliente.nome) : '') + '" /></div>' +
+              '<div class="col-md-6"><label class="form-label-custom">Telefone *</label><input type="tel" class="form-control-custom" id="frmTel" value="' + (isEdit ? escapeAttr(cliente.telefone) : '') + '" placeholder="(00) 00000-0000" /></div>' +
+              '<div class="col-md-6"><label class="form-label-custom">Email</label><input type="email" class="form-control-custom" id="frmEmail" value="' + (isEdit ? escapeAttr(cliente.email) : '') + '" /></div>' +
+              '<div class="col-md-6"><label class="form-label-custom">Tipo de Evento *</label>' +
+                '<select class="form-select-custom" id="frmTipo">' +
+                  '<option value="">Selecione</option>' +
+                  '<option value="Casamento"' + (isEdit && cliente.tipoEvento === 'Casamento' ? ' selected' : '') + '>Casamento</option>' +
+                  '<option value="Aniversário"' + (isEdit && cliente.tipoEvento === 'Aniversário' ? ' selected' : '') + '>Aniversário</option>' +
+                  '<option value="Corporativo"' + (isEdit && cliente.tipoEvento === 'Corporativo' ? ' selected' : '') + '>Corporativo</option>' +
+                  '<option value="Confraternização"' + (isEdit && cliente.tipoEvento === 'Confraternização' ? ' selected' : '') + '>Confraternização</option>' +
+                  '<option value="Formatura"' + (isEdit && cliente.tipoEvento === 'Formatura' ? ' selected' : '') + '>Formatura</option>' +
+                  '<option value="Chá de Bebê"' + (isEdit && cliente.tipoEvento === 'Chá de Bebê' ? ' selected' : '') + '>Chá de Bebê</option>' +
+                  '<option value="Outro"' + (isEdit && cliente.tipoEvento === 'Outro' ? ' selected' : '') + '>Outro</option>' +
+                '</select>' +
+              '</div>' +
+              '<div class="col-md-6"><label class="form-label-custom">Data do Evento *</label><input type="date" class="form-control-custom" id="frmData" value="' + (isEdit ? cliente.dataEvento : '') + '" /></div>' +
+              '<div class="col-md-6"><label class="form-label-custom">Quantidade de Pessoas *</label><input type="number" class="form-control-custom" id="frmQtd" min="1" value="' + (isEdit ? cliente.qtdPessoas : '') + '" /></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="modal-footer-custom">' +
+            '<button class="btn-navy" data-action="close">Cancelar</button>' +
+            '<button class="btn-gold" id="btnSaveCliente"><i class="fas fa-floppy-disk me-2"></i>Salvar</button>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(overlay);
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target.getAttribute('data-action') === 'close' || e.target === overlay) {
+          overlay.remove();
+        }
+      });
+
+      document.getElementById('btnSaveCliente').addEventListener('click', function() {
+        var nome = document.getElementById('frmNome').value.trim();
+        var tel = document.getElementById('frmTel').value.trim();
+        var email = document.getElementById('frmEmail').value.trim();
+        var tipo = document.getElementById('frmTipo').value;
+        var data = document.getElementById('frmData').value;
+        var qtd = parseInt(document.getElementById('frmQtd').value, 10);
+
+        if (!nome || !tel || !tipo || !data || !qtd) {
+          showToast('Preencha todos os campos obrigatórios (*)', 'warning');
+          return;
+        }
+
+        if (isEdit) {
+          cliente.nome = nome;
+          cliente.telefone = tel;
+          cliente.email = email;
+          cliente.tipoEvento = tipo;
+          cliente.dataEvento = data;
+          cliente.qtdPessoas = qtd;
+          showToast('Cliente atualizado com sucesso!', 'success');
+          saveDB();
+        } else {
+          DB.clientes.push({
+            id: DB.nextClienteId++,
+            nome: nome,
+            telefone: tel,
+            email: email,
+            tipoEvento: tipo,
+            dataEvento: data,
+            qtdPessoas: qtd,
+            status: 'pendente'
+          });
+          showToast('Cliente cadastrado com sucesso!', 'success');
+          saveDB();
+        }
+
+        overlay.remove();
+        renderClientes();
+      });
+    }
+
+    function editCliente(id) {
+      var c = getCliente(id);
+      if (c) showClienteForm(c);
+    }
+
+    function deleteCliente(id) {
+      showConfirmDialog('Excluir Cliente', 'Tem certeza que deseja excluir este cliente? Esta ação não pode ser desfeita.', function() {
+        DB.clientes = DB.clientes.filter(function(c) { return c.id !== id; });
+        showToast('Cliente excluído com sucesso!', 'success');
+        saveDB();
+        renderClientes();
+      });
+    }
+
+    /* ============================================
+       AGENDA
+    ============================================ */
+    function renderAgenda() {
+      var body = document.getElementById('agendaBody');
+      var empty = document.getElementById('agendaEmpty');
+      var filter = document.getElementById('agendaFilter').value;
+
+      var events = DB.clientes.filter(function(c) { return c.dataEvento; });
+      if (filter !== 'todos') {
+        events = events.filter(function(c) { return c.status === filter; });
+      }
+      events.sort(function(a, b) { return a.dataEvento.localeCompare(b.dataEvento); });
+
+      if (events.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        var html = '';
+        events.forEach(function(c) {
+          var orcamento = DB.orcamentos.find(function(o) { return o.clienteId === c.id; });
+          var cardapioNome = orcamento ? orcamento.cardapioNome : '—';
+          var statusClass = 'badge-' + c.status;
+          var statusLabel = c.status.charAt(0).toUpperCase() + c.status.slice(1);
+
+          html += '<tr>' +
+            '<td><strong>' + formatDate(c.dataEvento) + '</strong></td>' +
+            '<td>' + escapeHtml(c.nome) + '</td>' +
+            '<td><span class="badge-gold">' + escapeHtml(c.tipoEvento) + '</span></td>' +
+            '<td>' + c.qtdPessoas + '</td>' +
+            '<td>' + escapeHtml(cardapioNome) + '</td>' +
+            '<td><span class="badge-status ' + statusClass + '">' + statusLabel + '</span></td>' +
+            '<td>' +
+              '<select class="form-select-custom" style="width:auto;padding:6px 10px;font-size:12px;" onchange="changeStatus(' + c.id + ', this.value)">' +
+                '<option value="pendente"' + (c.status === 'pendente' ? ' selected' : '') + '>Pendente</option>' +
+                '<option value="confirmado"' + (c.status === 'confirmado' ? ' selected' : '') + '>Confirmado</option>' +
+                '<option value="cancelado"' + (c.status === 'cancelado' ? ' selected' : '') + '>Cancelado</option>' +
+              '</select>' +
+            '</td>' +
+          '</tr>';
+        });
+        body.innerHTML = html;
+      }
+    }
+
+    function changeStatus(clienteId, newStatus) {
+      var c = getCliente(clienteId);
+      if (c) {
+        c.status = newStatus;
+        showToast('Status atualizado!', 'success');
+        renderAgenda();
+      }
+    }
+
+    document.getElementById('agendaFilter').addEventListener('change', renderAgenda);
+
+    /* ============================================
+       ORCAMENTOS
+    ============================================ */
+    function renderOrcamentosPage() {
+      // Populate cliente select
+      var selCliente = document.getElementById('orcCliente');
+      selCliente.innerHTML = '<option value="">Selecione um cliente</option>';
+      DB.clientes.forEach(function(c) {
+        selCliente.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + '</option>';
+      });
+
+      // Populate cardapio select
+      var selCardapio = document.getElementById('orcCardapio');
+      selCardapio.innerHTML = '<option value="">Selecione um cardápio</option>';
+      DB.cardapios.forEach(function(c) {
+        selCardapio.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + ' — ' + formatCurrency(c.preco) + '/pessoa</option>';
+      });
+
+      // Render orcamentos list
+      renderOrcamentosList();
+    }
+
+    document.getElementById('orcCardapio').addEventListener('change', function() {
+      var c = getCardapio(Number(this.value));
+      document.getElementById('orcValorPessoa').value = c ? formatCurrency(c.preco) : '';
+    });
+
+    document.getElementById('orcCliente').addEventListener('change', function() {
+      var c = getCliente(Number(this.value));
+      if (c) {
+        document.getElementById('orcPessoas').value = c.qtdPessoas || 100;
+      }
+    });
+
+    document.getElementById('btnGerarOrc').addEventListener('click', function() {
+      var clienteId = Number(document.getElementById('orcCliente').value);
+      var cardapioId = Number(document.getElementById('orcCardapio').value);
+      var pessoas = parseInt(document.getElementById('orcPessoas').value, 10);
+      var obs = document.getElementById('orcObs').value.trim();
+      var deslocamento = parseFloat(document.getElementById('orcDeslocamento').value) || 0;
+      var garcom = parseFloat(document.getElementById('orcGarcom').value) || 0;
+
+      var cliente = getCliente(clienteId);
+      var cardapio = getCardapio(cardapioId);
+
+      if (!cliente) { showToast('Selecione um cliente', 'warning'); return; }
+      if (!cardapio) { showToast('Selecione um cardápio', 'warning'); return; }
+      if (!pessoas || pessoas < 1) { showToast('Informe a quantidade de pessoas', 'warning'); return; }
+
+      var valorTotal = (cardapio.preco * pessoas) + deslocamento + garcom;
+      var dataHoje = new Date().toISOString().split('T')[0];
+
+      var orc = {
+        id: DB.nextOrcamentoId++,
+        clienteId: clienteId,
+        clienteNome: cliente.nome,
+        clienteTel: cliente.telefone,
+        clienteEmail: cliente.email,
+        cardapioId: cardapioId,
+        cardapioNome: cardapio.nome,
+        pessoas: pessoas,
+        valorPessoa: cardapio.preco,
+        deslocamento: deslocamento,
+        garcom: garcom,
+        valorTotal: valorTotal,
+        data: dataHoje,
+        dataEvento: cliente.dataEvento,
+        tipoEvento: cliente.tipoEvento,
+        obs: obs
+      };
+
+      DB.orcamentos.push(orc);
+      saveDB();
+      showToast('Orçamento gerado com sucesso!', 'success');
+
+      // Show preview
+      renderOrcamentoPreview(orc);
+      renderOrcamentosList();
+    });
+
+    function renderOrcamentoPreview(orc) {
+      document.getElementById('orcPreviewArea').innerHTML =
+        '<div class="orcamento-preview">' +
+          '<div class="company-header">' +
+            '<h3>PAMPHILO FESTAS E EVENTOS</h3>' +
+            '<p style="color:var(--text-muted);">Orçamento #' + orc.id + '</p>' +
+          '</div>' +
+          '<div class="detail-row"><span class="detail-label">Cliente</span><span class="detail-value">' + escapeHtml(orc.clienteNome) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Telefone</span><span class="detail-value">' + escapeHtml(orc.clienteTel) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">' + escapeHtml(orc.clienteEmail) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Tipo de Evento</span><span class="detail-value">' + escapeHtml(orc.tipoEvento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Data do Evento</span><span class="detail-value">' + formatDate(orc.dataEvento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Cardápio</span><span class="detail-value">' + escapeHtml(orc.cardapioNome) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Nº de Pessoas</span><span class="detail-value">' + orc.pessoas + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Valor por Pessoa</span><span class="detail-value">' + formatCurrency(orc.valorPessoa) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Deslocamento</span><span class="detail-value">' + formatCurrency(orc.deslocamento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Garçom</span><span class="detail-value">' + formatCurrency(orc.garcom) + '</span></div>' +
+          (orc.obs ? '<div class="detail-row"><span class="detail-label">Observações</span><span class="detail-value">' + escapeHtml(orc.obs) + '</span></div>' : '') +
+          '<div class="total-row"><span class="total-label">Valor Total</span><span class="total-value">' + formatCurrency(orc.valorTotal) + '</span></div>' +
+        '</div>' +
+        '<div class="mt-3 text-end">' +
+          '<button class="btn-gold" onclick="gerarPDF(' + orc.id + ')"><i class="fas fa-file-pdf me-2"></i>Gerar PDF</button>' +
+        '</div>';
+    }
+
+    function renderOrcamentosList() {
+      var container = document.getElementById('orcListArea');
+      var empty = document.getElementById('orcListEmpty');
+
+      if (DB.orcamentos.length === 0) {
+        container.innerHTML = '';
+        container.appendChild(empty);
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      var html = '<table class="table-custom"><thead><tr><th>#</th><th>Cliente</th><th>Cardápio</th><th>Pessoas</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody>';
+      DB.orcamentos.slice().reverse().forEach(function(o) {
+        html += '<tr>' +
+          '<td>' + o.id + '</td>' +
+          '<td>' + escapeHtml(o.clienteNome) + '</td>' +
+          '<td>' + escapeHtml(o.cardapioNome) + '</td>' +
+          '<td>' + o.pessoas + '</td>' +
+          '<td><strong>' + formatCurrency(o.valorTotal) + '</strong></td>' +
+          '<td>' + formatDate(o.data) + '</td>' +
+          '<td>' +
+            '<button class="btn btn-sm" style="color:var(--gold);" onclick="viewOrcamento(' + o.id + ')" title="Visualizar"><i class="fas fa-eye"></i></button>' +
+            '<button class="btn btn-sm" style="color:var(--burgundy);" onclick="gerarPDF(' + o.id + ')" title="PDF"><i class="fas fa-file-pdf"></i></button>' +
+            '<button class="btn btn-sm" style="color:#c83232;" onclick="deleteOrcamento(' + o.id + ')" title="Excluir"><i class="fas fa-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function viewOrcamento(id) {
+      var orc = DB.orcamentos.find(function(o) { return o.id === id; });
+      if (orc) renderOrcamentoPreview(orc);
+    }
+
+    function deleteOrcamento(id) {
+      showConfirmDialog('Excluir Orçamento', 'Tem certeza que deseja excluir este orçamento?', function() {
+        DB.orcamentos = DB.orcamentos.filter(function(o) { return o.id !== id; });
+        showToast('Orçamento excluído!', 'success');
+        renderOrcamentosList();
+      });
+    }
+
+    /* ============================================
+       PDF GENERATION
+    ============================================ */
+    function gerarPDF(orcId) {
+      var orc = DB.orcamentos.find(function(o) { return o.id === orcId; });
+      if (!orc) { showToast('Orçamento não encontrado', 'error'); return; }
+
+      var jsPDF = window.jspdf.jsPDF;
+      var doc = new jsPDF();
+
+      // Header
+      doc.setFillColor(13, 27, 42);
+      doc.rect(0, 0, 210, 45, 'F');
+
+      doc.setTextColor(200, 168, 78);
+      doc.setFontSize(24);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PAMPHILO FESTAS E EVENTOS', 105, 22, { align: 'center' });
+
+      doc.setFontSize(11);
+      doc.setTextColor(180, 180, 190);
+      doc.text('Sistema de Gestão de Buffet', 105, 32, { align: 'center' });
+
+      // Gold line
+      doc.setDrawColor(200, 168, 78);
+      doc.setLineWidth(1);
+      doc.line(20, 50, 190, 50);
+
+      // Title
+      doc.setTextColor(13, 27, 42);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text('ORÇAMENTO #' + orc.id, 105, 62, { align: 'center' });
+
+      doc.setFontSize(10);
+      doc.setTextColor(120, 120, 130);
+      doc.text('Data de emissão: ' + formatDate(orc.data), 105, 70, { align: 'center' });
+
+      // Content
+      var y = 85;
+      var labelX = 25;
+      var valueX = 90;
+
+      function addRow(label, value) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(100, 100, 110);
+        doc.text(label, labelX, y);
+        doc.setTextColor(30, 30, 50);
+        doc.setFont('helvetica', 'bold');
+        doc.text(String(value), valueX, y);
+        y += 12;
+      }
+
+      // Section: Cliente
+      doc.setFillColor(244, 240, 232);
+      doc.rect(20, y - 6, 170, 10, 'F');
+      doc.setTextColor(13, 27, 42);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DADOS DO CLIENTE', labelX, y);
+      y += 14;
+
+      addRow('Cliente:', orc.clienteNome);
+      addRow('Telefone:', orc.clienteTel);
+      addRow('Email:', orc.clienteEmail || '—');
+      addRow('Tipo de Evento:', orc.tipoEvento);
+      addRow('Data do Evento:', formatDate(orc.dataEvento));
+
+      y += 4;
+
+      // Section: Orçamento
+      doc.setFillColor(244, 240, 232);
+      doc.rect(20, y - 6, 170, 10, 'F');
+      doc.setTextColor(13, 27, 42);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DETALHES DO ORÇAMENTO', labelX, y);
+      y += 14;
+
+      addRow('Cardápio:', orc.cardapioNome);
+      addRow('Nº de Pessoas:', String(orc.pessoas));
+      addRow('Valor por Pessoa:', formatCurrency(orc.valorPessoa));
+
+      if (orc.obs) {
+        addRow('Observações:', orc.obs);
+      }
+
+      y += 6;
+
+      // Total
+      doc.setDrawColor(200, 168, 78);
+      doc.setLineWidth(1);
+      doc.line(20, y, 190, y);
+      y += 14;
+
+      doc.setFillColor(13, 27, 42);
+      doc.rect(20, y - 10, 170, 20, 'F');
+      doc.setTextColor(200, 168, 78);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('VALOR TOTAL:', labelX, y + 2);
+      doc.setFontSize(18);
+      doc.text(formatCurrency(orc.valorTotal), 185, y + 2, { align: 'right' });
+
+      // Footer
+      doc.setTextColor(150, 150, 160);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Pamphilo Festas e Eventos — Orçamento válido por 15 dias', 105, 280, { align: 'center' });
+
+      // Download
+      doc.save('orcamento_' + orc.id + '_' + orc.clienteNome.replace(/\s+/g, '_') + '.pdf');
+      showToast('PDF gerado com sucesso!', 'success');
+    }
+
+    /* ============================================
+       CONTRATOS
+    ============================================ */
+    function renderContratosPage() {
+      var selCliente = document.getElementById('ctrCliente');
+      selCliente.innerHTML = '<option value="">Selecione um cliente</option>';
+      DB.clientes.forEach(function(c) {
+        selCliente.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + '</option>';
+      });
+
+      var selCardapio = document.getElementById('ctrCardapio');
+      selCardapio.innerHTML = '<option value="">Selecione um cardápio</option>';
+      DB.cardapios.forEach(function(c) {
+        selCardapio.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + ' — ' + formatCurrency(c.preco) + '/pessoa</option>';
+      });
+
+      renderContratosList();
+    }
+
+    document.getElementById('ctrCardapio').addEventListener('change', function() {
+      var c = getCardapio(Number(this.value));
+      document.getElementById('ctrValorPessoa').value = c ? formatCurrency(c.preco) : '';
+    });
+
+    document.getElementById('ctrCliente').addEventListener('change', function() {
+      var c = getCliente(Number(this.value));
+      if (c) {
+        document.getElementById('ctrPessoas').value = c.qtdPessoas || 100;
+      }
+    });
+
+    document.getElementById('btnGerarContrato').addEventListener('click', function() {
+      var clienteId = Number(document.getElementById('ctrCliente').value);
+      var cpfCnpj = document.getElementById('ctrCpfCnpj').value.trim();
+      var endereco = document.getElementById('ctrEndereco').value.trim();
+      var cardapioId = Number(document.getElementById('ctrCardapio').value);
+      var pessoas = parseInt(document.getElementById('ctrPessoas').value, 10);
+      var local = document.getElementById('ctrLocal').value.trim();
+      var horario = document.getElementById('ctrHorario').value.trim();
+      var pagamento = document.getElementById('ctrPagamento').value;
+      var obs = document.getElementById('ctrObs').value.trim();
+
+      var cliente = getCliente(clienteId);
+      var cardapio = getCardapio(cardapioId);
+
+      if (!cliente) { showToast('Selecione um cliente', 'warning'); return; }
+      if (!cpfCnpj) { showToast('Informe o CPF/CNPJ do contratante', 'warning'); return; }
+      if (!cardapio) { showToast('Selecione um cardápio', 'warning'); return; }
+      if (!pessoas || pessoas < 1) { showToast('Informe a quantidade de pessoas', 'warning'); return; }
+      if (!local) { showToast('Informe o local do evento', 'warning'); return; }
+
+      var valorTotal = cardapio.preco * pessoas;
+      var dataHoje = new Date().toISOString().split('T')[0];
+
+      var contrato = {
+        id: DB.nextContratoId++,
+        clienteId: clienteId,
+        clienteNome: cliente.nome,
+        clienteTel: cliente.telefone,
+        clienteEmail: cliente.email,
+        cpfCnpj: cpfCnpj,
+        endereco: endereco,
+        cardapioId: cardapioId,
+        cardapioNome: cardapio.nome,
+        cardapioItens: cardapio.itens.slice(),
+        pessoas: pessoas,
+        valorPessoa: cardapio.preco,
+        valorTotal: valorTotal,
+        dataContrato: dataHoje,
+        dataEvento: cliente.dataEvento,
+        tipoEvento: cliente.tipoEvento,
+        localEvento: local,
+        horario: horario || 'A definir',
+        pagamento: pagamento,
+        obs: obs
+      };
+
+      DB.contratos.push(contrato);
+      saveDB();
+      showToast('Contrato gerado com sucesso!', 'success');
+
+      renderContratoPreview(contrato);
+      renderContratosList();
+    });
+
+    function renderContratoPreview(ct) {
+      // Build menu items tags for preview
+      var itensHtml = '';
+      ct.cardapioItens.forEach(function(item) {
+        if (item.startsWith('—')) {
+          itensHtml += '<span class="menu-item-tag" style="background:var(--gold);color:var(--navy);font-weight:600;width:100%;text-align:center;display:block;margin:6px 0 2px;">' + escapeHtml(item) + '</span>';
+        } else {
+          itensHtml += '<span class="menu-item-tag">' + escapeHtml(item) + '</span>';
+        }
+      });
+
+      document.getElementById('ctrPreviewArea').innerHTML =
+        '<div class="orcamento-preview">' +
+          '<div class="company-header">' +
+            '<h3>PAMPHILO FESTAS E EVENTOS</h3>' +
+            '<p style="color:var(--text-muted);">Contrato + Orçamento + Cardápio</p>' +
+            '<p style="color:var(--text-muted);font-size:13px;">Contrato #' + ct.id + ' — ' + formatDate(ct.dataContrato) + '</p>' +
+          '</div>' +
+
+          '<!-- CONTRATO -->' +
+          '<div style="padding:12px 0;border-bottom:2px solid var(--gold);margin-bottom:12px;"><strong style="color:var(--gold-dark);font-size:15px;"><i class="fas fa-file-signature me-2"></i>CONTRATO</strong></div>' +
+          '<div class="detail-row"><span class="detail-label">Contratante</span><span class="detail-value">' + escapeHtml(ct.clienteNome) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">CPF/CNPJ</span><span class="detail-value">' + escapeHtml(ct.cpfCnpj) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Telefone</span><span class="detail-value">' + escapeHtml(ct.clienteTel) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">' + escapeHtml(ct.clienteEmail) + '</span></div>' +
+          (ct.endereco ? '<div class="detail-row"><span class="detail-label">Endereço</span><span class="detail-value">' + escapeHtml(ct.endereco) + '</span></div>' : '') +
+          '<div class="detail-row"><span class="detail-label">Evento</span><span class="detail-value">' + escapeHtml(ct.tipoEvento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Data</span><span class="detail-value">' + formatDate(ct.dataEvento) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Horário</span><span class="detail-value">' + escapeHtml(ct.horario) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Local</span><span class="detail-value">' + escapeHtml(ct.localEvento) + '</span></div>' +
+
+          '<!-- CARDÁPIO -->' +
+          '<div style="padding:12px 0;border-bottom:2px solid var(--gold);margin:16px 0 12px;"><strong style="color:var(--gold-dark);font-size:15px;"><i class="fas fa-utensils me-2"></i>CARDÁPIO: ' + escapeHtml(ct.cardapioNome).toUpperCase() + '</strong></div>' +
+          '<div style="margin-bottom:16px;">' + itensHtml + '</div>' +
+
+          '<!-- ORÇAMENTO -->' +
+          '<div style="padding:12px 0;border-bottom:2px solid var(--gold);margin-bottom:12px;"><strong style="color:var(--gold-dark);font-size:15px;"><i class="fas fa-file-invoice-dollar me-2"></i>ORÇAMENTO</strong></div>' +
+          '<div class="detail-row"><span class="detail-label">Nº de Convidados</span><span class="detail-value">' + ct.pessoas + ' pessoas</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Valor por Pessoa</span><span class="detail-value">' + formatCurrency(ct.valorPessoa) + '</span></div>' +
+          '<div class="detail-row"><span class="detail-label">Forma de Pagamento</span><span class="detail-value">' + escapeHtml(ct.pagamento) + '</span></div>' +
+          (ct.obs ? '<div class="detail-row"><span class="detail-label">Observações</span><span class="detail-value">' + escapeHtml(ct.obs) + '</span></div>' : '') +
+
+          '<!-- VALOR TOTAL -->' +
+          '<div class="total-row"><span class="total-label">VALOR TOTAL</span><span class="total-value">' + formatCurrency(ct.valorTotal) + '</span></div>' +
+        '</div>' +
+        '<div class="mt-3 d-flex flex-wrap gap-2 justify-content-end">' +
+          '<button class="btn-gold" onclick="gerarContratoPDF(' + ct.id + ')"><i class="fas fa-file-pdf me-2"></i>Baixar PDF Completo</button>' +
+        '</div>';
+    }
+
+    function renderContratosList() {
+      var container = document.getElementById('ctrListArea');
+      var empty = document.getElementById('ctrListEmpty');
+
+      if (DB.contratos.length === 0) {
+        container.innerHTML = '';
+        container.appendChild(empty);
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      var html = '<table class="table-custom"><thead><tr><th>#</th><th>Cliente</th><th>Evento</th><th>Data</th><th>Total</th><th>Ações</th></tr></thead><tbody>';
+      DB.contratos.slice().reverse().forEach(function(ct) {
+        html += '<tr>' +
+          '<td>' + ct.id + '</td>' +
+          '<td>' + escapeHtml(ct.clienteNome) + '</td>' +
+          '<td><span class="badge-gold">' + escapeHtml(ct.tipoEvento) + '</span></td>' +
+          '<td>' + formatDate(ct.dataEvento) + '</td>' +
+          '<td><strong>' + formatCurrency(ct.valorTotal) + '</strong></td>' +
+          '<td>' +
+            '<button class="btn btn-sm" style="color:var(--gold);" onclick="viewContrato(' + ct.id + ')" title="Visualizar"><i class="fas fa-eye"></i></button>' +
+            '<button class="btn btn-sm" style="color:var(--burgundy);" onclick="gerarContratoPDF(' + ct.id + ')" title="PDF"><i class="fas fa-file-pdf"></i></button>' +
+            '<button class="btn btn-sm" style="color:#c83232;" onclick="deleteContrato(' + ct.id + ')" title="Excluir"><i class="fas fa-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function viewContrato(id) {
+      var ct = DB.contratos.find(function(c) { return c.id === id; });
+      if (ct) renderContratoPreview(ct);
+    }
+
+    function deleteContrato(id) {
+      showConfirmDialog('Excluir Contrato', 'Tem certeza que deseja excluir este contrato?', function() {
+        DB.contratos = DB.contratos.filter(function(c) { return c.id !== id; });
+        showToast('Contrato excluído!', 'success');
+        saveDB();
+        renderContratosList();
+      });
+    }
+
+    /* ============================================
+       CONTRACT PDF GENERATION (multi-page, 4-in-1)
+       Includes: Contrato + Orçamento + Cardápio + Valor Total
+    ============================================ */
+    function gerarContratoPDF(contratoId) {
+      var ct = DB.contratos.find(function(c) { return c.id === contratoId; });
+      if (!ct) { showToast('Contrato não encontrado', 'error'); return; }
+
+      var jsPDF = window.jspdf.jsPDF;
+      var doc = new jsPDF();
+      var pageW = 210;
+      var marginL = 22;
+      var marginR = 22;
+      var contentW = pageW - marginL - marginR;
+      var y = 0;
+      var currentYear = new Date().getFullYear();
+
+      /* ---- Helpers ---- */
+      function addHeader() {
+        doc.setFillColor(13, 27, 42);
+        doc.rect(0, 0, pageW, 42, 'F');
+        doc.setTextColor(200, 168, 78);
+        doc.setFontSize(22);
+        doc.setFont('helvetica', 'bold');
+        doc.text('PAMPHILO FESTAS E EVENTOS', pageW / 2, 17, { align: 'center' });
+        doc.setFontSize(9);
+        doc.setTextColor(160, 165, 175);
+        doc.text('CNPJ: 00.000.000/0000-00  |  contato@pamphiloeventos.com.br  |  Tel: (00) 0000-0000', pageW / 2, 27, { align: 'center' });
+        // Gold line under header
+        doc.setDrawColor(200, 168, 78);
+        doc.setLineWidth(1);
+        doc.line(0, 42, pageW, 42);
+        // Thin accent
+        doc.setFillColor(200, 168, 78);
+        doc.rect(0, 42, pageW, 1.2, 'F');
+        y = 52;
+      }
+
+      function checkPage(needed) {
+        if (y + needed > 270) {
+          doc.addPage();
+          addHeader();
+        }
+      }
+
+      function sectionTitle(title, icon) {
+        checkPage(18);
+        y += 2;
+        doc.setFillColor(13, 27, 42);
+        doc.rect(marginL, y - 6, contentW, 12, 'F');
+        doc.setTextColor(200, 168, 78);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.text((icon || '') + '  ' + title, marginL + 6, y + 1);
+        y += 14;
+      }
+
+      function subsectionTitle(title) {
+        checkPage(14);
+        doc.setFillColor(244, 240, 232);
+        doc.rect(marginL, y - 5, contentW, 10, 'F');
+        doc.setTextColor(13, 27, 42);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text(title, marginL + 4, y + 1);
+        y += 12;
+      }
+
+      function infoRow(label, value) {
+        checkPage(10);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 110);
+        doc.text(label, marginL + 4, y);
+        doc.setTextColor(30, 30, 50);
+        doc.setFont('helvetica', 'bold');
+        var valStr = String(value || '—');
+        // Wrap long values
+        if (valStr.length > 55) {
+          var valLines = doc.splitTextToSize(valStr, contentW - 68);
+          valLines.forEach(function(vl, vi) {
+            if (vi > 0) { checkPage(6); }
+            doc.text(vl, 86, y);
+            if (vi < valLines.length - 1) { y += 5.5; }
+          });
+        } else {
+          doc.text(valStr, 86, y);
+        }
+        y += 8;
+      }
+
+      function clauseParagraph(title, text) {
+        checkPage(22);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(13, 27, 42);
+        doc.text(title, marginL + 4, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(50, 50, 60);
+        var lines = doc.splitTextToSize(text, contentW - 8);
+        lines.forEach(function(line) {
+          checkPage(6);
+          doc.text(line, marginL + 4, y);
+          y += 5;
+        });
+        y += 4;
+      }
+
+      function goldDivider() {
+        checkPage(8);
+        doc.setDrawColor(200, 168, 78);
+        doc.setLineWidth(0.6);
+        doc.line(marginL, y, pageW - marginR, y);
+        y += 8;
+      }
+
+      /* =========================================================
+         PAGE 1 — COVER / TITLE PAGE
+      ========================================================= */
+      addHeader();
+
+      // Title block
+      y += 8;
+      doc.setFillColor(13, 27, 42);
+      doc.roundedRect(marginL, y, contentW, 40, 4, 4, 'F');
+      doc.setTextColor(200, 168, 78);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      doc.text('CONTRATO DE PRESTAÇÃO DE SERVIÇOS', pageW / 2, y + 16, { align: 'center' });
+      doc.setFontSize(11);
+      doc.setTextColor(180, 185, 195);
+      doc.text('Contrato + Orçamento + Cardápio', pageW / 2, y + 26, { align: 'center' });
+      doc.setFontSize(10);
+      doc.text('Nº ' + ct.id + '/' + currentYear + '  —  Emitido em ' + formatDate(ct.dataContrato), pageW / 2, y + 34, { align: 'center' });
+      y += 52;
+
+      // Intro
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(50, 50, 60);
+      var introText = 'Pelo presente instrumento particular de prestação de serviços de buffet, as partes abaixo identificadas e qualificadas têm entre si justo e contratado o seguinte, que mutuamente aceitam e outorgam, a saber:';
+      var introLines = doc.splitTextToSize(introText, contentW);
+      introLines.forEach(function(line) {
+        doc.text(line, marginL, y);
+        y += 6;
+      });
+      y += 8;
+
+      /* =========================================================
+         SECTION 1 — CONTRATO (Partes)
+      ========================================================= */
+      sectionTitle('CONTRATO — IDENTIFICAÇÃO DAS PARTES');
+
+      subsectionTitle('CONTRATADA');
+      infoRow('Razão Social:', 'PAMPHILO FESTAS E EVENTOS LTDA');
+      infoRow('Atividade:', 'Prestação de serviços de buffet, gastronomia e eventos');
+      y += 2;
+
+      subsectionTitle('CONTRATANTE');
+      infoRow('Nome Completo:', ct.clienteNome);
+      infoRow('CPF / CNPJ:', ct.cpfCnpj);
+      if (ct.endereco) { infoRow('Endereço:', ct.endereco); }
+      infoRow('Telefone:', ct.clienteTel);
+      infoRow('E-mail:', ct.clienteEmail || '—');
+      y += 4;
+
+      /* =========================================================
+         SECTION 2 — DADOS DO EVENTO
+      ========================================================= */
+      sectionTitle('DADOS DO EVENTO');
+      infoRow('Tipo de Evento:', ct.tipoEvento);
+      infoRow('Data do Evento:', formatDate(ct.dataEvento));
+      infoRow('Horário:', ct.horario);
+      infoRow('Local:', ct.localEvento);
+      infoRow('Nº de Convidados:', ct.pessoas + ' pessoas');
+      y += 4;
+
+      /* =========================================================
+         SECTION 3 — CARDÁPIO COMPLETO
+      ========================================================= */
+      sectionTitle('CARDÁPIO — ' + ct.cardapioNome.toUpperCase());
+
+      // Separate items into categories
+      var salgados = [];
+      var doces = [];
+      var isDoces = false;
+      ct.cardapioItens.forEach(function(item) {
+        if (item.startsWith('—')) {
+          isDoces = true;
+          return;
+        }
+        if (isDoces) { doces.push(item); }
+        else { salgados.push(item); }
+      });
+
+      // Render items in numbered table
+      function renderItemTable(items, label) {
+        if (items.length === 0) return;
+        checkPage(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(13, 27, 42);
+        doc.text(label + ' (' + items.length + ' itens)', marginL + 4, y);
+        y += 6;
+
+        // Render in 2 columns for compact layout
+        var colW = (contentW - 8) / 2;
+        var half = Math.ceil(items.length / 2);
+        var startY = y;
+        var maxY = y;
+
+        items.forEach(function(item, idx) {
+          var col = idx < half ? 0 : 1;
+          var row = idx < half ? idx : idx - half;
+          var xBase = marginL + 4 + (col * colW);
+          var yPos = startY + (row * 5.5);
+
+          // Check page break
+          if (yPos > 266) {
+            // If we go to next page, recalc
+            return;
+          }
+
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8.5);
+          doc.setTextColor(100, 100, 110);
+          doc.text(String(idx + 1) + '.', xBase, yPos);
+          doc.setTextColor(40, 40, 55);
+          doc.text(item, xBase + 12, yPos);
+
+          if (yPos > maxY) maxY = yPos;
+        });
+
+        y = maxY + 8;
+
+        // If too many items, use simple list fallback
+        if (items.length > 40) {
+          y = startY;
+          items.forEach(function(item, idx) {
+            checkPage(6);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(8.5);
+            doc.setTextColor(100, 100, 110);
+            doc.text(String(idx + 1) + '.', marginL + 4, y);
+            doc.setTextColor(40, 40, 55);
+            doc.text(item, marginL + 16, y);
+            y += 5;
+          });
+          y += 4;
+        }
+      }
+
+      if (doces.length > 0) {
+        renderItemTable(salgados, 'SALGADOS');
+        renderItemTable(doces, 'DOCES');
+      } else {
+        renderItemTable(salgados, 'ITENS DO CARDÁPIO');
+      }
+
+      y += 4;
+
+      /* =========================================================
+         SECTION 4 — ORÇAMENTO DETALHADO
+      ========================================================= */
+      sectionTitle('ORÇAMENTO DETALHADO');
+
+      // Table header
+      checkPage(40);
+      var tableX = marginL;
+      var col1W = contentW * 0.45;
+      var col2W = contentW * 0.2;
+      var col3W = contentW * 0.35;
+
+      doc.setFillColor(244, 240, 232);
+      doc.rect(tableX, y - 5, contentW, 10, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(80, 80, 90);
+      doc.text('DESCRIÇÃO', tableX + 4, y + 1);
+      doc.text('QTD / UND', tableX + col1W + 4, y + 1);
+      doc.text('VALOR', tableX + col1W + col2W + 4, y + 1);
+      y += 10;
+
+      // Row 1
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(40, 40, 55);
+      doc.text('Serviço de Buffet — ' + ct.cardapioNome, tableX + 4, y);
+      doc.text(ct.pessoas + ' pessoas', tableX + col1W + 4, y);
+      doc.setFont('helvetica', 'bold');
+      doc.text(formatCurrency(ct.valorPessoa) + ' / pessoa', tableX + col1W + col2W + 4, y);
+      y += 8;
+      doc.setDrawColor(220, 215, 205);
+      doc.setLineWidth(0.3);
+      doc.line(tableX, y - 3, tableX + contentW, y - 3);
+
+      // Row 2 - Subtotal
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 110);
+      doc.text('Subtotal (' + ct.pessoas + ' x ' + formatCurrency(ct.valorPessoa) + ')', tableX + 4, y);
+      doc.setTextColor(40, 40, 55);
+      doc.setFont('helvetica', 'bold');
+      doc.text(formatCurrency(ct.valorTotal), tableX + col1W + col2W + 4, y);
+      y += 8;
+      doc.line(tableX, y - 3, tableX + contentW, y - 3);
+
+      // Payment info
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 110);
+      doc.text('Forma de Pagamento:', tableX + 4, y);
+      doc.setTextColor(40, 40, 55);
+      doc.setFont('helvetica', 'bold');
+      doc.text(ct.pagamento, tableX + col1W + col2W + 4, y);
+      y += 10;
+
+      // ======= VALOR TOTAL HIGHLIGHT =======
+      checkPage(24);
+      doc.setFillColor(13, 27, 42);
+      doc.roundedRect(marginL, y - 2, contentW, 20, 3, 3, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('VALOR TOTAL:', marginL + 8, y + 10);
+      doc.setTextColor(200, 168, 78);
+      doc.setFontSize(18);
+      doc.text(formatCurrency(ct.valorTotal), pageW - marginR - 8, y + 10, { align: 'right' });
+      y += 28;
+
+      // Value in words
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 110);
+      doc.text('Valor por extenso: ' + valorPorExtenso(ct.valorTotal), marginL + 4, y);
+      y += 10;
+
+      /* =========================================================
+         SECTION 5 — CLÁUSULAS CONTRATUAIS
+      ========================================================= */
+      sectionTitle('CLÁUSULAS CONTRATUAIS');
+
+      clauseParagraph(
+        'CLÁUSULA 1ª — DO OBJETO',
+        'O presente contrato tem como objeto a prestação de serviços de buffet pela CONTRATADA ao CONTRATANTE, para o evento descrito neste instrumento, incluindo o fornecimento de alimentação conforme o cardápio "' + ct.cardapioNome + '" especificado acima, equipe de serviço qualificada, utensílios e materiais necessários para a completa execução do buffet.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 2ª — DO PREÇO E FORMA DE PAGAMENTO',
+        'O valor total dos serviços contratados é de ' + formatCurrency(ct.valorTotal) + ' (' + valorPorExtenso(ct.valorTotal) + '), correspondente ao atendimento de ' + ct.pessoas + ' (' + valorPorExtenso(ct.pessoas).replace(' reais', '') + ') pessoas ao valor unitário de ' + formatCurrency(ct.valorPessoa) + ' por pessoa. O pagamento será realizado na modalidade: "' + ct.pagamento + '". Em caso de atraso, incidirá multa de 2% (dois por cento) sobre o valor em atraso, acrescido de juros moratórios de 1% (um por cento) ao mês, calculados pro rata die.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 3ª — DA EXECUÇÃO DOS SERVIÇOS',
+        'A CONTRATADA se compromete a prestar os serviços de buffet no local, data e horário acordados: ' + formatDate(ct.dataEvento) + ', das ' + ct.horario + ', no endereço: ' + ct.localEvento + '. A equipe de montagem chegará com antecedência mínima de 2 (duas) horas antes do início do evento. A CONTRATADA fornecerá todos os alimentos, bebidas (quando previstas no cardápio), utensílios de servir, e pessoal de atendimento.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 4ª — DO NÚMERO DE CONVIDADOS',
+        'O número de convidados contratado é de ' + ct.pessoas + ' (' + valorPorExtenso(ct.pessoas).replace(' reais', '') + ') pessoas. Alterações deverão ser comunicadas com antecedência mínima de 7 (sete) dias úteis. Acréscimos serão cobrados proporcionalmente ao valor por pessoa contratado. Reduções superiores a 10% (dez por cento) do número contratado não serão aceitas sem acordo prévio entre as partes.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 5ª — DO CANCELAMENTO E RESCISÃO',
+        'Em caso de cancelamento unilateral pelo CONTRATANTE: a) Com mais de 30 (trinta) dias de antecedência da data do evento: restituição de 70% dos valores pagos; b) Entre 15 (quinze) e 30 (trinta) dias: restituição de 50% dos valores pagos; c) Com menos de 15 (quinze) dias: não haverá restituição. Em caso de cancelamento pela CONTRATADA, esta se compromete a devolver integralmente os valores recebidos, acrescidos de multa compensatória de 20% (vinte por cento) sobre o valor total do contrato.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 6ª — DAS RESPONSABILIDADES',
+        'A CONTRATADA é responsável pela qualidade sanitária dos alimentos, pontualidade e qualificação da equipe de serviço. O CONTRATANTE é responsável por: a) Garantir acesso adequado ao local do evento; b) Fornecer infraestrutura mínima incluindo energia elétrica, água potável e espaço para montagem do buffet; c) Informar sobre quaisquer restrições alimentares dos convidados com antecedência mínima de 5 (cinco) dias úteis.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 7ª — DO CASO FORTUITO E FORÇA MAIOR',
+        'As partes não serão responsáveis pelo inadimplemento de suas obrigações quando este decorrer de caso fortuito ou força maior, conforme previsto no artigo 393 do Código Civil Brasileiro. Nesta hipótese, as partes negociarão de boa-fé nova data para o evento ou a devolução integral dos valores pagos.'
+      );
+
+      clauseParagraph(
+        'CLÁUSULA 8ª — DO FORO',
+        'Para dirimir quaisquer controvérsias oriundas do presente contrato, as partes elegem o foro da comarca onde se situa a sede da CONTRATADA, com renúncia expressa a qualquer outro, por mais privilegiado que seja ou venha a ser.'
+      );
+
+      // Observações
+      if (ct.obs) {
+        clauseParagraph(
+          'DISPOSIÇÕES ESPECIAIS',
+          ct.obs
+        );
+      }
+
+      /* =========================================================
+         ASSINATURAS
+      ========================================================= */
+      checkPage(80);
+      y += 6;
+      goldDivider();
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(50, 50, 60);
+      doc.text('E por estarem assim justos e contratados, as partes firmam o presente instrumento em', marginL, y);
+      y += 6;
+      doc.text('2 (duas) vias de igual teor e forma, na presença das testemunhas abaixo assinadas.', marginL, y);
+      y += 16;
+
+      doc.setTextColor(100, 100, 110);
+      doc.setFontSize(10);
+      doc.text('Local e Data: _______________________, _____ de ___________________ de ___________', marginL, y);
+      y += 24;
+
+      // Signature lines
+      var sigW = (contentW - 24) / 2;
+      doc.setDrawColor(60, 60, 70);
+      doc.setLineWidth(0.3);
+      // Contratada
+      doc.line(marginL, y, marginL + sigW, y);
+      // Contratante
+      doc.line(marginL + sigW + 24, y, marginL + contentW, y);
+      y += 6;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(13, 27, 42);
+      doc.text('CONTRATADA', marginL + sigW / 2, y, { align: 'center' });
+      doc.text('CONTRATANTE', marginL + sigW + 24 + sigW / 2, y, { align: 'center' });
+      y += 5;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(100, 100, 110);
+      doc.text('Pamphilo Festas e Eventos Ltda', marginL + sigW / 2, y, { align: 'center' });
+      doc.text(ct.clienteNome, marginL + sigW + 24 + sigW / 2, y, { align: 'center' });
+      y += 4;
+      doc.setFontSize(8);
+      doc.text('CNPJ: 00.000.000/0000-00', marginL + sigW / 2, y, { align: 'center' });
+      doc.text('CPF/CNPJ: ' + ct.cpfCnpj, marginL + sigW + 24 + sigW / 2, y, { align: 'center' });
+
+      y += 24;
+      checkPage(36);
+
+      // Witnesses
+      doc.setDrawColor(60, 60, 70);
+      doc.line(marginL, y, marginL + sigW, y);
+      doc.line(marginL + sigW + 24, y, marginL + contentW, y);
+      y += 6;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(13, 27, 42);
+      doc.text('TESTEMUNHA 1', marginL + sigW / 2, y, { align: 'center' });
+      doc.text('TESTEMUNHA 2', marginL + sigW + 24 + sigW / 2, y, { align: 'center' });
+      y += 5;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(100, 100, 110);
+      doc.text('Nome: ______________________________', marginL, y);
+      doc.text('Nome: ______________________________', marginL + sigW + 24, y);
+      y += 5;
+      doc.text('CPF:  ______________________________', marginL, y);
+      doc.text('CPF:  ______________________________', marginL + sigW + 24, y);
+
+      /* =========================================================
+         FOOTERS (applied to every page at the end)
+      ========================================================= */
+      var totalPages = doc.getNumberOfPages();
+      for (var p = 1; p <= totalPages; p++) {
+        doc.setPage(p);
+        // Bottom gold line
+        doc.setDrawColor(200, 168, 78);
+        doc.setLineWidth(0.5);
+        doc.line(marginL, 277, pageW - marginR, 277);
+        // Footer text
+        doc.setTextColor(140, 140, 150);
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.text('PAMPHILO FESTAS E EVENTOS  —  Contrato Nº ' + ct.id + '/' + currentYear, marginL, 283);
+        doc.text('Pág. ' + p + ' / ' + totalPages, pageW - marginR, 283, { align: 'right' });
+        // Document sections indicator
+        doc.setFontSize(6.5);
+        doc.setTextColor(170, 170, 180);
+        doc.text('Contrato  |  Orçamento  |  Cardápio  |  Valor Total', pageW / 2, 288, { align: 'center' });
+      }
+
+      /* =========================================================
+         SAVE
+      ========================================================= */
+      doc.save('contrato_completo_' + ct.id + '_' + ct.clienteNome.replace(/\s+/g, '_') + '.pdf');
+      showToast('PDF completo gerado com sucesso! (Contrato + Orçamento + Cardápio + Valor Total)', 'success');
+    }
+
+    /** Helper: convert value to approximate text in Portuguese */
+    function valorPorExtenso(valor) {
+      var inteiro = Math.floor(valor);
+      var centavos = Math.round((valor - inteiro) * 100);
+      var unidades = ['', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
+      var especiais = ['dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
+      var dezenas = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
+      var centenas = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
+
+      function porExtenso(n) {
+        if (n === 0) return 'zero';
+        if (n === 100) return 'cem';
+        var parts = [];
+        if (n >= 1000) {
+          var milhares = Math.floor(n / 1000);
+          if (milhares === 1) { parts.push('mil'); }
+          else { parts.push(porExtenso(milhares) + ' mil'); }
+          n = n % 1000;
+          if (n > 0) parts.push('e');
+        }
+        if (n >= 100) {
+          if (n === 100) { parts.push('cem'); return parts.join(' '); }
+          parts.push(centenas[Math.floor(n / 100)]);
+          n = n % 100;
+          if (n > 0) parts.push('e');
+        }
+        if (n >= 10 && n <= 19) {
+          parts.push(especiais[n - 10]);
+          return parts.join(' ');
+        }
+        if (n >= 20) {
+          parts.push(dezenas[Math.floor(n / 10)]);
+          n = n % 10;
+          if (n > 0) parts.push('e');
+        }
+        if (n >= 1 && n <= 9) {
+          parts.push(unidades[n]);
+        }
+        return parts.join(' ');
+      }
+
+      var result = porExtenso(inteiro) + ' reais';
+      if (centavos > 0) {
+        result += ' e ' + porExtenso(centavos) + ' centavos';
+      }
+      return result;
+    }
+
+    /* ============================================
+       ADMIN PANEL
+    ============================================ */
+    function renderAdminPage() {
+      if (!DB.adminUnlocked) {
+        document.getElementById('adminLocked').style.display = 'block';
+        document.getElementById('adminPanel').style.display = 'none';
+      } else {
+        document.getElementById('adminLocked').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        populateAdminCardapioSelect();
+      }
+    }
+
+    document.getElementById('btnAdminLogin').addEventListener('click', function() {
+      var pass = document.getElementById('adminPass').value;
+      if (pass === DB.adminPassword) {
+        DB.adminUnlocked = true;
+        saveDB();
+        showToast('Acesso autorizado!', 'success');
+        renderAdminPage();
+      } else {
+        showToast('Senha incorreta!', 'error');
+      }
+    });
+
+    document.getElementById('adminPass').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('btnAdminLogin').click();
+      }
+    });
+
+    document.getElementById('btnAdminLogout').addEventListener('click', function() {
+      DB.adminUnlocked = false;
+      saveDB();
+      document.getElementById('adminPass').value = '';
+      renderAdminPage();
+    });
+
+    function populateAdminCardapioSelect() {
+      var sel = document.getElementById('adminCardapioSelect');
+      sel.innerHTML = '';
+      DB.cardapios.forEach(function(c) {
+        sel.innerHTML += '<option value="' + c.id + '">' + escapeHtml(c.nome) + '</option>';
+      });
+      renderAdminCardapio();
+    }
+
+    document.getElementById('adminCardapioSelect').addEventListener('change', renderAdminCardapio);
+
+    function renderAdminCardapio() {
+      var id = Number(document.getElementById('adminCardapioSelect').value);
+      var c = getCardapio(id);
+      if (!c) return;
+
+      document.getElementById('adminPreco').value = c.preco;
+
+      var container = document.getElementById('adminItemsList');
+      if (c.itens.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-list"></i><h5>Nenhum item neste cardápio</h5></div>';
+        return;
+      }
+
+      var html = '<table class="table-custom"><thead><tr><th>#</th><th>Item</th><th>Ações</th></tr></thead><tbody>';
+      c.itens.forEach(function(item, i) {
+        html += '<tr>' +
+          '<td style="width:40px;">' + (i + 1) + '</td>' +
+          '<td>' +
+            '<input type="text" class="form-control-custom" style="padding:8px 12px;" value="' + escapeAttr(item) + '" data-cardapio="' + c.id + '" data-index="' + i + '" onchange="updateItem(this)" />' +
+          '</td>' +
+          '<td style="width:60px;">' +
+            '<button class="btn btn-sm" style="color:#c83232;" onclick="removeItem(' + c.id + ',' + i + ')" title="Remover"><i class="fas fa-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    document.getElementById('btnSalvarPreco').addEventListener('click', function() {
+      var id = Number(document.getElementById('adminCardapioSelect').value);
+      var c = getCardapio(id);
+      var preco = parseFloat(document.getElementById('adminPreco').value);
+      if (!c) return;
+      if (isNaN(preco) || preco < 0) { showToast('Informe um valor válido', 'warning'); return; }
+      c.preco = preco;
+      showToast('Preço atualizado para ' + formatCurrency(preco) + '!', 'success');
+    });
+
+    document.getElementById('btnAddItem').addEventListener('click', function() {
+      var id = Number(document.getElementById('adminCardapioSelect').value);
+      var c = getCardapio(id);
+      var nome = document.getElementById('adminNovoItem').value.trim().toUpperCase();
+      if (!c) return;
+      if (!nome) { showToast('Informe o nome do item', 'warning'); return; }
+      c.itens.push(nome);
+      document.getElementById('adminNovoItem').value = '';
+      showToast('Item adicionado!', 'success');
+      renderAdminCardapio();
+    });
+
+    function updateItem(input) {
+      var cardapioId = Number(input.getAttribute('data-cardapio'));
+      var index = Number(input.getAttribute('data-index'));
+      var c = getCardapio(cardapioId);
+      if (c) {
+        c.itens[index] = input.value.trim().toUpperCase();
+        showToast('Item atualizado!', 'success');
+      }
+    }
+
+    function removeItem(cardapioId, index) {
+      showConfirmDialog('Remover Item', 'Tem certeza que deseja remover este item?', function() {
+        var c = getCardapio(cardapioId);
+        if (c) {
+          c.itens.splice(index, 1);
+          showToast('Item removido!', 'success');
+          renderAdminCardapio();
+        }
+      });
+    }
+
+    /* ============================================
+       HTML ESCAPE UTILITIES
+    ============================================ */
+    function escapeHtml(str) {
+      if (!str) return '';
+      var div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
+    function escapeAttr(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* ============================================
+       INIT
+    ============================================ */
+    renderDashboard();
+  </script>
+
+
+
+</body></html>
